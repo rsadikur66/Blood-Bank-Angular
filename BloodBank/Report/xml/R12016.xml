@@ -1,0 +1,25 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="R12016" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="R12016">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="T_UNIT_NO" msprop:BaseColumn="T_UNIT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_DONATION_DATE" msprop:BaseColumn="T_DONATION_DATE" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="T_RH_NAME" msprop:BaseColumn="T_RH_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_RH" msprop:BaseColumn="T_RH" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_PRODUCT_CODE" msprop:BaseColumn="T_PRODUCT_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_EXPIRY_DATE" msprop:BaseColumn="T_EXPIRY_DATE" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PRODUCTDESC" msprop:BaseColumn="PRODUCTDESC" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_STORE_AT" msprop:BaseColumn="T_STORE_AT" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="VOLUME" msprop:BaseColumn="VOLUME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="NEG_VIRUS" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

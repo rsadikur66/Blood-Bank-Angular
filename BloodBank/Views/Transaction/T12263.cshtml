@@ -1,0 +1,359 @@
+﻿@{
+    ViewBag.Title = "T12263";
+}
+<script src="~/Apps/JSController/Transaction/T12263Controller.js?version:0"></script>
+<script src="~/Apps/JSService/Transaction/T12263Service.js?version:0"></script>
+<script src="~/Apps/JSService/Transaction/T12091Service.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=? &origin=Oslo+Norway
+    &destination=Telemark+Norway
+    &avoid=tolls|highways"></script>*@
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvK4WBt18RMBAKEjwPZ0bDIY3Vp6ekPbM&origin=Oslo+Norway
+    &destination=Telemark+Norway
+    &avoid=tolls|highways"></script>
+@*<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAj3T-jw1kbD_NMCCjUXFGG4ePRqeFQzvcM&origin=Oslo+Norway
+    &destination=Telemark+Norway
+    &avoid=tolls|highways"></script>*@
+
+
+<style>
+    #grid2 tbody {
+        display: block !important;
+        overflow: auto;
+        height: 120px !important;
+        width: 100%;
+    }
+
+    #grid2 thead tr {
+        /*display: table;*/
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    #grid2 thead, tbody tr {
+        /*display: table;*/
+        width: 100%;
+        table-layout: fixed !important;
+    }
+</style>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12263Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()" disabled></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete()" disabled></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()" disabled></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="EnterQuery()" disabled></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="ExecuteQuery()" disabled></button>
+    </div>
+}
+<div class="" ng-app="BloodBank" ng-controller="T12263Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row">
+        <div style="width: 100%" class="col-lg-12">
+            <div>
+                <table id="grid2" class="omf-modal-grid grid" style=" width:100%;">
+                    <thead style="text-align: center;display: table;">
+                        <tr style=" background-color: #c12d2d; color: #ffffff;width:100%;display: table;">
+                            <th style="width:7%;border:1px solid #a21217;text-align:center" ng-bind="getLabel('lblReqNo')">Req.No</th>
+                            <th style="width:20%;border:1px solid #a21217;text-align:center" ng-bind="getLabel('lblTransfHosp')"></th>
+                            <th style="width:10%;border:1px solid #a21217;text-align:center" ng-bind="getLabel('lblReqDate')"></th>
+                            <th style="width:10%;border:1px solid #a21217;text-align:center" ng-bind="getLabel('lblReceiveDate')"></th>
+                            <th style="width: 10%; text-align: center;" class="ng-cloak" ng-bind="getLabel('lblIssueDate')"></th>
+                            <th style="width: 18%; text-align: center;" class="ng-cloak" ng-bind="getLabel('lblDeliveryMan')"></th>
+                            <th style="width: 10%; text-align: center;" ng-bind="getLabel('lblAcceptDate')"></th>
+                            <th style="width: 10%; text-align: center;" ng-bind="getLabel('lblArrivalDate')"></th>
+                            <th style="width: 5%; text-align: center;" ng-bind="getLabel('lblHandOver')"></th>
+                            <th class="Hidden"></th>
+                            <th class="Hidden"></th>
+                        </tr>
+                    </thead>
+                    <tbody style="display: table;">
+                        <tr style=" width:100%;display: table;" dir-paginate="B in obj.SiteList |filter : Search |itemsPerPage:50" pagination-id="site" ng-class="{'selected':$index == selectedRow}" ng-click="onSiteListSelect($index,B)">
+                            <td style="width: 7%; ">{{B.T_REQNO}}</td>
+                            <td style="width: 20%;text-align: left;">{{B.NAME}}</td>
+                            <td style="width: 10%;">{{B.T_BLOOD_REQDATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{B.T_BLOOD_REQTIME}}</td>
+                            <td style="width: 10%;">{{B.T_BB_RECEIVED_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{B.T_BB_RECEIVED_TIME}}</td>
+                            <td style="width: 10%; ">{{B.T_BB_ISSUED_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{B.T_BB_ISSUED_TIME}}</td>
+                            <td style="width: 18%;text-align: left; ">{{B.T_USER_NAME}}</td>
+                            <td style="width: 10%;">{{B.T_REQ_ACCEPT_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{B.T_REQ_ACCEPT_TIME}}</td>
+                            <td style="width: 10%;">{{B.T_BLOOD_RCVD_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{B.T_BLOOD_RCVD_TIME}}</td>
+                            <td style="width: 5%;"><input type="checkbox" ng-click="Handover_Flag($index,B)" ng-disabled="B.T_BLOOD_RCVD_FLG ===null" ng-true-value="'1'" ng-false-value="''" /></td>
+                            <td class="Hidden">{{B.T_LATITUDE}}</td>
+                            <td class="Hidden">{{B.T_LONGITUDE}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="width: 100%" class="col-lg-12">
+            <div class="col-lg-8">
+
+                <div style="margin: 1.6% 0%; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+                    <table style=" width:100%">
+                        <tr style="width: 100%">
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblSiteCode" for="txtSiteCode" class="ng-cloak" ng-bind="getLabel('lblSiteCode')"></label>
+                            </td>
+                            <td style="width: 7%;">
+                                <input type="text" id="txtSiteCode" ng-model="obj.T_SITE_CODE" style="width: 100%" ng-dblclick="GetSiteList()" ng-keydown="PopUpOnf9($event)" readonly="readonly" />
+                            </td>
+                            <td style="width: 2%" colspan="4">
+                                <input type="text" id="txtSiteName" ng-model="obj.T_SITE_NAME" style="width: 100%" readonly="readonly" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblRequestNo" for="txtRequestNo" class="ng-cloak" ng-bind="getLabel('lblRequestNo')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtRequestNo" ng-model="obj.T_REQUEST_NO" style="width: 100%" ng-dblclick="GetRequestList()" readonly="readonly" />
+                            </td>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblNoOfUnit" for="txtNoOfUnit" class="ng-cloak" ng-bind="getLabel('lblNoOfUnit')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtNoOfUnit" ng-model="obj.T_UNIT_COUNT" style="width: 100%" ng-dblclick="GetZoneList()" readonly="readonly" />
+                            </td>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblReqBloodGrp" for="txtReqBldGrp" class="ng-cloak" ng-bind="getLabel('lblReqBloodGrp')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtReqBldGrp" ng-model="obj.T_REQ_BLD_GRP" style="width: 100%" readonly="readonly" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblReqDate" for="txtReqDate" class="ng-cloak" ng-bind="getLabel('lblReqDate')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtReqDate" ng-model="obj.T_REQ_DATE" style="width: 100%" readonly="readonly" />
+                            </td>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblReqTime" for="txtReqTime" class="ng-cloak" ng-bind="getLabel('lblReqTime')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtReqTime" ng-model="obj.T_REQ_TIME" style="width: 100%" readonly="readonly" />
+                            </td>
+                            <td style="width: 5%" class="alnR">
+                                <label id="lblReqProductCode" for="txtReqProdCode" class="ng-cloak" ng-bind="getLabel('lblReqProductCode')"></label>
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtReqProdCode" ng-model="obj.T_REQ_PROD_CODE" style="width: 100%" readonly="readonly" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                @*<div style="margin: 1.6% 0%; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+                        <table>
+                            <tr style="width:100%">
+                                <td style="width: 10%" class="alnR">
+                                    <label id="lblCourier" for="txtSiteCode" class="ng-cloak">Courier</label>
+                                </td>
+                                <td style="width: 15%;">
+                                    <ui-select ng-model="obj.C.selected" on-select="onbagTypeSelect()" id="ddlCourier" theme="select2" append-to-body="true" style="width: 100px" ng-keydown="getUnitList($event)">
+                                        <ui-select-match placeholder="Select">{{$select.selected.COURIER_NAME}}</ui-select-match>
+                                        <ui-select-choices repeat="C in obj.CourierDataList | propsFilter: {COURIER_NAME: $select.search}">
+                                            <div ng-bind-html="C.COURIER_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <input type="text" hidden id="ddlCourier{{$index}}" ng-model="obj.T_COURIER_CODE" ng-bind="obj.T_COURIER_CODE=obj.C.selected.T_COURIER_CODE" name="courier" style="width: 96%; height: 22px;"  />
+                                </td>
+                                <td style="width: 10%" class="alnR">
+                                    <label id="lblTrackingNo" for="txtSiteCode" class="ng-cloak">Track No</label>
+                                </td>
+                                <td style="width: 10%" class="alnR">
+                                    <input type="text" id="txtTrackingNo" ng-model="obj.T_TRACK_NO" style="width: 100%" />
+                                </td>
+                                <td style="width: 10%" class="alnR">
+                                    <label id="lblEstimDelTime" for="txtSiteCode" class="ng-cloak">Est Time</label>
+                                </td>
+                                <td style="width: 5%;">
+                                    <input type="text" id="txtEstmitTime" ng-model="obj.T_EST_TIME" style="width: 100%" />
+                                </td>
+                                <td style="width: 15%;">
+
+                                    <ui-select ng-model="obj.E.selected" on-select="onbagTypeSelect()" id="ddllblEstimDelTime" theme="select2" append-to-body="true" style="width: 85px" ng-keydown="getUnitList($event)">
+                                        <ui-select-match placeholder="Select">{{$select.selected.T_EST_NAME}}</ui-select-match>
+                                        <ui-select-choices repeat="E in obj.EstmitDataList | propsFilter: {T_EST_NAME: $select.search}">
+                                            <div ng-bind-html="E.T_EST_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </td>
+                                <td style="width: 15%" class="alnR">
+                                    <label id="lblDeliveryBy" for="txtSiteCode" class="ng-cloak">Delivery By</label>
+                                </td>
+                                <td style="width: 10%" class="alnR">
+                                    <ui-select ng-model="obj.D.selected" on-select="onbagTypeSelect()" id="ddllblDeliveryBy" theme="select2" append-to-body="true" style="width: 100px" ng-keydown="getUnitList($event)">
+                                        <ui-select-match placeholder="Select">{{$select.selected.T_USER_NAME}}</ui-select-match>
+                                        <ui-select-choices repeat="D in obj.DeliveryDataList | propsFilter: {T_USER_NAME: $select.search}">
+                                            <div ng-bind-html="D.T_USER_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <input type="text" hidden id="ddllblEstimDelTime{{$index}}" ng-model="obj.T_EMP_CODE" ng-bind="obj.T_EMP_CODE=obj.D.selected.T_EMP_CODE" name="deliveryby" style="width: 96%; height: 22px;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>*@
+
+                <div style="margin: 1.6% 0%; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+                    <table id="gridUnit" style="width: 100%">
+                        <thead style="text-align: center">
+                            <tr style="color: #29449b; width: 100%">
+                                @*<td style="width: 10%"></td>*@
+                                <td style="width: 10%"><span id="lblUnit" style="text-align: center;" ng-bind="getLabel('lblUnit')"></span></td>
+                                <td style="width: 9%"><span id="lblProduct" style="text-align: center; width: 10%" ng-bind="getLabel('lblProduct')"></span></td>
+                                <td style="width: 10%"><span id="lblBldGroup" style="width: 10%" ng-bind="getLabel('lblBldGroup')"> </span></td>
+                                <td style="width: 10%"><span id="lblIssueDate" style="width: 10%" ng-bind="getLabel('lblIssueDate')"> </span></td>
+                                <td style="width: 10%"><span id="lblIssueTime" style="width: 3%;" ng-bind="getLabel('lblIssueTime')"></span></td>
+                                <td colspan="2" style="width: 32%"><span id="lblBldIssuedBy" style="width: 10%;" ng-bind="getLabel('lblBldIssuedBy')"></span></td>
+                                <td style="width: 10%"><span id="lblExpiryDate" style="width: 10%;" ng-bind="getLabel('lblExpiryDate')"></span></td>
+                                <td style="width: 9%"><span id="lblIssuedYN" style="width: 10%;" ng-bind="getLabel('lblIssuedYN')"></span></td>
+                                @*<td><span id="lblIssueDate" style="width: 10%;" ng-bind="getLabel('lblIssueDate')"></span></td>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="obj in obj.BloodIssueList" style="width: 100%">
+                                @*<td style="width: 10%"></td>*@
+                                <td style="width: 10%">
+                                    <input type="text" style="width: 100%" class="form-control" name="UnitNo" id="txtUnitNo" ng-model="obj.UnitNo" readonly>
+                                </td>
+                                <td style="width: 9%">
+                                    <input type="text" style="width: 100%" class="form-control" name="ProductCode" id="txtProductCode" ng-model="obj.ProductCode" readonly>
+                                </td>
+                                <td style="width: 10%">
+                                    <input type="text" style="width: 100%" class="form-control" name="BloodGroup" id="txtBloodGroup" ng-model="obj.BloodGroup" readonly>
+                                </td>
+                                <td style="width: 10%">
+                                    <input type="text" style="width: 100%" class="form-control" name="IssueDate" id="txtIssueDate" ng-model="obj.IssueDate" readonly>
+                                </td>
+                                <td style="width: 10%">
+                                    <input type="text" style="width: 100%" class="form-control" name="IssueTime" id="txtIssueTime" ng-model="obj.IssueTime" readonly>
+                                </td>
+
+                                <td style="width: 7%">
+                                    <input type="text" style="width: 100%;" class="form-control" name="IssuedByCode" id="txtIssuedBy_Code" ng-model="obj.IssuedBy_Code" readonly>
+                                </td>
+                                <td style="width: 25%">
+                                    <input type="text" style="width: 100%;" class="form-control" name="IssuedBy_Name" id="txtIssuedBy_Name" ng-model="obj.IssuedBy_Name" readonly>
+                                </td>
+                                <td style="width: 10%">
+                                    <input type="text" style="width: 100%;" class="form-control" name="ExpiryDate" id="txtExpiryDate" ng-model="obj.ExpiryDate" readonly>
+                                </td>
+                                @*<td style="width: 15%">
+                                        <input type="text" style="width: 100%;" class="form-control" name="VirologyBy_Name" id="txtVirologyBy_Name" ng-model="obj.MobileNo">
+                                    </td>*@
+                                <td style="width: 9%">
+                                    <input type="checkbox" style="width: 100%; box-shadow: none; margin-left: -30%" class="form-control" name="IssuedYesNo" id="IssueChkYN{{$index}}" ng-disabled="checkvalue($index)" ng-model="obj.IssueYN" ng-click="IssuedCheckboxClicked($index)">
+                                </td>
+                                @*<td style="width: 10%;display: none">
+                                        <input type="text" class="form-control" name="hiddenField" style="width: 55px" id="txtHiddenField" ng-model="obj.HiddenField">
+                                    </td>*@
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-lg-4" style="margin: 0.5% 0%; border-radius: 5px; padding: 10px">
+                <div id="dvDeliveryMap" style="height: 350px"></div>
+                @*<div id="dvMap" style="width: 600px; height: 400px"></div>*@
+                <div id="msg">{{obj.dis}}</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--2nd part start-->
+    @*SiteList popup start*@
+    <div id="divSitePopUp" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label style="width: 97%">Site List</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseSiteListPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+            </div>
+
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak">Site Code</th>
+                                    <th style="width: 100px; text-align: center;">Site Name</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="B in obj.SiteList |filter : Search |itemsPerPage:5" pagination-id="site" ng-class="{'selected':$index == selectedRow}" ng-click="onSiteListSelect($index,B)">
+                                    <td style="width: 53px; ">{{B.CODE}}</td>
+                                    <td style="width: 100px;">{{B.NAME}}</td>
+                                    <td class="Hidden" style="width: 53px; ">{{B.T_LATITUDE}}</td>
+                                    <td class="Hidden" style="width: 100px;">{{B.T_LONGITUDE}}</td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="site" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Consultant popup end*@
+
+    @*RequestList popup start*@
+    <div id="divRequestNoPopUp" class="omf-modal" style="width: 65% !important">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label style="width: 97%">Request List</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseRequestListPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+            </div>
+
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak">Request No</th>
+                                    <th style="width: 100px; text-align: center;">Date </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="D in obj.RequestList |filter : Search |itemsPerPage:5" pagination-id="request" ng-class="{'selected':$index == selectedRow}" ng-click="onRequestListSelect($index,D)">
+                                    <td style="width: 53px; ">{{D.CODE}}</td>
+                                    <td style="width: 100px;">{{D.T_BLOOD_REQDATE|date:'dd/MM/yyyy'}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="request" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Consultant popup end*@
+</div>
+
+

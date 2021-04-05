@@ -1,0 +1,248 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/menuarb.css")" title="arb" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/menueng.css")" title="eng" rel="alternate stylesheet" type="text/css" />
+
+    @*<link href="@VirtualPathUtility.ToAbsolute("~/Content/ui-grid.min.css")" title="arb" rel="alternate stylesheet" type="text/css" />
+        <link href="@VirtualPathUtility.ToAbsolute("~/Content/angular-datepicker_Custom.css")" rel="stylesheet" type="text/css" />*@
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-hijri.js"></script>
+    <script src="~/Scripts/jquery.validationEngine.js"></script>
+    <script src="~/Scripts/jquery.validationEngine-en.js"></script>
+    <script src="~/Scripts/jquery.simplemodal.1.4.4.min.js"></script>
+    <script src="~/Scripts/angular/jquery.js"></script>
+    <script src="~/Scripts/angular/jquery.dataTables.js"></script>
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular/angular-datatables.js"></script>
+    <script src="~/Scripts/angular/angular-modal-service.js"></script>
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="~/Scripts/angular/angular-route.js"></script>
+    <script src="~/Scripts/dirPagination.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script src="~/Scripts/Module/fileUploader.js"></script>
+    <script src="~/Scripts/angular-datepicker_Custom.js"></script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    @*<script src="~/Scripts/ChatScripts/angular-flash.js"></script>
+        <script src="~/Scripts/Rating/jk-rating-stars.min.js"></script>
+        <script src="~/Scripts/Rating/script.js"></script>
+        <script src="~/Scripts/angular/angularjs-google-maps.js"></script>
+        <script src="~/Scripts/angular/xeditable.js"></script>
+        <script src="~/Scripts/angular/angular-mocks.js"></script>
+        <script src="~/Scripts/angular/xeditable.js"></script>
+        <script src="~/Scripts/angular/angular-mocks.js"></script>
+        <script src="~/Scripts/zebra_datepicker.js"></script>
+        <script src="~/Scripts/angular/ng-map.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvK4WBt18RMBAKEjwPZ0bDIY3Vp6ekPbM"></script>
+        <script src="~/Scripts/angular/map_api.js"></script>
+        <link href="~/Content/Rating/jk-rating-stars.min.css" rel="stylesheet" />*@
+
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
+    <script src="~/Apps/app.js"></script>
+    <script src="~/Apps/JSService/Menu/menuService.js"></script>
+    <script src="~/Apps/JSController/Menu/menuController.js"></script>
+    <script src="~/Apps/JSService/LoginService.js"></script>
+    <script src="~/Apps/JSService/Transaction/T12265Service.js"></script>
+
+    <style>
+        .headLine {
+            background-color: #800000;
+            margin: 16px;
+            text-align: center;
+            font-weight: bold;
+            font-size: x-large;
+            border-radius: 5px;
+            /*background-color: #800000;
+            text-align: center;
+            font-weight: bold;
+            font-size: x-large;
+            border-radius: 5px;
+            width: 200px;
+            height: 34px;
+            padding: 8px;
+            margin-left: 400px;*/
+        }
+
+
+        #nd-box {
+            float: left;
+            width: 180px;
+            height: 190px;
+        }
+
+        #rd-box {
+            float: left;
+            width: 180px;
+            height: 190px;
+        }
+        .ClassA {
+            background-color: red;
+            margin: 5px;
+            border-radius: 50%;
+            padding: 3px;
+            color: white
+        }
+
+    </style>
+
+</head>
+@*<body>*@
+<body ng-app="BloodBank" ng-controller="menuController" ng-init="test()" class="ng-cloak" >
+    <div id="topbar">
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/bg.png")" id="bg" alt="background image" />
+        <img src="~/Images/{{topbarbg}}.png" id="topbarBg" alt="top bar" />
+        <img src="~/Images/{{topbarseparator}}.png" id="topbarSeparator" alt="top bar separator" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/whitelogo.png")" id="whiteLogo" alt="white logo" />
+        <img src="~/Images/{{leftpanelbg}}.png" id="leftPanelBg" alt="left panel" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/headerbg.png")" id="headerBg" alt="header" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/calender.png")" id="calender" alt="calender" />
+        <div id="datePanel">
+            <script type="text/javascript">
+                document.writeln(moment().format('DD/MM/YYYY'));
+            </script>
+            &nbsp;&nbsp;&nbsp;&nbsp;&brvbar;&nbsp;&nbsp;&nbsp;
+            <script src="@VirtualPathUtility.ToAbsolute("~/Scripts/ar-sa.js")"></script>
+            <script type="text/javascript">
+                document.writeln(moment().format('iYYYY/iMM/iDD'));
+            </script>
+        </div>
+        <div id="formInfo">
+            <label ID="FName" class="ng-cloak">{{FCode}}</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&brvbar;&nbsp;&nbsp;&nbsp;
+            <label ID="lblFormInfo" class="ng-cloak">{{FName}}</label>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="header">
+        <div id="user">
+            <img src="@VirtualPathUtility.ToAbsolute("~/Images/user.png")" id="usericon" alt="user icon" />
+        </div>
+        <div id="userName" style="width: 9%;">
+            <label ID="lblUserName">{{UserName}}</label>
+        </div>
+        @*<div id="logo">
+                <img src="@VirtualPathUtility.ToAbsolute("~/Images/logo.png")" alt="logo" />
+            </div>*@
+        <div id="title">
+            <span class='gray'>{{title1}}</span>&nbsp;<span class='red'>{{title2}}</span>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="options" data-ng-init="BackInit(BackURL)">
+
+        <button ID="btnTransaction" class="Button Transaction" style="cursor: pointer;font-size:20px" ng-click="Menu(1)">{{labelOption1}}</button>
+        <button ID="btnReport" class="Button Report" style="cursor: pointer;font-size:20px" ng-click="Menu(3)">{{labelOption2}}</button>
+        <button ID="btnQuery" class="Button Query" style="cursor: pointer;font-size:20px" ng-click="Menu(4)">{{labelOption6}}</button>
+        <button ID="btnInitialization" class="Button Setup" style="cursor: pointer;font-size:20px" ng-click="Menu(2)">{{labelOption3}}</button>
+        <div id="navigation">
+            <button ID="btnBack" class="Button Back" style="cursor: pointer;font-size:20px" ng-click="Back()">
+                {{labelOption4}}
+            </button>
+            <button ID="btnLogout" class="Button Logout" style="cursor: pointer;font-size:20px" ng-click="Logout()">{{labelOption5}}</button>
+        </div>
+    </div>
+    <div id="container">
+        @*<span>*@
+        @*<label ID="ltrOption" style="color: white;background-color: #800000" class="ng-cloak">{{Labelmsg}}</label>*@
+        @*<img src="@VirtualPathUtility.ToAbsolute("~/Images/navdir.png")" id="navdir" alt="navdir" />*@
+        @*</span>*@
+        <div class="headLine">
+            <label ID="ltrOption" style="color: white;background-color: #800000" class="ng-cloak">{{Labelmsg}}</label>
+        </div>
+        <div id="links11" class="mainMenu">
+            @*<div>*@
+                <div id="leftcontent11" class="childMenu">
+                    <div ng-repeat="row in menus">
+                        <div ng-repeat="dr in row">
+                            <div ng-if="dr.T_LINK_SEPERATION != 1">
+                                <div ng-if="dr.ROWNUM < 15">
+                                    @*<a id="ini_lc_setup" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_lc_setup" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                            <div ng-if="dr.T_LINK_SEPERATION == 1">
+                                <div ng-if="dr.ROWNUM >= 0 && dr.ROWNUM <= 14  ">
+                                    @*<a id="ini_lc_setupT" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_lc_setupT" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}<sup ng-class='whatClassIsIt(rr)'>{{rr}}</sup></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="centerleftcontent11" class="childMenu">
+                    <div ng-repeat="row in menus">
+                        <div ng-repeat="dr in row">
+                            <div ng-if="dr.T_LINK_SEPERATION != 1">
+                                <div ng-if="dr.ROWNUM >= 15 && dr.ROWNUM <= 29 ">
+                                    @*<a id="ini_clc_setup" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)" style="display: inline-block;">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_clc_setup" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                            <div ng-if="dr.T_LINK_SEPERATION == 1">
+                                <div ng-if="dr.ROWNUM >= 15 && dr.ROWNUM <= 29">
+                                    @*<a id="ini_lc_setupT" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_lc_setupT" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="centerrightcontent11" class="childMenu">
+                    <div ng-repeat="row in menus">
+                        <div ng-repeat="dr in row">
+                            <div ng-if="dr.T_LINK_SEPERATION != 1">
+                                <div ng-if="dr.ROWNUM >= 30 && dr.ROWNUM <= 44 ">
+                                    @*<a id="ini_clc_setup" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)" style="display: inline-block;">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_clc_setup" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                            <div ng-if="dr.T_LINK_SEPERATION == 1">
+                                <div ng-if="dr.ROWNUM >= 30 && dr.ROWNUM <= 44">
+                                    @*<a id="ini_lc_setupT" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_lc_setupT" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="rightcontent11" class="childMenu">
+                    <div ng-repeat="row in menus">
+                        <div ng-repeat="dr in row">
+                            <div ng-if="dr.T_LINK_SEPERATION != 1">
+                                <div ng-if="dr.ROWNUM >= 45 && dr.ROWNUM <= 59 ">
+                                    @*<a id="ini_clc_setup" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)" style="display: inline-block;">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_clc_setup" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                            <div ng-if="dr.T_LINK_SEPERATION == 1">
+                                <div ng-if="dr.ROWNUM >= 45 && dr.ROWNUM <= 59">
+                                    @*<a id="ini_lc_setupT" href="/{{labelLink}}/{{dr.T_LINK_TEXT}}" class="ng-cloak" style="display: inline-block;" ng-click="FormName(dr)">{{dr.LINK_LABEL}}</a>*@
+                                    <label id="ini_lc_setupT" class="ng-cloak" style="display: inline-block; cursor: pointer" ng-click="FormName(dr,labelLink)">{{dr.LINK_LABEL}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @*</div>*@
+        </div>
+    </div>
+</body>
+</html>
+
+

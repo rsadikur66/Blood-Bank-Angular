@@ -1,0 +1,167 @@
+﻿@{
+    ViewBag.Title = "T12202";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Apps/JSController/Transaction/T12202Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12202Service.js"></script>
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12202Controller">
+        <button id="btnSave" title="Save" class="Button Save" ng-click="onSaveClick()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="onNextClick()" ></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="onClear()"></button>
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12202Controller" name="obj.myDiv" novalidate ng-form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d;margin-top: 10px; border-radius: 5px;">
+                    <div style="width: 100%">
+                        <table style=" width:100%;">
+                            <tr style="width: 100%;">
+                                <td style="width: 10%;" class="alnR">  <label id="lblPatNo" for="txtPatNo" ng-bind="getLabel('lblPatNo')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;"><input id="txtPatNo" ng-model="obj.t12022.T_PAT_NO" type="text" style="width: 100%" required 
+                                 ng-blur="onPatSrch_blur()"  
+                                 ng-keydown="onPatSrch_tab($event)"
+                                 numbers-only
+                                 my-maxlength="8"
+                                 /></td>
+                                <td style="width: 65%;" colspan="6"> <input id="txtPatName" ng-model="obj.PAT_DESC" type="text" style="width: 100%" readonly="readonly" /></td>
+                                <td style="width: 11%;text-align: center" rowspan="4"> <input type="button" style="background: url(../../Images/buttonWhite.png); width: 100px; height: 100px;background-repeat: no-repeat; background-position: center; border-color: #FBFBFB;" id="btnSign" ng-click="onbtnSignClick()" /></td>
+
+                            </tr>
+                            <tr style="width: 100%;">
+                                <td style="width: 10%;" class="alnR">    <label id="lblGender" for="txtGender" ng-bind="getLabel('lblGender')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;"> <input id="txtGender" type="text" style="width: 100%" ng-model="obj.GENDER" readonly="readonly" /></td>
+                                <td style="width: 8%; " class="alnR">    <label id="lblAge" for="txtYear" ng-bind="getLabel('lblAge')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;">
+                                    <input id="txtYear" type="text" style="width: 34%" ng-model="obj.YRS" readonly="readonly" /><label id="lblYear" for="txtYear" ng-bind="getLabel('lblYear')" class="ng-cloak"></label>
+                                    <input id="txtMonth" type="text" style="width: 34%" ng-model="obj.MOS" readonly="readonly" />
+                                    <label id="lblMonth" for="txtMonth" ng-bind="getLabel('lblMonth')" class="ng-cloak"></label>
+                                </td>
+                                <td style="width: 9%; " class="alnR">   <label id="lblMrtLStatus" for="txtMrtLStatus" ng-bind="getLabel('lblMrtLStatus')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;">  <input id="txtMrtLStatus" type="text" style="width: 100%" ng-model="obj.MRTL_STTS" readonly="readonly" /></td>
+                                <td style="width: 8%; " class="alnR"> <label id="lblNationality" for="txtNationality" ng-bind="getLabel('lblNationality')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;"><input id="txtNationality" type="text" style="width: 100%" ng-model="obj.NATIONALITY" readonly="readonly" /></td>
+                            </tr>
+                            <tr style="width: 100%;">
+                                <td style="width: 10%;" class="alnR"> <label id="lblNID" for="txtNID" ng-bind="getLabel('lblNID')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;"> <input id="txtNID" type="text" style="width: 100%" ng-model="obj.T_DONOR_ID" ng-keydown="onPatSrch_tab($event)" required /></td>
+                                <td style="width: 8%; " class="alnR">   <label id="lblEpisode" for="txtEpisode" ng-bind="getLabel('lblEpisode')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;"> <input id="txtEpisode" type="text" style="width: 100%" ng-model="obj.t12022.T_EPISODE_NO" readonly="readonly" /></td>
+                                <td style="width: 9%; " class="alnR">   <label id="lblEpisodeDate" for="txtEpisodeDate" ng-bind="getLabel('lblEpisodeDate')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;">   <input id="txtEpisodeDate" type="text" style="width: 100%" ng-model="obj.EPISODE_DATE" readonly="readonly" /></td>
+                                <td style="width: 8%; " class="alnR"> <label id="lblTotalReg" for="txtTotalReg" ng-bind="getLabel('lblTotalReg')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;">    <input id="txtTotalReg" type="text" style="width: 100%" ng-model="obj.TOTAL_REG" readonly="readonly" /></td>
+                            </tr>
+                            <tr style="width: 100%;">
+                                <td style="width: 10%;" class="alnR">   <label id="lblDifferalDays" for="txtDifferalDays" ng-bind="getLabel('lblDifferalDays')" class="ng-cloak"></label></td>
+                                <td style="width: 14%;"> <input id="txtDifferalDays" type="text" style="width: 100%" ng-model="obj.t12022.T_MAX_DIFFERED_DAY" readonly="readonly" /></td>
+                                <td style="width: 8%; " class="alnR">  <label id="lblDifferalUpto" for="txtDifferalUpto" ng-bind="getLabel('lblDifferalUpto')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;">  <input id="txtDifferalUpto" type="text" style="width: 100%" ng-model="obj.t12022.T_MAX_DIFFERED_DATE" readonly="readonly" /></td>
+                                <td style="width: 9%; " class="alnR"> <label id="lblDifferalStatus" for="txtDifferalStatus" ng-bind="getLabel('lblDifferalStatus')" class="ng-cloak"></label></td>
+                                <td style="width: 13%;">  <input id="txtDifferalStatus" type="text" style="width: 100%" ng-model="obj.DIFF_STTS_SIGN" readonly="readonly" /></td>
+                                <td style="width: 8%; " class="alnR"></td>
+                                <td style="width: 14%;">
+                                    <input type="checkbox" id="chkStatus" ng-true-value="1" ng-false-value="0" ng-model="obj.T_STATUS_CHECK" />
+                                    <label id="lblStatus" for="chkStatus" ng-bind="getLabel('lblStatus')" class="ng-cloak"></label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d; margin-top: 10px; height: 300px; border-radius: 5px;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        @*<table class="table table-bordered" style="width: 100%; margin: 5px auto; border: 1px solid #c12d2d; border-radius: 5px;" id="tblQues">*@
+                        <table class="omf-modal-grid grid pageGrid" style="width: 100%; margin: 5px auto; border: 1px solid #c12d2d; border-radius: 5px;" id="tblQues">
+                            <thead style="text-align: center; display: table; width: 100%;">
+                                <tr style="background-color: #c12d2d; color: #ffffff">
+                                    <th id="lblQNo" style="width: 5%; text-align: center;" ng-bind="getLabel('lblQNo')" class="ng-cloak"></th>
+                                    <th id="lblQuestion" style="width: 75%; text-align: center" ng-bind="getLabel('lblQuestion')" class="ng-cloak"></th>
+                                    <th id="lblAns" style="width: 10%; text-align: center" ng-bind="getLabel('lblAns')" class="ng-cloak"></th>
+                                    <th id="lblDifferal" colspan="2" style="width: 10%; text-align: center" ng-bind="getLabel('lblDifferal')" class="ng-cloak"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="text-align: center; width: 100%; max-height: 250px; min-height: 250px; overflow: auto; overflow-x: hidden;display: block;">
+                                <tr style="display: table; width: 100%; table-layout: fixed;" ng-repeat="obj in obj.quesList" id="trQues{{$index}}">
+
+                                    <td style="width: 5%; text-align: center">
+                                        {{$index+1}}
+                                    </td>
+                                    <td style="width: 75%;" ng-bind-html="obj.QUES_DESC" ng-style="la==1?ala:ale"></td>
+                                    <td style="width: 10%; text-align: center">
+                                        <ui-select id="ddlAnswer" ng-model="obj.a.selected" theme="select2" append-to-body="true" style="width: 100%" on-select="onAnsSelect(obj.a.selected.ANS_ID,$index)" ng-click="onAnsClick()" ng-disabled="obj.disble">
+                                            <ui-select-match placeholder="Select">{{$select.selected.ANS_DESC}}</ui-select-match>
+                                            <ui-select-choices repeat="a in obj.getAnsList | propsFilter: {ANS_DESC: $select.search}">
+                                                <div ng-bind-html="a.ANS_DESC | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </td>
+                                    <td style="width: 5%; text-align: center">
+                                        <img src="{{obj.src}}" id="imgDiffSign{{$index}}" style="width: 25px; height: 25px">
+                                    </td>
+                                    <td style="width: 5%; text-align: center">{{obj.T_DIFFERAL_DAY}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d; margin-top: 10px; padding-top: 5px; border-radius: 5px;">
+                <div style="width: 100%">
+                    <table style="width: 100%;">
+                        <tr style="width: 100%">
+                            <td style="width: 17%;" class="alnR">   <label id="lblWeight" for="txtWeight" ng-bind="getLabel('lblWeight')" class="ng-cloak"></label></td>
+                            <td style="width: 8.25%;">  <input id="txtWeight" type="text" style="width: 100%" ng-model="obj.t12022.T_WEIGHT" ng-keydown="onVitalSignCheckUI('0003',obj.t12022.T_WEIGHT,0,$event,'txtHb')" ng-readonly="obj.tf" required /></td>
+                            <td style="width: 8.25%;" class="alnR">  <label id="lblHb" for="txtHb" ng-bind="getLabel('lblHb')" class="ng-cloak"></label></td>
+                            <td style="width: 8.25%;"> <input id="txtHb" type="text" style="width: 100%" ng-model="obj.t12022.T_HB" ng-keydown="onVitalSignCheckUI('0005',obj.t12022.T_HB,1,$event,'txtPulse')" ng-readonly="tf" required /></td>
+                            <td style="width: 8.25%;" class="alnR">   <label id="lblPulse" for="txtPulse" ng-bind="getLabel('lblPulse')" class="ng-cloak"></label></td>
+                            <td style="width: 8.25%;"> <input id="txtPulse" type="text" style="width: 100%" ng-model="obj.t12022.T_PULS" ng-keydown="onVitalSignCheckUI('0004',obj.t12022.T_PULS,2,$event,'txtTemp')" ng-readonly="obj.tf" required /></td>
+                            <td style="width: 8.25%;" class="alnR"> <label id="lblTemp" for="txtTemp" ng-bind="getLabel('lblTemp')" class="ng-cloak"></label></td>
+                            <td style="width: 8.25%;"> <input id="txtTemp" type="text" style="width: 100%" ng-model="obj.t12022.T_TEMPTURE" ng-keydown="onVitalSignCheckUI('0006',obj.t12022.T_TEMPTURE,3,$event,'txtBPHigh')" ng-readonly="obj.tf" required /></td>
+                            <td style="width: 8.25%;" class="alnR"> <label id="lblBP" for="txtBPHigh" ng-bind="getLabel('lblBP')" class="ng-cloak"></label></td>
+                            <td style="width: 17%;">   <input id="txtBPHigh" type="text" style="width: 44%" ng-model="obj.t12022.T_BP_HIGH" ng-keydown="onVitalSignCheckUI('0001',obj.t12022.T_BP_HIGH,4,$event,'txtBPLow')" ng-readonly="obj.tf" required/>
+
+                                <label style="margin-right: 5px; margin-left: 5px;">/</label><input id="txtBPLow" type="text" style="width: 44%" ng-model="obj.t12022.T_BP_LOW" ng-keydown="onVitalSignCheckUI('0002',obj.t12022.T_BP_LOW,5,$event,'btnFingerScan')" ng-readonly="obj.tf" required/></td>
+                        </tr>
+                        <tr style="width: 100%">
+                            <td style="width: 17%;" class="alnR">   <label id="lblRejectReason" for="txtRejectReason" ng-bind="getLabel('lblRejectReason')" class="ng-cloak"></label></td>
+                            <td style="width: 16.5%;" colspan="2">   <input id="txtRejectReason" type="text" style="width: 100%" ng-model="obj.t12022.T_REJECT_REASON" readonly="readonly" /></td>
+                            <td style="width: 33%;" colspan="4"><input id="txtRejectReasonDesc" type="text" style="width: 100%" ng-model="obj.RejectDesc" readonly="readonly" /></td>
+                            <td style="width: 33.5%;" colspan="3">   <input type="button" value="{{getLabel('btnFingerScan')}}" id="btnFingerScan" style="width: 100%; background: #c12d2d; color: #ffffff" class="ng-cloak" /></td>
+                            </tr>
+                    </table>
+                </div>
+               
+
+            </div>
+                <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d; margin-top: 10px; padding-top: 5px; border-radius: 5px;">
+                    <div style="width: 100%">
+                        <table style="width: 100%;">
+                            <tr style="width: 100%">
+                                <td style="width: 25%;" class="alnR">   <label id="lblRecmndDiffDays" for="txtRecmndDiffDays" ng-bind="getLabel('lblRecmndDiffDays')" class="ng-cloak"></label></td>
+                                <td style="width: 25%;">   <input id="txtRecmndDiffDays" type="text" style="width: 100%" ng-model="obj.t12022.REC_DIF_DAY" ng-keydown="onRecmndDiffDaysGiven($event)" ng-readonly="obj.tf" /></td>
+                                <td style="width: 25%;" class="alnR"> <label id="lblDifferedDateUpto" for="txtDifferedDateUpto" ng-bind="getLabel('lblDifferedDateUpto')" class="ng-cloak"></label></td>
+                                <td style="width: 25%;">  <input id="txtDifferedDateUpto" type="text" style="width: 100%" ng-model="obj.t12022.T_DIFFERED_DATE" /></td>
+                            </tr>
+                            <tr style="width: 100%">
+                                <td style="width: 25%;" class="alnR"> <label id="lblDifferedReason" for="ddlDifferedReason" ng-bind="getLabel('lblDifferedReason')" class="ng-cloak"></label></td>
+                                <td style="width: 25%;">     <input id="ddlDifferedReason" type="text" style="width: 100%" ng-model="obj.DifferedReason" readonly="readonly" /></td>
+                                <td style="width: 25%;"></td>
+                                <td style="width: 25%;"></td>
+                            </tr>
+                            <tr style="width: 100%">
+                                <td style="width: 25%;" class="alnR">  <label id="lblComment" for="txtComment" ng-bind="getLabel('lblComment')" class="ng-cloak"></label></td>
+                                <td style="width: 25%;" colspan="3"> <input id="txtComment" type="text" style="width: 100%" ng-model="obj.t12022.T_COMMENT" /></td>
+                            </tr>
+                        </table>
+                    </div>
+              
+            </div>
+                
+            </div>
+            </div>
+    </div>

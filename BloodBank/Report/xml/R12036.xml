@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="R12036" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="R12036" msprop:BaseTable.4="T04" msprop:BaseTable.3="T11" msprop:BaseTable.2="T19" msprop:BaseTable.0="T22" msprop:BaseTable.1="T56">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="T_DONATION_NO" msprop:BaseColumn="T_DONATION_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_DONATION_DATE" msprop:BaseColumn="T_DONATION_DATE" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="T_UNIT_NO" msprop:BaseColumn="T_UNIT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_BLOOD_GROUP" msprop:BaseColumn="T_BLOOD_GROUP" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_EXPIRY_DATE" msprop:BaseColumn="T_EXPIRY_DATE" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="T_LAB_REQUEST_NO" msprop:BaseColumn="T_LAB_REQUEST_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_PRODUCT_CODE" msprop:BaseColumn="T_PRODUCT_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="PROD_DESC" msprop:BaseColumn="T_LANG2_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="BLOOD_GROUP_DESCRIPTION" msprop:BaseColumn="T_LANG2_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_RH_NAME" msprop:BaseColumn="T_RH_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_XMATCH_DONE_TIME" msprop:BaseColumn="T_XMATCH_DONE_TIME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_KELL" msprop:BaseColumn="T_KELL" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_RH_PHENOTY" msprop:BaseColumn="T_RH_PHENOTY" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_SEG_ABO" msprop:BaseColumn="T_SEG_ABO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_ANTIBODY_1" msprop:BaseColumn="T_ANTIBODY_1" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_RH" msprop:BaseColumn="T_RH" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,981 @@
+﻿
+@{
+    ViewBag.Title = "T12204";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #696969;
+        margin: 1em 0;
+        padding: 0;
+    }
+
+    /*For PopUp start*/
+    .omf-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 300px;
+        width: 60%;
+        height: 50vw;
+        background-color: rgba(128, 128, 128, 0.00);
+        overflow: auto;
+        z-index: 99999;
+    }
+
+    .omf-modal .omf-modal-body {
+        width: 68.25%;
+        padding: 1px 1px 12px;
+        margin: auto;
+        margin-top: 150px;
+        margin-left: 122px;
+        background-color: #FFFFFF;
+        border-style: ridge;
+    }
+
+    nav .nav .btn {
+        margin-top: 3px;
+    }
+
+    #mainBody {
+        margin-top: 20px;
+        z-index: 999999;
+    }
+    /*For PopUp end*/
+
+    /*For Apheresis PopUp start*/
+    .omf-modalApheresisPopUp {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 300px;
+        width: 60%;
+        height: 50vw;
+        background-color: rgba(128, 128, 128, 0.00);
+        z-index: 99999;
+    }
+
+    .omf-modalApheresisPopUp .omf-modal-bodyAheresis {
+        width: 90%;
+        padding: 1px;
+        margin: auto;
+        margin-top: 150px;
+        margin-left: 50px;
+        background-color: #FFFFFF;
+        border-style: ridge;
+    }
+
+    nav .nav .btn {
+        margin-top: 3px;
+    }
+
+    #mainBody {
+        margin-top: 20px;
+        z-index: 999999;
+    }
+    /*For Apheresis PopUp end*/
+
+    /*Toggling Div---------------------------Start*/
+    .ultab {
+        list-style: none;
+        padding: 0;
+        margin-left: 160px;
+    }
+
+    .litab {
+        float: left;
+        border-bottom-width: 0;
+        margin: 3px 3px 3px 3px;
+        padding: 8px 5px 25px 5px;
+        background-color: #C12D2D;
+        color: #FFFFFF;
+        border-radius: 3px;
+        transition: 0.2s;
+        margin-right: -2px;
+        width: 175px;
+        text-align: center;
+        height: 0px;
+    }
+
+
+
+    #mainView {
+        clear: both;
+        padding: 0 1em;
+    }
+
+    .active {
+        background-color: #CCCCCC;
+        color: #000000;
+    }
+    /*Toggling Div---------------------------End*/
+    /*for popup grid start*/
+    .selected {
+        background-color: #E17D7D;
+        color: white;
+        font-weight: bold;
+    }
+
+    #bedPopUpTable tr:hover {
+        background-color: #E17D7D;
+    }
+    /*for popup grid end*/
+    /*for validation start*/
+    .error {
+        color: red !important;
+    }
+    #ngDate {
+        width: 100px !important;
+    }
+/*for validation end*/
+</style>
+<script>
+    function isNumeric(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+</script>
+<script src="~/Apps/JSController/Transaction/T12204Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12204Service.js"></script>
+<script src="~/Apps/JSService/LabelService.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+<link href="~/Content/calender.css" rel="stylesheet" />
+<script src="~/Scripts/calender.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12204Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save_Click()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button ID="btnPrint" title="Print" class="Button Print" ng-click="Print_Click()"></button>
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="T12204Controller" name="obj.myDiv" novalidate ng-form>
+    <div style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px; width: 95%;height: 70px">
+        @*<div style="width: 95%;">*@
+            <input type="hidden" id="hidnEmpInformation" ng-model="obj.Hidenfield" />
+            <input type="hidden" id="bldStoreID" ng-model="obj.T12022.T_BLD_STORE_ID" />
+            <input type="hidden" id="imagStatus" ng-model="obj.T12022.T_imagStatus" />
+            <input type="hidden" id="segmentNo" ng-model="obj.T12022.T_SEQ_NO" />
+            <input type="hidden" id="AcceptStatus" ng-model="obj.T12022.T_ACCEPT_STATUS" />
+            <input type="hidden" id="saveStatus" ng-model="obj.saveStatus" />
+            <input type="hidden" id="patNo" ng-model="obj.patNo" />
+            <input type="hidden" id="unitNohidden" ng-model="obj.unitNohidden" />
+            <input type="hidden" id="patNaId" ng-model="obj.patNaId" />
+            <input type="hidden" id="patBloodDonationStatus" ng-model="obj.T_BLOOD_DONATION_STATUS" />
+            <input type="hidden" id="patRequestId" ng-model="obj.T_REQUEST_ID" />
+            <input type="hidden" id="hiddenBagUsed" ng-model="obj.completeIdForBagUsed" />
+            <input type="hidden" id="trigerApheresis"ng-click="TrigerApheresis()" />
+            <input type="hidden" id="trigerGeneral"ng-click="TrigerGeneral()" />
+            <input type="hidden" id="trigerBagUsed"ng-click="TrigerBagUsed()" />
+           
+            <table style="width: 100%">
+                <tr>
+                    <td style="width:95%">
+                        <table id="tblOne" style="padding: 10px; width:100%">
+                            <tr>
+                                <td colspan="5" style="width: 500px;">
+                                    <label id="lblPatNo" class="ng-cloak" ng-bind="getLabel('lblPatNo')" for="txtPatNo" style="width:50px"><span class="error" ng-show="obj.myDiv.patNo.$error.required">*</span></label>
+                                    <input id="txtPatNo" type="text" ng-model="obj.T12071.T_DONOR_PATNO" name="patNo" ng-click="Focus('PatNo')" pattern="[0-9]*" maxlength="8" ng-keydown="Patient_Click($event,obj.T12071.T_DONOR_PATNO,obj.T12071.T_NTNLTY_ID)" onkeypress="return isNumeric(event)" style="width:80px" required />
+                                    <input id="txtPatName" type="text" ng-model="obj.T12071.PAT_NAME" ng-click="FocusFalse()" style="width:356px" readonly="readonly" />
+                                </td>
+                                <td style="width: 190px;">
+                                    <label id="lblNationality" class="ng-cloak" ng-bind="getLabel('lblNationality')" for="txtNationality" style="width:80px"></label>
+                                    <input id="txtNationality" type="text" ng-model="obj.T12071.NATIONALITY" style="width:100px" ng-click="FocusFalse()" readonly="readonly" />
+                                </td>
+                                <td style="width: 190px;">
+                                    <label id="lblNationalID" class="ng-cloak" ng-bind="getLabel('lblNationalID')" style="width:90px"></label>
+                                    <input id="txtNationalID" type="text" ng-model="obj.T12071.T_NTNLTY_ID" style="width:100px" ng-click="Focus('natID')" ng-keydown="Patient_Click($event,obj.T12071.T_DONOR_PATNO,obj.T12071.T_NTNLTY_ID)" ng-keypress="enterKey($event,obj.T12071.T_DONOR_PATNO,obj.T12071.T_NTNLTY_ID)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 130px;">
+                                    <label id="lblGender" class="ng-cloak" ng-bind="getLabel('lblGender')" for="txtGender" style="width:50px"></label>
+                                    <input id="txtGender" type="text" ng-model="obj.T12071.GENDER" style="width:80px" readonly="readonly" />
+                                </td>
+                                <td style="width: 50px;">
+                                    <label id="lblyear" class="ng-cloak" ng-bind="getLabel('lblyear')" for="txtyear" style="width:10px"></label>
+                                    <input id="txtyear" type="text" ng-model="obj.T12071.YRS" style="width:30px" readonly="readonly" />
+                                </td>
+                                <td style="width: 50px;">
+                                    <label id="lblmonth" class="ng-cloak" ng-bind="getLabel('lblmonth')" for="txtmonth" style="width:10px"></label>
+                                    <input id="txtmonth" type="text" ng-model="obj.T12071.MOS" style="width:30px" readonly="readonly" />
+                                </td>
+                                <td style="width: 80px;">
+                                    <label id="lblENo" class="ng-cloak" ng-bind="getLabel('lblENo')" for="txtENo" style="width:33px"></label>
+                                    <input id="txtENo" type="text" ng-model="obj.T12071.MAX_EPISODE" style="width:40px" readonly="readonly" />
+                                </td>
+                                <td style="width: 150px;">
+                                    <label id="lblDiffStatus" class="ng-cloak" ng-bind="getLabel('lblDiffStatus')" for="txtDiffStatus" style="width:65px"></label>
+                                    <input id="txtDiffStatus" type="text" ng-model="obj.T12071.DiffStatus" style="width:80px" readonly="readonly" />
+                                </td>
+                                <td style="width: 180px;">
+                                    <label id="lblDifferalDays" class="ng-cloak" ng-bind="getLabel('lblDifferalDays')" for="txtDifferalDays" style="width:80px"></label>
+                                    <input id="txtDifferalDays" type="text" ng-model="obj.T12071.T_DIFFERAL_DAY" style="width:100px" readonly="readonly" />
+                                </td>
+                                <td style="width: 160px;">
+                                    <label id="lblDifferedUpTo" class="ng-cloak" ng-bind="getLabel('lblDifferedUpTo')" for="txtDifferedUpTo" style="width:90px"></label>
+                                    <input id="txtDifferedUpTo" type="text" ng-model="obj.T12071.DifferedUpTo" style="width:100px" readonly="readonly" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width:5%">
+                        <table id="tblTwo" style="width:100%">
+                            <tr><td><img ng-src="{{obj.Images}}" style="width: 50px" /></td></tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            
+        @*</div>*@
+        
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div id="tabs" style="text-align: center">
+                <ul class="ultab">
+                    <li class="litab ng-cloak" ng-repeat="tab in tabs"
+                        ng-class="{active:isActiveTab(tab.url)}"
+                        ng-click="onClickTab(tab)">{{tab.title}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6"></div>
+    </div>
+    <div class="row text-center">
+        <!-- For Input Table -->
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div id="mainView">
+                <div ng-include="currentTab"></div>
+            </div>
+        </div>
+    </div>
+<script type="text/ng-template" id="tabUnitDetails.tpl.html">
+        @*<div style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px; width: 1000px;height: 400px">*@
+
+        <div style="width: 72%; float: left; border: 1px solid #A21217; border-radius: 5px;">
+            <div style="padding: 10px 50px 10px 50px;">
+                <table id="tblThree" class="tblCss" style="padding: 10px; width: 700px;">
+                    <tr>
+                        <td>
+                            <label id="lblUnit" class="alnR" ng-bind="getLabel('lblUnit')" for="txtUnit" style="width: 30px">{{field.T_CONTROL_TEXT}}</label>
+                        </td>
+                        <td colspan="2"><input id="txtUnit" type="text" ng-model="obj.T12022.T_UNIT_NO" style="width: 150px" readonly="readonly" /></td>
+                        <td></td>
+                        <td colspan="2">
+                            <label id="lblSegmentNo" class="alnR" ng-bind="getLabel('lblSegmentNo')" for="txtSegmentNo" style="width: 80px">{{field.T_CONTROL_TEXT}}</label>
+
+                        </td>
+                        <td colspan="3"><input id="txtSegmentNo" type="text" ng-model="obj.T12022.T_SEGMENT_NO" ng-change="Segment_Click()" style="width: 150px" /></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="chkGeneralApp" style="text-align: right;" type="checkbox" ng-model="obj.T12022.ChkGenlApp" ng-disabled="ChkBoxGeneralApp == 'Diable'" ng-click="chkGeneralApp_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblGeneralApp"  ng-bind="getLabel('lblGeneralApp')" for="chkGeneralApp" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkDHQ" class="alnR" type="checkbox" ng-model="obj.T12022.ChkbxDHQ" ng-disabled="ChkBoxDHQ == 'Diable'" ng-click="chkDHQ_Click()" ng-true-value="'1'" ng-false-value="''" />                           
+                        </td>
+                        <td> <label id="lblDHQ"  ng-bind="getLabel('lblDHQ')" for="chkDHQ" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkLetArm" class="alnR" type="checkbox" ng-model="obj.T12022.ChkbxLetArm" ng-disabled="ChkBoxLetArm == 'Diable'" ng-click="chkLetArm_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblLetArm"  ng-bind="getLabel('lblLetArm')" for="chkLetArm" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkRightArm" class="alnR" type="checkbox" ng-model="obj.T12022.ChkbxRightArm" ng-disabled="ChkBoxRightArm == 'Diable'" ng-click="chkRightArm_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblRightArm"  ng-bind="getLabel('lblRightArm')" for="chkRightArm" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkBag" class="alnR" type="checkbox" ng-model="obj.T12022.ChkbxBag" ng-disabled="ChkBoxBag == 'Diable'" ng-click="chkBag_Click()" ng-true-value="'1'" ng-false-value="''" />                           
+                        </td>
+                        <td> <label id="lblBag" ng-bind="getLabel('lblBag')" for="chkBag" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="chkAPheresis" type="checkbox" ng-disabled="ChkBoxAPheresis == 'Diable'" ng-model="obj.T12022.ChkAPheresis" ng-click="chkAPheresis_Click()" ng-true-value="'1'" ng-false-value="''" />                           
+                        </td>
+                        <td> <label id="lblAPheresis" ng-bind="getLabel('lblAPheresis')" for="chkAPheresis" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkPLT" type="checkbox" ng-disabled="ChkBoxPLT == 'Diable'" ng-model="obj.T12022.ChkPLT" ng-click="chkPLT_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblPLT" class="ng-cloak" ng-bind="getLabel('lblPLT')" for="chkPLT" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkRBCS" type="checkbox" ng-disabled="ChkBoxRBCS == 'Diable'" ng-model="obj.T12022.ChkRBCS" ng-click="chkRBCS_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblRBCS" class="ng-cloak" ng-bind="getLabel('lblRBCS')" for="chkRBCS" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td>
+                            <input id="chkPlasma" type="checkbox" ng-disabled="ChkBoxPlasma == 'Diable'" ng-model="obj.T12022.ChkPlasma" ng-click="chkPlasma_Click()" ng-true-value="'1'" ng-false-value="''" />                            
+                        </td>
+                        <td><label id="lblPlasma" class="ng-cloak" ng-bind="getLabel('lblPlasma')" for="chkPlasma" ng-style="{'text-align':Text_Aling,'width':'106px'}"></label></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" ng-style="{'text-align':Text_Aling}">
+                            <label id="lblDonationStartTime" class="ng-cloak" ng-bind="getLabel('lblDonationStartTime')" for="txtDonationStartTime"></label>
+                            <input id="txtDonationStartTime" type="text" ng-model="obj.T12022.DonationStartTime" style="width: 60px" readonly="readonly" />
+                            <img src="../Images/start.png" ng-click="StartTime_Click()" />
+
+                        </td>
+                        <td colspan="4" ng-style="{'text-align':Text_Aling}">
+                            <label id="lblDonationEndTime" class="ng-cloak" ng-bind="getLabel('lblDonationEndTime')" for="txtDonationEndTime" ></label>
+                            <input id="txtDonationEndTime" type="text" ng-model="obj.T12022.DonationEndTime" style="width: 60px" readonly="readonly" />
+                            <img src="../Images/stop.png" ng-click="EndTime_Click()" />
+                        </td>
+                        <td colspan="2">
+                            <label id="lblPhebotomy" class="ng-cloak" ng-bind="getLabel('lblPhebotomy')" for="txtPhebotomy" style="width: 70px"></label>
+                            <input id="txtPhebotomy" type="text" ng-model="obj.T12022.Phebotomy" ng-change="Phebotomy_Click(obj.T12022.Phebotomy)" style="width: 50px" />
+                        </td>
+                        
+                    </tr>
+
+                </table>
+                <hr />
+                <table id="tblFour" class="tblCss" style="padding: 10px; width: 700px;">
+                    <tr>
+                        <td><label id="lblBed" class="ng-cloak" ng-bind="getLabel('lblBed')" for="txtBedNo" style="width: 80px"></label></td>
+                       <td><input id="txtBedNo" type="text" name="bedNo" ng-model="obj.T12022.T_BED_CODE" ng-dblclick="Bed_Click('BedPopUp')" ng-keydown="GetDataOnKeyPrass($event,'Bed')" style="width: 100px" /></td>
+                        <td colspan="4">                            
+                            <input id="txtName" type="text" ng-model="obj.T_BED_NAME_LANG2" style="width: 500px" readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblComments" class="ng-cloak" ng-bind="getLabel('lblComments')" for="txtComments" style="width: 80px"></label></td>
+                        <td colspan="5">                           
+                            <input id="txtComments" type="text" ng-model="obj.T12022.T_COMMENTS" style="width: 607px" readonly="readonly" />
+                        </td>
+
+
+                    </tr>
+                    <tr>
+                        <td><label id="lblBedWeight" class="ng-cloak" ng-bind="getLabel('lblBedWeight')" for="txtBedWeight" style="width: 80px"></label></td>
+                        <td style="width: 30px;">                            
+                            <input id="txtBadWeight" type="text" ng-model="obj.T12022.T_BAG_WEIGHT" ng-disabled="obj.T12071.T_DONOR_PATNO ===''||obj.T12071.T_DONOR_PATNO ===undefined" ng-keydown="BagWeight_Click($event,obj.T12022.T_BAG_WEIGHT)" name="bagweit" style="width: 100px" ng-click="Focus('bag')" />
+                        </td>
+                        <td style="width: 200px;">
+                            <label id="lblReason" class="ng-cloak" ng-bind="getLabel('lblReason')" for="txtReason" style="width: 70px"></label>
+                            <input id="txtReason" type="text" ng-model="obj.T12022.CancelReason" style="width: 100px" readonly="readonly" />
+                        </td>
+                        <td calspan="3"></td>
+
+                    </tr>
+                    <tr>
+                        <td><label id="lblCompletionStatus" class="ng-cloak" ng-bind="getLabel('lblCompletionStatus')" for="ddlCompletionStatus" style="width: 80px"></label></td>
+                        <td style="width: 100px">
+                            <select id="ddlCompletionStatus"
+                                    ng-model="obj.T12022.T_DONATION_COMPLETION_STATUS" ng-change="getBedUsedData(obj.T12022.T_DONATION_COMPLETION_STATUS)"
+                                    ng-options="x.T_DONATION_COMPLETION_STATUS as x.T_LANG2_NAME for x in CompleteStatusList"
+                                    style="width: 100px;">
+                                <option value="">Select One</option>
+                            </select>
+
+                        </td>
+                        <td style="width: 80px;">
+                            <label id="lblBedUsed" class="ng-cloak" ng-bind="getLabel('lblBedUsed')" for="ddlBedUsed" style="width: 70px"></label>
+                            <select id="ddlBedUsed" ng-model="obj.T12022.T_BAG_USED_CODE"
+                                    ng-options="x.T_BAG_USED_CODE as x.T_LANG2_NAME for x in BedUsedList"
+                                    style="width: 100px;">
+                                <option value="">Select One</option>
+                            </select>
+
+                        </td>
+                        <td>
+                            <label id="lblUnitAcceptStatus" class="ng-cloak" ng-bind="getLabel('lblUnitAcceptStatus')" for="txtUnitAcceptStatus" style="width: 116px"></label>
+                            <input id="txtUnitAcceptStatus" type="text" ng-model="obj.T12022.UINT_ACCEPT_STATUS" style="width: 179px" readonly="readonly" />
+                            <input class="hidden" ng-model="obj.T12022.T_ACTION" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td> <label id="lblReasonM" class="ng-cloak" ng-bind="getLabel('lblReasonM')" for="txtReasonMNo" style="width: 80px"></label></td>
+                       <td><input id="txtReasonMNo" type="text" name="disReason" ng-model="obj.T12022.DISCARD_REASON_CODE" ng-dblclick="DiscurtReason_Click('DiscurtReasonPopUp')" ng-keydown="GetDataOnKeyPrass($event,'Discurt')" style="width: 100px"/></td>
+                        <td colspan="4">                            
+                            <input id="txtReasonM" type="text" ng-model="obj.T_LANG_NAME" style="width:500px" readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblMarks" class="ng-cloak" ng-bind="getLabel('lblMarks')" for="txtMarks" style="width: 80px"></label></td>
+                        <td colspan="5">                            
+                            <input id="txtMarks" type="text" ng-model="obj.T12022.Marks" style="width: 607px" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="margin: 45px 0px 0px 10px; width: 26%; float: left;border: 1px solid #A21217; border-radius: 5px;">
+            <div style="padding: 10px; margin-left: 30px">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn7" value="7" name="seven" ng-click="addNumber('7')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn8" value="8" name="eight" ng-click="addNumber('8')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn9" value="9" name="nine" ng-click="addNumber('9')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btnAc" value="AC" name="cancle" ng-click="Cancel()" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn4" value="4" name="four" ng-click="addNumber('4')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn5" value="5" name="five" ng-click="addNumber('5')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn6" value="6" name="six" ng-click="addNumber('6')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btnback" value="←" name="back" ng-click="BackNumber()" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn1" value="1" name="one" ng-click="addNumber('1')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn2" value="2" name="two" ng-click="addNumber('2')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn3" value="3" name="three" ng-click="addNumber('3')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td rowspan="2">
+                            <input type="button" id="btnenter" value="Enter" name="enterr" ng-click="Enter()" style="width: 50px; height: 100px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" id="btn0" value="0" name="zero" ng-click="addNumber('0')" style="width: 102px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btndot" value="." name="dot" ng-click="addNumber('.')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+
+        @*</div>*@
+    </script>
+    @*for Vital sign Start*@
+    <script type="text/ng-template" id="tabVitalSign.tpl.html">
+        <div style="width: 72%;height:311px; float: left; border: 1px solid #A21217; border-radius: 5px;">
+            <div style="padding: 10px;">
+                <table>
+                    <tr>
+                        <td style="width: 150px">
+                            <label id="lblWeight" class="ng-cloak" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblWeight'" for="txtWeight">{{field.T_CONTROL_TEXT}}</label>
+                            <input id="txtWeight" type="text" ng-model="obj.Body_WEIGHT" style="width: 70px" />
+                        </td>
+                        <td style="width: 150px">
+                            <label id="lblHB" class="ng-cloak" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblHB'" for="txtHB">Hb</label>
+                            <input id="txtHB" type="text" ng-model="obj.T_HB" style="width: 70px" />
+                        </td>
+                        <td style="width: 150px">
+                            <label id="lblPulse" class="ng-cloak" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblPulse'" for="txtPulse">{{field.T_CONTROL_TEXT}}</label>
+                            <input id="txtPulse" type="text" ng-model="obj.T_PULS" style="width: 70px" />
+                        </td>
+                        <td style="width: 150px">
+                            <label id="lblTemp" class="ng-cloak" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblTemp'" for="txtTemp">{{field.T_CONTROL_TEXT}}</label>
+                            <input id="txtTemp" type="text" ng-model="obj.T_TEMPTURE" style="width: 70px" />
+                        </td>
+                        <td style="width: 150px">
+                            <label id="lblBP" class="ng-cloak" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblBP'" for="txtSystolic">{{field.T_CONTROL_TEXT}}</label>
+                            <input id="txtBPSystolic" type="text" ng-model="obj.T_BP_HIGH" style="width: 50px" /> /
+                            <input id="txtBPDiastolic" type="text" ng-model="obj.T_BP_LOW" style="width: 50px" />
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered" style="width: 100%; margin: 5px auto; border: 1px solid #c12d2d; border-radius: 5px;" id="tblQues">
+                    <thead style="text-align: center; display: table; width: 100%;">
+                        <tr style="background-color: #c12d2d; color: #ffffff">
+                            <th style="width: 5%; text-align: center;">Q.No</th>
+                            <th style="width: 33%; text-align: center">Questions</th>
+                            <th style="width: 5%;  text-align: center">Ans</th>
+                            <th colspan="2" style="width: 10%;  text-align: center">Differal Days</th>
+                        </tr>
+                    </thead>
+                    <tbody style="text-align: center; width: 100%;max-height:216px; min-height:216px; overflow:auto; overflow-x:hidden; display:block;">
+                        <tr style="display: table; width: 100%; table-layout: fixed;" ng-repeat="obj in obj.quesList" id="trQues{{$index}}">
+
+                            <td style="width: 5%; text-align: center">
+                                {{$index+1}}
+                            </td>
+                            <td style="width: 33%; text-align: left" ng-bind-html="obj.QUES_DESC"></td>
+                            <td style="width: 5%; text-align: center">
+                                <ui-select id="ddlAnswer" ng-model="obj.a.selected" theme="select2" append-to-body="true" style="width: 100%" on-select="onAnsSelect(obj.a.selected.ANS_ID,$index)">
+                                    <ui-select-match placeholder="Select">{{$select.selected.ANS_DESC}}</ui-select-match>
+                                    <ui-select-choices repeat="a in obj.getAnsList | propsFilter: {ANS_DESC: $select.search}">
+                                        <div ng-bind-html="a.ANS_DESC | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </td>
+                            <td style="width: 6%; text-align: center">
+                                <img src="{{obj.src}}" id="imgDiffSign{{$index}}" style="width: 75%;height: 25px">
+                            </td>
+                            <td style="width: 4%; text-align: center">{{obj.T_DIFFERAL_DAY}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="margin: 45px 0px 0px 10px; width: 26%; float: left;border: 1px solid #A21217; border-radius: 5px;">
+            <div style="padding: 10px; margin-left: 30px">
+                <table>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn7" value="7" name="seven" ng-click="addNumber('7')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn8" value="8" name="eight" ng-click="addNumber('8')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn9" value="9" name="nine" ng-click="addNumber('9')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btnAc" value="AC" name="cancle" ng-click="Cancel()" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn4" value="4" name="four" ng-click="addNumber('4')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn5" value="5" name="five" ng-click="addNumber('5')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn6" value="6" name="six" ng-click="addNumber('6')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btnback" value="←" name="back" ng-click="BackNumber()" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="button" id="btn1" value="1" name="one" ng-click="addNumber('1')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn2" value="2" name="two" ng-click="addNumber('2')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btn3" value="3" name="three" ng-click="addNumber('3')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td rowspan="2">
+                            <input type="button" id="btnenter" value="Enter" name="enterr" ng-click="Enter()" style="width: 50px; height: 100px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" id="btn0" value="0" name="zero" ng-click="addNumber('0')" style="width: 102px; height: 50px; border-radius: 5px; " />
+                        </td>
+                        <td>
+                            <input type="button" id="btndot" value="." name="dot" ng-click="addNumber('.')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </script>
+    @*for Vital sign end *@
+
+    @*Bed popup start*@
+    <div id="BedPopUp" class="omf-modal popup">
+
+        <div class="omf-modal-body">
+            
+            <div class="omf-modal-header">
+                @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                <label class="ng-cloak" id="lblBedInfromation" ng-bind="getLabel('lblBedInfromation')" style="width: 97%"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePatientPopup('BedPopUp')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+            </div>
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table id="bedPopUpTable" class="omf-modal-grid grid" style="width: 550px">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak" ng-bind="getLabel('BedNo')"></th>
+                                    <th style="width: 100px; text-align: center;" class="ng-cloak" ng-bind="getLabel('BedName')"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="B in obj.BedList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,B,'BedPopUp')">
+                                    <td style="width: 53px; ">{{B.T_BED_CODE}}</td>
+                                    <td style="width: 100px;">{{B.T_BED_NAME_LANG2}}</td>
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*style="text-align: center;display:table; width:100%;"*@
+    @*Bed popup end*@
+    @*Discurt Reason popup start*@
+    <div id="DiscurtReasonPopUp" class="omf-modal popup">
+
+        <div class="omf-modal-body">
+
+            @*<div>
+            <div style="background-color: #c12d2d; color: #ffffff; width: 100%; text-align: center;">
+                <label style="width: 97%">Bed Information</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseDisReasonPopup('DiscurtReasonPopUp')" />
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+            </div>
+
+        </div>*@
+            <div class="omf-modal-header">
+                @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                <label class="ng-cloak" id="lblDiscurtReason" ng-bind="getLabel('lblDiscurtReason')" style="width: 97%"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseDisReasonPopup('DiscurtReasonPopUp')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+            </div>
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table id="DiscurtReasonPopUpTable" class="omf-modal-grid grid" style="width: 550px">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak" ng-bind="getLabel('DiscurtReasonCode')"></th>
+                                    <th style="width: 100px; text-align: center;" class="ng-cloak" ng-bind="getLabel('DiscurtReasonName')"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="Reason in obj.ReasonList |filter : Search |itemsPerPage:5 " pagination-id="Reason" ng-class="{'selected':$index == selectedRow}" ng-click="setClickReasonRow($index,Reason,'DiscurtReasonPopUp')">
+                                    <td style="width: 53px; ">{{Reason.T_RJ_RSN_CODE}}</td>
+                                    <td style="width: 100px;text-align: left">{{Reason.T_LANG_NAME}}</td>
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="Reason" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*style="text-align: center;display:table; width:100%;"*@
+    @*Discurt Reason  popup end*@
+    @*verificaton popup start*@
+    <div id="verificatonPopUp" class="omf-modal">
+
+        <div class="omf-modal-body" style="height: 120px;width: 40%">
+
+            <div>
+                <div style="background-color: #c12d2d; color: #ffffff; width: 100%; text-align: center;">
+                    <label id="lblVerification" ng-bind="getLabel('lblVerification')" style="width: 97%">Verification </label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseVerificationPopup('verificatonPopUp')" />
+
+                </div>
+
+            </div>
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 20px;align-items: center">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <label id="lblEnterPinNo" ng-bind="getLabel('lblEnterPinNo')" class="ng-cloak"></label>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6" style="width: 25%">
+                            <input type="text" class="form-control" ng-model="obj.T12022.T_PIN" />
+                            <input type="button" value="OK" ng-click="Ok_Click()" style="margin-top: 10px; float: right; background: #a21217;color: white" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*verificaton popup end*@
+    @*Apheresis popup start*@
+    <div id="ApheresisPopUp" class="omf-modalApheresisPopUp">
+
+        <div class="omf-modal-bodyAheresis">
+
+            <div>
+                <div style="background-color: #c12d2d; color: #ffffff; width: 100%; text-align: center;">
+                    <label id="lblApheresis" style="width: 97%" class="ng-cloak" ng-bind="getLabel('lblApheresis')"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseApheresisPopup('ApheresisPopUp')" />
+
+                </div>
+
+            </div>
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 2px; align-items: center">
+                        
+                        <table style="padding: 10px">
+                            <tr>
+                                <td style="width: 50%;">
+                                    <table>
+                                        <tr style="width: 100%">@*class="alnR"*@
+                                            <td style="width: 50%" class="alnR"><label id="lblAcdused" class="ng-cloak" ng-bind="getLabel('lblAcdused')" for="txtAcdused"></label> </td>
+                                            <td style="width: 50%"><input id="txtAcdused" type="text" ng-model="obj.T12022.T_TACD_USED" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblendRunTime" class="ng-cloak" ng-bind="getLabel('lblendRunTime')" for="txtendRunTime"></label></td>
+                                            <td style="width: 50%"><input id="txtendRunTime" type="text" ng-model="obj.T12022.T_ER_TIME" placeholder="24 Hours" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblLengthRunTime" class="ng-cloak" ng-bind="getLabel('lblLengthRunTime')" for="txtLengthRunTime"></label></td>
+                                            <td><input id="txtLengthRunTime" type="text" ng-model="obj.T12022.T_LR_TIME" placeholder="Minute" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblPostPlateletCount" class="ng-cloak" ng-bind="getLabel('lblPostPlateletCount')" for="txtPostPlateletCount"></label></td>
+                                            <td style="width: 50%"><input id="txtPostPlateletCount" type="text" ng-model="obj.T12022.T_POST_PLT" placeholder="X 1000/UI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblPostAcd" class="ng-cloak" ng-bind="getLabel('lblPostAcd')" for="txtPostAcd"></label></td>
+                                            <td style="width: 50%"><input id="txtPostAcd" type="text" ng-model="obj.T12022.T_POST_HCT" placeholder="%" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"> <label id="lblActualAcdToDonor" class="ng-cloak" ng-bind="getLabel('lblActualAcdToDonor')" for="txtActualAcdToDonor"></label></td>
+                                            <td style="width: 50%"><input id="txtActualAcdToDonor" type="text" ng-model="obj.T12022.T_AACD_DONOR" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblBloodVolumeProcessed" class="ng-cloak" ng-bind="getLabel('lblBloodVolumeProcessed')" for="txtBloodVolumeProcessed"></label></td>
+                                            <td style="width: 50%"><input id="txtBloodVolumeProcessed" type="text" ng-model="obj.T12022.T_BLOOD_PROCESSED" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblTotalSlineUsed" class="ng-cloak" ng-bind="getLabel('lblTotalSlineUsed')" for="txtTotalSlineUsed"></label></td>
+                                            <td style="width: 50%"> <input id="txtTotalSlineUsed" type="text" ng-model="obj.T12022.T_TSAL_USED" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"> <label id="lblKitLot" class="ng-cloak" ng-bind="getLabel('lblKitLot')" for="txtKitLot"></label></td>
+                                            <td style="width: 50%"><input id="txtKitLot" type="text" ng-model="obj.T12022.T_KIT_LOT" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblLotExpiry" class="ng-cloak" ng-bind="getLabel('lblLotExpiry')"></label></td>
+                                            <td style="width: 50%">
+                                                <datepicker date-format="dd/MM/yyyy">
+                                                    <input ng-model="obj.T12022.T_LOT_EXPIRY" type="text" readonly="readonly" style="cursor: pointer; width: 90%"/>
+                                                </datepicker>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblACDLotNo" class="ng-cloak" ng-bind="getLabel('lblACDLotNo')" for="txtACDLotNo"></label></td>
+                                            <td style="width: 50%"><input id="txtACDLotNo" type="text" ng-model="obj.T12022.T_ACD_LOT" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 50%" class="alnR"><label id="lblACDExpiry" class="ng-cloak" ng-bind="getLabel('lblACDExpiry')"></label></td>
+                                            <td style="width: 50%">
+                                                <datepicker date-format="dd/MM/yyyy">
+                                                    <input ng-model="obj.T12022.T_ACD_EXPIRY" type="text" readonly="readonly" style="cursor: pointer; width: 90%"/>
+                                                </datepicker>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                                <td style="width: 50%">
+                                    <table>
+                                        <tr style="width: 100%"><td style="text-align: center; font-weight: bold"><label id="lblPlateletProduct" class="ng-cloak" ng-bind="getLabel('lblPlateletProduct')"></label></td></tr>
+                                        <tr style="width: 100%">
+                                            <td style="width: 60%" class="alnR"><label id="lblPlatelet" class="ng-cloak" ng-bind="getLabel('lblPlatelet')" for="txtPlatelet"></label></td>
+                                            <td style="width: 40%"><input id="txtPlatelet" type="text" ng-model="obj.T12022.T_PLT_M_V" name="plt" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblYieldPropduct" class="ng-cloak" ng-bind="getLabel('lblYieldPropduct')" for="txtYieldPropduct"></label></td>
+                                            <td style="width: 40%"><input id="txtYieldPropduct" type="text" ng-model="obj.T12022.T_YLD_PLT" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblVolumeACDPlatelet" class="ng-cloak" ng-bind="getLabel('lblVolumeACDPlatelet')" for="txtVolumeACDPlatelet"></label></td>
+                                            <td style="width: 40%"><input id="txtVolumeACDPlatelet" type="text" ng-model="obj.T12022.T_ACD_PLT_V" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr style="width: 100%"><td style="text-align: center; font-weight: bold"><label id="lblPlasmaProduct" class="ng-cloak" ng-bind="getLabel('lblPlasmaProduct')"></label></td></tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"> <label id="lblPlasmaVolume" class="ng-cloak" ng-bind="getLabel('lblPlasmaVolume')" for="txtPlasmaVolume"></label></td>
+                                            <td style="width: 40%"><input id="txtPlasmaVolume" type="text" ng-model="obj.T12022.T_PLSMA_M_V" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblVolumeACDPlasma" class="ng-cloak" ng-bind="getLabel('lblVolumeACDPlasma')" for="txtVolumeACDPlasma"></label></td>
+                                            <td style="width: 40%"><input id="txtVolumeACDPlasma" type="text" ng-model="obj.T12022.T_ACD_V_PLASMA" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr style="width: 100%"><td style="text-align: center; font-weight: bold"><label id="lblBrcProduct" class="ng-cloak" ng-bind="getLabel('lblBrcProduct')"></label></td></tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblRBCVolume" class="ng-cloak" ng-bind="getLabel('lblRBCVolume')" for="txtRBCVolume"></label></td>
+                                            <td style="width: 40%"><input id="txtRBCVolume" type="text" ng-model="obj.T12022.T_RBCS_M_V" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblVolumeACDbrc" ng-bind="getLabel('lblVolumeACDbrc')" class="ng-cloak" for="txtVolumeACDbrc"></label></td>
+                                            <td style="width: 40%"><input id="txtVolumeACDbrc" type="text" ng-model="obj.T12022.T_ACD_V_RBC" placeholder="MI" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblHCTOfBRC" ng-bind="getLabel('lblHCTOfBRC')" class="ng-cloak" for="txtHCTOfBRC"></label></td>
+                                            <td style="width: 40%"><input id="txtHCTOfBRC" type="text" ng-model="obj.T12022.T_HTC_RBC" placeholder="%" style="width: 90%"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 60%" class="alnR"><label id="lblComplete" class="ng-cloak" ng-bind="getLabel('lblComplete')" for="chkComplete"></label><input type="checkbox" id="chkComplete" ng-true-value="'1'" ng-false-value="'2'" ng-model="obj.T12022.T_COMPLETE"/></td>
+                                            <td style="width: 40%"><img src="~/Images/back.png" ng-click="CloseApheresisPopup('ApheresisPopUp')"/></td>
+                                            
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        @*<div class="col-lg-6 col-md-6 col-sm-6" style="border-right: 3px solid gray">*@
+
+                        
+
+                        @*<div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblAcdused" class="ng-cloak" ng-bind="getLabel('lblAcdused')" for="txtAcdused"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtAcdused" type="text" ng-model="obj.T12022.T_TACD_USED" placeholder="MI" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblendRunTime" class="ng-cloak" ng-bind="getLabel('lblendRunTime')" for="txtendRunTime"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtendRunTime" type="text" ng-model="obj.T12022.T_ER_TIME" placeholder="24 Hours" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblLengthRunTime" class="ng-cloak" ng-bind="getLabel('lblLengthRunTime')" for="txtLengthRunTime"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtLengthRunTime" type="text" ng-model="obj.T12022.T_LR_TIME" placeholder="Minute" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblPostPlateletCount" class="ng-cloak" ng-bind="getLabel('lblPostPlateletCount')" for="txtPostPlateletCount"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtPostPlateletCount" type="text" ng-model="obj.T12022.T_POST_PLT" placeholder="X 1000/UI" style="width: 100px" /></div>
+
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblPostAcd" class="ng-cloak" ng-bind="getLabel('lblPostAcd')" for="txtPostAcd"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtPostAcd" type="text" ng-model="obj.T12022.T_POST_HCT" placeholder="%" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblActualAcdToDonor" class="ng-cloak" ng-bind="getLabel('lblActualAcdToDonor')" for="txtActualAcdToDonor"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtActualAcdToDonor" type="text" ng-model="obj.T12022.T_AACD_DONOR" placeholder="MI" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblBloodVolumeProcessed" class="ng-cloak" ng-bind="getLabel('lblBloodVolumeProcessed')" for="txtBloodVolumeProcessed"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtBloodVolumeProcessed" type="text" ng-model="obj.T12022.T_BLOOD_PROCESSED" placeholder="MI" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblTotalSlineUsed" class="ng-cloak" ng-bind="getLabel('lblTotalSlineUsed')" for="txtTotalSlineUsed"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtTotalSlineUsed" type="text" ng-model="obj.T12022.T_TSAL_USED" style="width: 100px" /></div>
+
+                                
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblKitLot" class="ng-cloak" ng-bind="getLabel('lblKitLot')" for="txtKitLot"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtKitLot" type="text" ng-model="obj.T12022.T_KIT_LOT" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblLotExpiry" class="ng-cloak" ng-bind="getLabel('lblLotExpiry')"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <datepicker date-format="dd/MM/yyyy">
+                                        <input ng-model="obj.T12022.T_LOT_EXPIRY" type="text" readonly="readonly" style="cursor: pointer; width: 100px"/>
+                                    </datepicker>
+                                   
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblACDLotNo" class="ng-cloak" ng-bind="getLabel('lblACDLotNo')" for="txtACDLotNo"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4"><input id="txtACDLotNo" type="text" ng-model="obj.T12022.T_ACD_LOT" style="width: 100px" /></div>
+                                <div class="col-lg-8 col-md-8 col-sm-8"><label id="lblACDExpiry" class="ng-cloak" ng-bind="getLabel('lblACDExpiry')"></label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <datepicker date-format="dd/MM/yyyy">
+                                        <input ng-model="obj.T12022.T_ACD_EXPIRY" type="text" readonly="readonly" style="cursor: pointer;width: 100px"/>
+                                    </datepicker>
+                                    
+                                </div>
+
+                            </div>*@
+
+                        @*</div>*@
+                        @*<div class="col-lg-6 col-md-6 col-sm-6">*@
+
+                        
+
+                        @*<div class="col-lg-12 col-md-12 col-sm-12" style="font-size: 15px; text-align: center; font-weight: bold"><label id="lblPlateletProduct" class="ng-cloak" ng-bind="getLabel('lblPlateletProduct')"></label>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblPlatelet" class="ng-cloak" ng-bind="getLabel('lblPlatelet')" for="txtPlatelet"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtPlatelet" type="text" ng-model="obj.T12022.T_PLT_M_V" name="plt" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblYieldPropduct" class="ng-cloak" ng-bind="getLabel('lblYieldPropduct')" for="txtYieldPropduct"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtYieldPropduct" type="text" ng-model="obj.T12022.T_YLD_PLT" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblVolumeACDPlatelet" class="ng-cloak" ng-bind="getLabel('lblVolumeACDPlatelet')"for="txtVolumeACDPlatelet"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtVolumeACDPlatelet" type="text" ng-model="obj.T12022.T_ACD_PLT_V" placeholder="MI" style="width: 100px"/>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="font-size: 15px; text-align: center; font-weight: bold"><label id="lblPlasmaProduct" class="ng-cloak" ng-bind="getLabel('lblPlasmaProduct')"></label>
+                            </div>
+
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblPlasmaVolume" class="ng-cloak" ng-bind="getLabel('lblPlasmaVolume')" for="txtPlasmaVolume"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtPlasmaVolume" type="text" ng-model="obj.T12022.T_PLSMA_M_V" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblVolumeACDPlasma" class="ng-cloak" ng-bind="getLabel('lblVolumeACDPlasma')" for="txtVolumeACDPlasma"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtVolumeACDPlasma" type="text" ng-model="obj.T12022.T_ACD_V_PLASMA" placeholder="MI" style="width: 100px"/>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-sm-12" style="font-size: 15px; text-align: center; font-weight: bold"><label id="lblBrcProduct" class="ng-cloak" ng-bind="getLabel('lblBrcProduct')"></label>
+                            </div>
+
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblRBCVolume" class="ng-cloak" ng-bind="getLabel('lblRBCVolume')" for="txtRBCVolume"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtRBCVolume" type="text" ng-model="obj.T12022.T_RBCS_M_V" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblVolumeACDbrc" ng-bind="getLabel('lblVolumeACDbrc')" class="ng-cloak" for="txtVolumeACDbrc"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtVolumeACDbrc" type="text" ng-model="obj.T12022.T_ACD_V_RBC" placeholder="MI" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7"><label id="lblHCTOfBRC" ng-bind="getLabel('lblHCTOfBRC')" class="ng-cloak" for="txtHCTOfBRC"></label>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5"><input id="txtHCTOfBRC" type="text" ng-model="obj.T12022.T_HTC_RBC" placeholder="%" style="width: 100px"/>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-sm-7" style="margin-top: 15px"><label id="lblComplete" class="ng-cloak" ng-bind="getLabel('lblComplete')" for="chkComplete" style="width: 100px"></label><input type="checkbox" id="chkComplete" ng-true-value="'1'" ng-false-value="'2'" ng-model="obj.T12022.T_COMPLETE"/>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-5" style="margin-top: 15px"><img src="~/Images/back.png" ng-click="CloseApheresisPopup('ApheresisPopUp')"/>
+                            </div>*@
+
+                        @*</div>*@
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Apheresis popup end*@
+
+    <!--For Data Gridview start-->
+    @*<div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2"></div>
+            <div class="col-lg-8 col-md-8 col-sm-8">
+                <center>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="table-responsive">
+                                    <table id="entry-grid" datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-hover" style="width: 100%"></table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2"></div>
+        </div>*@
+    <!--For Data Gridview End-->
+</div>
+
+
+

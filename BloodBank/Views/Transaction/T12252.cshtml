@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "T12252";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .tdStyleH {
+        width: 24.25%;
+        text-align: center;
+        font-weight: bold
+    }
+    .tdStyle {
+        width: 24.25%;
+        text-align: center;
+        
+    }
+
+    #tblBloodGroup {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    .trBlGroup {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }
+
+    .tdBlGroup {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+        height: 30px;
+    }
+/*#tblBloodGroup {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        padding: 5px;
+    }*/
+</style>
+<script>
+    $(document).ready(function () {
+        $("input").not($(":submit, :button")).keypress(function (evt) {
+            //evt.preventDefault();
+            if (evt.keyCode == 13) {
+                var next = $('[tabindex="'+(this.tabIndex+1)+'"]');
+                if (next.length)
+                    next.focus();
+                else
+                    $('[tabindex="1"]').focus();
+            }
+        });
+    });
+</script>
+<link href="~/Content/calender.css" rel="stylesheet" />
+<script src="~/Scripts/calender.js"></script>
+
+<script src="~/Apps/JSController/Transaction/T12252Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12252Service.js"></script>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12252Controller">
+        <button id="btnNew" title="New" class="Button New" ng-click="NewClick()"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="onSave()"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear_Click()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+        <button id="btnPrint" title="Print" class="Button Print" ng-click="onPrint()"></button>
+
+    </div>
+}
+
+<div class="container" ng-app="BloodBank" ng-controller="T12252Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto;width: 70%; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDatefrom" for="txtDatefrom" ng-bind="getLabel('lblDatefrom')" class="ng-cloak"></label>
+                    </td>
+                    <td style="width: 15%;">
+                        <datepicker date-format="dd/MM/yyyy">
+                            <input ng-model="obj.t12252.DateFrom" ng-blur="Date_Click(obj.t12252.DateFrom,'f')" id="txtDatefrom" type="text" style=" width: 90%" TabIndex="1" />
+                        </datepicker>
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDateTo" for="txtDateTo" ng-bind="getLabel('lblDateTo')" class="ng-cloak"></label>
+                    </td>
+                    <td style="width: 15%;">
+                        <datepicker date-format="dd/MM/yyyy">
+                            <input ng-model="obj.t12252.DateTo" ng-blur="Date_Click(obj.t12252.DateTo,'t')" id="txtDateTo" type="text" style=" width: 90%" TabIndex="2"/>
+                        </datepicker>
+                        @*<input type="text" id="txtDateTo" ng-model="obj.t12252.DateTo" style="width: 100%;" />*@
+                    </td>
+                    <td style="width: 20%;" class="alnR">
+                        <label id="lblSeqNo" for="txtSeqNo" ng-bind="getLabel('lblSeqNo')" class="ng-cloak">Sequence No </label>
+                    </td>
+                    <td style="width: 10%; text-align: center">
+                        <input type="text" id="txtSeqNo" ng-model="obj.t12252.T_SEQ_NO" ng-keydown="Keydown_Click($event)" style="width: 100%" ng-click="Seq_Click('s')" TabIndex="3"/>
+                    </td>
+                    <td style="width: 8%;" class="alnR">
+                        <label id="lblWeld" for="ddlAnswer" ng-bind="getLabel('lblWeld')" class="ng-cloak">Weld Id </label>
+
+                    </td>
+                    <td style="width: 12%; text-align: center">
+                        <ui-select id="ddlAnswer" ng-model="obj.W.selected" theme="select2" append-to-body="true" style="width: 100%" on-select="onAnsSelect(obj.a.selected.ANS_ID,$index)">
+                            <ui-select-match placeholder="Select">{{$select.selected.WeldName}}</ui-select-match>
+                            <ui-select-choices repeat="W in obj.WeldList | propsFilter: {WeldName: $select.search}">
+                                <div ng-bind-html="W.WeldName | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </td>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+    <div class="row" style="margin: 1.6% auto;width: 70%; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+        <table id="tblBloodGroup" style="width: 100%">
+            <tr class="trBlGroup" style="width: 100%; background-color: #c12d2d; color: #ffffff;">
+                <td class="tdBlGroup" style="width: 3%; text-align: center; color: #ffffff;">
+                    <img src="~/Images/Cancel_White.png" style="height: 20px"/>
+                </td>
+                <td class="tdStyleH tdBlGroup" ng-bind="getLabel('lblUnitNo')"></td>
+                <td class="tdStyleH tdBlGroup" ng-bind="getLabel('lblDonationDate')"> </td>
+                <td class="tdStyleH tdBlGroup" ng-bind="getLabel('lblSegmantNo')"> </td>
+                <td class="tdStyleH tdBlGroup" ng-bind="getLabel('lblBloodGroup')"> </td>
+            </tr>
+            <tr ng-repeat="U in obj.Unit track by $index" ng-click="setgridData(U.T_WELD_ID)">
+                <td class=" tdBlGroup" style="width: 3%;text-align: center">
+                    @*<img src="~/Images/plus.png" ng-Click="Add_Click($index+1)"/>*@
+                    <img src="~/Images/Reject.png" style="height: 20px" ng-Click="Remove_Click($index)" />
+                </td>
+                <td class="tdStyle tdBlGroup"><input id="txtUnNo" style="width: 95%" type="text" ng-model="U.T_UNIT_NO" ng-keydown="Unit_Click($event,$index,U.T_UNIT_NO)"></td>
+                <td class="tdStyle tdBlGroup">{{U.DONATION_DATE}}</td>
+                <td class="tdStyle tdBlGroup">{{U.T_SEGMENT_NO}}</td>
+                <td class="tdStyle tdBlGroup">{{U.T_BLOOD_GROUP}}</td>
+
+                <td class="Hidden">{{U.CheckValue}}</td>
+                <td class="Hidden">{{U.T_BB_STOCK_ID}}</td>
+                <td class="Hidden">{{U.T_PRODUCT_CODE}}</td>
+                <td class="Hidden">{{U.T_WELD_ID}}</td>
+            </tr>
+        </table>
+
+        <table style="margin-top: 5px;">
+            <tr>
+                <td style="width: 40%;"></td>
+                <td style="width: 10%;" class="alnR">
+                    <label id="lblWelder" for="txtWelder" ng-bind="getLabel('lblWelder')" class="ng-cloak"></label>
+                </td>
+                <td style="width: 10%; text-align: center" rowspan="3">
+                    <input type="text" ng-model="obj.t12252.welder" id="txtWelder" readonly="readonly" />
+                </td>
+                <td style="width: 40%;"></td>
+            </tr>
+        </table>
+
+
+    </div>
+    <div id="divReason" class="omf-modal">
+        @*<div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseReasonPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblReasonId" ng-bind="getLabel('lblReasonId')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 80%">
+                                        <label id="lblReasonDesc" ng-bind="getLabel('lblReasonDesc')" class="ng-cloak"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in reasonList |filter : Search |itemsPerPage:10" pagination-id="reason" ng-click="onReasonSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnReasonCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                    <td style="width: 80%" class="alnL"><span id="spnReasonDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="reason" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    </div>
+</div>
+

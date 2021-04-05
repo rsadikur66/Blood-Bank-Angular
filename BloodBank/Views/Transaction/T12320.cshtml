@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "T12320";
+}
+<script src="~/Apps/JSController/Transaction/T12320Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12320Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12320Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12320Controller" name="obj.myDiv" novalidate ng-form>
+
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding-top: 200px; padding-bottom: 200px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%;">
+                    <td style="width: 40%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblWrongUnit" for="txtWrongUnit" class="ng-cloak" ng-bind="getLabel('lblWrongUnit')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtWrongUnit" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 40%;"></td>
+                </tr>
+                <tr style="width: 100%;">
+                    <td style="width: 40%;"></td>
+                    
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblCorrectedUnit" for="txtCorrectedUnit" class="ng-cloak" ng-bind="getLabel('lblCorrectedUnit')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtCorrectedUnit" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 40%;"></td>
+
+                </tr>
+                <tr style="width: 100%;">
+                    <td style="width: 50%;" colspan="2"></td>
+                    <td style="width: 10%">
+                        <input type="button" value="{{getLabel('lblCorrectEntry')}}" />
+                    </td>
+                    <td style="width: 40%;"></td>
+
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    
+</div>
+

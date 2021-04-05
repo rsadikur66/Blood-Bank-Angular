@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewBag.Title = "T12338";
+}
+
+<script src="~/Apps/JSController/Initialization/T12338Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12338Service.js"></script>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12338Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()" disabled></button>
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="T12338Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% 15.6%; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                   
+                    <td class="alnR" style="width: 3%">
+                        <label id="lblCentralBloodBank" for="txtCentralBankCode" class="ng-cloak" ng-bind="getLabel('lblCentralBloodBank')"></label>
+                    </td>
+                    <td style="width: 2%;">
+                        <input type="text" id="txtCentralBankCode" ng-model="obj.T_CENTRAL_BANK_CODE" style="width: 100%" ng-dblclick="GetCentralBankList()" ng-keydown="PopUpOnf9()"/>
+                    </td>
+                    <td style="width: 7%">
+                        <input type="text" id="txtCentralBankName" style="width: 80%;" ng-model="obj.T_CENTRAL_BANK_NAME"/>
+                    </td>
+                </tr>
+
+            </table>
+
+
+            <!--2nd part start-->
+            <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px; width: 100%; margin: 1.0% auto">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div>
+                        <table style="width: 100%">
+                            <thead style="text-align: center">
+                                <tr style="color: #29449b; width: 100%">
+                                    @*<td style="width: 10%"></td>*@
+                                    <td width="15%"><span id="lblBankCode" style="text-align: center;" ng-bind="getLabel('lblBankCode')"></span></td>
+                                    <td width="35%"><span id="lblEnglishName" style="text-align: center;" ng-bind="getLabel('lblEnglishName')"></span></td>
+                                    <td width="35%"><span id="lblArabicName" ng-bind="getLabel('lblArabicName')"> </span></td>
+                                    <td width="5%"><span id="lblActive" ng-bind="getLabel('lblActive')"></span></td>
+                                    <td style="display:none"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in obj.BloodBankList" style="width: 100%">
+                                    @*<td style="width: 10%"></td>*@
+                                    <td style="width: 15%">
+                                        <input type="text" style="width: 100%" class="form-control" name="UnitNo" id="txtUnitNo" ng-model="obj.T_BANK_CODE">
+                                    </td>
+                                    <td style="width: 40%">
+                                        <input type="text" style="width: 100%" class="form-control" name="SegmentNo" id="txtSegmentNo" ng-model="obj.T_LANG2_NAME" readonly>
+                                    </td>
+                                    <td style="width: 40%">
+                                        <input type="text" style="width: 100%" class="form-control" name="DonationDate" id="txtDonationDate" ng-model="obj.T_LANG1_NAME">
+                                    </td>
+                                    <td style="width: 5%">
+                                        <input type="checkbox" style="width: 100%; box-shadow: none;" class="form-control" name="Virology" id="BBActive{{$index}}" @*ng-disabled="checkvalue($index)"*@ ng-model="obj.T_BANK_ACTIVE" ng-click="ActiveCheckboxClicked($index)">
+                                    </td>
+                                    <td style="display: none">
+                                        <input type="text" class="form-control" name="hiddenField" style="width: 55px" id="txtHiddenField" ng-model="obj.HiddenField">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            @*Unit From Modal Start*@
+            <div id="divCentralBankList" class="omf-modal" style="width: 80% !important">
+                <div class="omf-modal-body">
+                    <div class="omf-modal-header">
+                        <label id="lblCentralBankList" ng-bind="getLabel('lblCentralBankList')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseCentralBankPopup()" />
+                    </div>
+
+                    <div class="form-horizontal popup">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table class="omf-modal-grid grid" arrow-selector="UnitList">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%">
+                                                <label id="lblCentralBankCode" class="ng-cloak" ng-bind="getLabel('lblCentralBankCode')"></label>
+                                            </th>
+                                            <th style="width: 20%">
+                                                <label id="lblCentralBankName" class="ng-cloak" ng-bind="getLabel('lblCentralBankName')"></label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="obj in CentralBankList |filter : SearchUnit |itemsPerPage:10" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onCentralBankSelect($index)">
+                                            <td style="text-align: center"><span id="spnZoneCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                            <td style="text-align: center"><span id="spnZoneName{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Unit From Modal end*@
+
+
+        </div>
+    </div>
+</div>
+
+
+                                

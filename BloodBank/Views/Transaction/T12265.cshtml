@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "T12265";
+}
+
+<script src="~/Apps/JSController/Transaction/T12265Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12265Service.js"></script>
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>*@
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvK4WBt18RMBAKEjwPZ0bDIY3Vp6ekPbM&origin=Oslo+Norway
+  &destination=Telemark+Norway
+  &avoid=tolls|highways"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12265Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12265Controller" name="obj.myDiv" novalidate ng-form style=" margin-left: 25px;">       
+        <div class="container" style="border: 2px solid #B2B4AA;margin:0% 0% 0% 15%; margin-top: 2%; padding: 5px;">
+            <div class="col-lg-12 col-md-12 col-sm-12" style=" width: 100%; border-radius: 10px; padding: 15px;">
+                <div class="col-lg-1 col-md-1 col-sm-1">
+                    <input type="button" style="border-radius:50%;width:40px;height:40px;background:#c12d2d;color:white;font-weight:bolder;text-align:center;cursor:pointer" value="{{obj.t12265.Count}}" ng-click="ShowRequest_Click()" />
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9" style="border: 1px solid #353833;  border-radius: 10px; padding: 15px;">
+                    <table>
+                        <tr>
+                            
+                            <td>
+                                <label id="lblBloodReqNo" for="txtBloodReqNo" class="ng-cloak" style="color: #303386;width: 123px;" ng-bind="getLabel('lblBloodReqNo')"></label>
+                            </td>
+                            <td>
+                                <input id="txtBloodReqNo" type="text" ng-model="obj.t12265.T_BLOOD_REQ_NO" ng- style="width: 80px;" readonly>
+                            </td>
+                            <td>
+                                <label id="lblFrom" for="txtBloodReqNo" class="ng-cloak" style="color: #303386;width: 25px;" ng-bind="getLabel('lblFrom')"></label>
+                            </td>
+                            <td colspan="3">
+                                <input id="txtRefHospital" type="text" ng-model="obj.t12265.T_REF_HOSPITAL" ng- style="width: 250px;" readonly>
+                            </td>
+                            <td>
+                                <label id="lblTo" for="txtBloodReqNo" class="ng-cloak" style="color: #303386;width: 25px;" ng-bind="getLabel('lblTo')"></label>
+                            </td>
+                            <td colspan="3">
+                                <input id="txtSiteHospital" type="text" ng-model="obj.t12265.T_SITE_HOSPITAL" ng- style="width: 200px;" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right">
+                                <label id="lblRequestAccept" for="chkRequestAccept" class="ng-cloak" style="color: #303386" ng-bind="getLabel('lblRequestAccept')"></label>
+                            </td>
+                            <td>
+                                <input id="chkRequestAccept" type="checkbox" ng-model="obj.t12265.T_REQ_ACCEPT_FLG" ng-click="RequestAccept_Flag()" ng-disabled="obj.t12265.T_REQ_ACCEPT_FLG === 'Disable'" name="check" ng-true-value="'1'" ng-false-value="''" style="width: 20px;box-shadow: none;">
+                            </td>
+                            <td>
+                                <label id="lblRequestCancel" for="chkRequestCancel" class="ng-cloak" style="color: #303386" ng-bind="getLabel('lblRequestCancel')"></label>
+                            </td>
+                            <td>
+                                <input id="chkRequestCancel" type="checkbox" ng-model="obj.t12265.T_REQ_CANCEL_FLG" ng-click="RequestCancel_Flag()" ng-disabled="obj.t12265.T_REQ_CANCEL_FLG === 'Disable'" name="check" ng-true-value="'1'" ng-false-value="''" style="width: 20px;box-shadow: none;">
+                            </td>
+                            <td><label id="lblTime" class="ng-cloak" style="color: #303386" ng-bind="getLabel('lblTime')"></label></td>
+                            <td><input id="txtTime" type="text" ng-model="obj.t12265.T_ESTIMATED_DELIVERY_TIME" ng- style="width: 159px;" readonly></td>
+                            <td><label id="lblDistance" for="chkRequestCancel" class="ng-cloak" style="color: #303386" ng-bind="getLabel('lblDistance')"></label></td>
+                            <td><input id="txtDistance" type="text" ng-model="obj.t12265.T_ESTIMATED_DELIVERY_DIST" ng- style="width: 200px;" readonly></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-sm-2 col-md-2 col-lg-2" style="margin-bottom:-1%;">
+                    
+                    <div style="margin-bottom:10px;">
+                        <input id="btnRcv" style="border-radius: 70px;width:100%;position:relative;height:12vh;" type="button" value="{{status}}" ng-click="clickReceived()" ng-disabled="mySwitch" />
+                    </div>
+                    <div>
+                        <label style="background-color:green;margin-left: 40px;color:white" id="lblHandOverFromCenter">{{handoverfromCenterFlag}}</label>
+                    </div>                   
+                </div>
+            </div>
+
+            @*RequestList popup start*@
+            <div id="divRequestListPopUp" class="omf-modal">
+                <div class="omf-modal-body">
+                    <div class="omf-modal-header">
+                        <label id="lblDelReqList" style="width: 97%" ng-bind="getLabel('lblDelReqList')"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="CloseRequestListPopup()" />
+                    </div>
+                    <div class="omf-modal-div-placeholder">
+                        <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+                    </div>
+
+                    <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                        <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table class="omf-modal-grid grid">
+                                    <thead style="text-align: center">
+                                        <tr style=" background-color: #c12d2d; color: #ffffff;">
+
+                                            <th style="width: 100px; text-align: center;" ng-bind="getLabel('lblBloodReqNo')"><span><label id="lblDelReqNo" ng-bind="getLabel('lblDelReqNo')"></label></span></th>
+                                            <th style="width: 100px; text-align: center;" ng-bind="getLabel('lblBloodReqNo')"><span><label id="lblBloodReqNo" ng-bind="getLabel('lblBloodReqNo')"></label></span></th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="B in obj.RequestListOfData |filter : Search"  ng-class="{'selected':$index == selectedRow}" ng-click="onRequestListSelect($index,B)">
+                                            <td style="width: 53px; ">{{B.T_REQ_ID}}</td>
+                                            <td style="width: 100px;">{{B.BLOOD_REQ_NO}}</td>
+                                            @*<td class="Hidden" style="width: 53px; ">{{B.T_LATITUDE}}</td>
+                                            <td class="Hidden" style="width: 100px;">{{B.T_LONGITUDE}}</td>*@
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            @*RequestList popup end*@
+        </div>
+        <div class="container" id="googleMapDiv" style="border: 1px solid #353833; margin:1% 1% 2% 15%;  border-radius: 10px; padding: 15px;">
+            <div id="DeliveryManGoogleMap" style="width: 100%; height: 375px"></div>
+        </div>
+    </div>
+

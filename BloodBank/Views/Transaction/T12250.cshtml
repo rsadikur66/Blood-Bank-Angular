@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewBag.Title = "T12250";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/calender.js"></script>
+<script src="~/Apps/JSController/Transaction/T12250Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12250Service.js"></script>
+
+@*<link href="~/Content/calender.css" rel="stylesheet" />*@
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12250Controller">
+        <button id="btnNew" title="New" class="Button New" ng-click="NewClick()"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="onSave()"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="NextClick()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+        <button id="btnPrint" title="Print" class="Button Print" ng-click="onPrint()"></button>
+
+    </div>
+}
+
+    <div class="container" ng-app="BloodBank" ng-controller="T12250Controller" name="obj.myDiv" novalidate ng-form>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%">
+                <table style=" width:100%">
+                    <tr style="width: 100%">
+                        <td style="width: 18%;" class="alnR">
+                            <label id="lblDonorNo" for="txtDonorNo" ng-bind="getLabel('lblDonorNo')" class="ng-cloak"></label>
+                        </td>
+                        <td style="width: 10%;">
+                            <input type="text" id="txtDonorNo" ng-model="obj.t12017.T_PAT_NO" style="width: 100%;" ng-dblclick="RegPage()" ng-keydown="onPatSrch_tab($event)" ng-blur="onPatSrch_blur()" required />
+                           
+                        </td>
+                        <td style="width: 37%;">
+                            <input type="text" id="txtDonorName" ng-model="obj.PatName" style="width: 100%;" readonly="readonly" />
+                        </td>
+                        <td style="width: 12%;" class="alnR">
+                            <label id="lblYear" ng-bind="getLabel('lblYear')" class="ng-cloak"></label>
+                        </td>
+                        <td style="width: 10%;">
+                          
+                            <input type="text" id="txtYear" ng-model="obj.Year" readonly="readonly" style="width: 35%"/>
+                            <label id="lblMonth" ng-bind="getLabel('lblMonth')" class="ng-cloak"></label>
+                           <input type="text" id="txtMonth" ng-model="obj.Month" readonly="readonly" style="width: 35%"/>
+                        </td>
+                        <td style="width: 13%; text-align: center" rowspan="3">
+                            <input type="button" style="background: url(../../Images/buttonWhite.png); width: 75px; height: 75px; background-repeat: round; border-color: #FBFBFB;" id="btnSign"/>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 18%;" class="alnR">
+                             <label id="lblNationalId" ng-bind="getLabel('lblNationalId')" class="ng-cloak"></label>
+                        </td>
+                        <td style="width: 10%;">  
+                            <input type="text" id="txtNationalId" style="width: 100%;" ng-model="obj.t12017.T_DONOR_NTNLTY_ID" readonly="readonly" required /></td>
+                        <td style="width: 37%; ">
+                            <label id="lblNationality" for="txtNationality" ng-bind="getLabel('lblNationality')" class="ng-cloak"></label>
+                            <input type="text" id="txtNationality" style="width: 35%;" ng-model="obj.Nationality" readonly="readonly" />
+                            <label id="lblGender" for="txtGender" ng-bind="getLabel('lblGender')" class="ng-cloak"></label>
+                            <input type="text" id="txtGender" ng-model="obj.Gender" style="width: 34%;" readonly="readonly" />
+                        </td>
+                        <td style="width: 12%;" class="alnR"> <label id="lblMrtLStatus" for="txtMrtlStatus" ng-bind="getLabel('lblMrtLStatus')" class="ng-cloak"></label></td>
+                        <td style="width: 10%;">  <input type="text" id="txtMrtlStatus" ng-model="obj.MaritalStatus" readonly="readonly" style="width: 100%;" /></td>
+
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 18%;" class="alnR">
+                             <label id="lblLastEpisodeNo" for="txtLastEpisode" ng-bind="getLabel('lblLastEpisodeNo')" class="ng-cloak"></label>
+                        </td>
+                        <td style="width: 10%;">
+                             <input type="text" id="txtLastEpisode" style="width: 100%;" ng-model="obj.LastEpisode" readonly="readonly"/>
+                        </td>
+                        <td style="width: 37%;">
+
+                            <label id="lblLastArrDate" for="txtLastArrDate" ng-bind="getLabel('lblLastArrDate')" class="ng-cloak"></label>
+
+                            <input type="text" id="txtLastArrDate" ng-model="obj.LastArrDate" style="width: 25%;" readonly="readonly"/>
+
+                            <input type="text" id="txtArrTime" ng-model="obj.LastArrTime" style="width: 32%;" readonly="readonly"/>
+                        </td>
+                        <td style="width: 12%;" class="alnR">  
+                            <label id="lblDifferedDateUpto" for="txtDifferedDateUpto" ng-bind="getLabel('lblDifferedDateUpto')" class="ng-cloak"></label></td>
+                        <td style="width: 10%;">
+
+                            <input type="text" id="txtDifferedDateUpto" ng-model="obj.DifferedDateUpto" style="width: 100%;" readonly="readonly"/>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%;">
+                <table style="width: 50%;margin: auto; ">
+                    <tr style="width: 100%;">
+                        <td style="width: 25%" class="alnR">
+                            <label id="lblArrivalDate" for="txtArrivalDate" ng-bind="getLabel('lblArrivalDate')" class="ng-cloak"></label>
+                        </td>
+                        <td style="width: 75%">
+
+                            <input type="text" id="txtArrivalDate" ng-model="obj.T_ARRIVAL_DATE" readonly="readonly" style="width: 30%"/>&nbsp;<input type="text" id="txtArrivalDateHijri" ng-model="obj.ArrivalDateHijri" readonly="readonly" style="width: 30%"/>&nbsp;<label id="lblArrivalDateHijri" for="txtArrivalDateHijri" ng-bind="getLabel('lblArrivalDateHijri')" class="ng-cloak"></label>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 25%" class="alnR"><label id="lblReasonForDonation" for="txtReasonCode" ng-bind="getLabel('lblReasonForDonation')" class="ng-cloak"></label></td>
+                        <td style="width: 75%">
+                            <input type="text" id="txtReasonCode" ng-model="obj.t12017.T_DOTN_RSN_CODE" ng-dblclick="getReasonList()" ng-keydown="obj.chk && getReasonbyCode($event,obj.t12017.T_DOTN_RSN_CODE)" style="width: 20%" required/> <input type="text" id="txtReasonDesc" ng-model="obj.ReasonDesc" style="width: 79%" readonly="readonly"/>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 25%" class="alnR">
+                            <label id="lblPatient" for="txtpatientId" ng-show="pati" ng-bind="getLabel('lblPatient')" class="ng-cloak">
+                            </label>
+                        </td>
+                        <td style="width: 75%">
+                            <div ng-show="pati">
+                                <input id="txtpatientId" type="text" ng-model="obj.t12017.T_REF_PAT_NO" ng-keydown="complete($event,obj.t12017.T_REF_PAT_NO)" class="ng-cloak" style="width: 20%;display: inline" />
+                                <input id="txtpatient" type="text" name="pat" ng-model="obj.t12017.T_OTHER_PAT_NAME" class="ng-cloak form-control" style="width: 79%;display: inline" />
+                                <table ng-show="SearTable" style="z-index: 1000; position: absolute; background-color: white; color: Black; width: 23%; cursor: pointer;">
+                                    <tbody style="max-height: 200px; overflow: auto; overflow-x: hidden; display: block;width: 122%;">
+                                        <tr ng-repeat="S in obj.patList" id="AutoSearch" ng-click="SelectSearchcc_Click(S)" style="width: 100%;">
+                                            <td style="width: 13%; font-family: arial; color: #5b5b5b; border-radius: 3px; height: 22px; border: solid 1px #ccc; background-image: linear-gradient(to top, #fff, #eee); padding: 0 3px;">{{S.T_REF_PAT_NO}}</td>
+                                            <td style=" width: 58%; font-family: arial; color: #5b5b5b; border-radius: 3px; height: 22px; border: solid 1px #ccc; background-image: linear-gradient(to top, #fff, #eee); padding: 0 6px;">{{S.T_OTHER_PAT_NAME}}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </td>
+                    </tr>
+                    <tr style="width: 100%;">
+                        <td style="width: 25%"></td>
+                        <td style="width: 75%">
+                            <input type="radio" id="rdoAutoLog" name="rdoPatType" />
+                            <label id="lblRadioAutoLog" for="rdoAutoLog" ng-bind="getLabel('lblRadioAutoLog')" class="ng-cloak"></label>
+                            <label style="min-width: 80px"></label>
+                            <input type="radio" id="rdoDirectPatient" name="rdoPatType" />
+                            <label id="lblDirectPatient" for="rdoDirectPatient" ng-bind="getLabel('lblDirectPatient')" class="ng-cloak"></label>
+                            <label style="min-width: 80px"></label>
+                            <input type="radio" id="radioNormal" name="rdoPatType" checked="checked" />
+                            <label id="lblNormal" for="radioNormal" ng-bind="getLabel('lblNormal')" class="ng-cloak"></label>
+
+
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div id="divReason" class="omf-modal">
+                <div class="omf-modal-body">
+                    <div class="omf-modal-header">
+                        <label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseReasonPopup()" />
+                    </div>
+                    <div class="omf-modal-div-placeholder">
+                        <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />
+
+                    </div>
+                    <div class="form-horizontal popup">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table class="omf-modal-grid grid">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%">
+                                                <label id="lblReasonId" ng-bind="getLabel('lblReasonId')" class="ng-cloak"></label>
+                                            </th>
+                                            <th style="width: 80%">
+                                                <label id="lblReasonDesc" ng-bind="getLabel('lblReasonDesc')" class="ng-cloak"></label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="obj in reasonList |filter : Search |itemsPerPage:10" pagination-id="reason" ng-click="onReasonSelect($index)" style="cursor: pointer">
+                                            <td style="text-align: center; width: 20%"><span id="spnReasonCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                            <td style="width: 80%" class="alnL"><span id="spnReasonDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls pagination-id="reason" max-size="5"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </div>

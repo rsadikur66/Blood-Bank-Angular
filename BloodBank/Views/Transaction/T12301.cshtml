@@ -1,0 +1,255 @@
+﻿@{
+    ViewBag.Title = "T12301";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Apps/JSController/Transaction/T12301Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12301Service.js"></script>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12301Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        <button ID="btnEnterQuery" title="Enter Query" class="Button Enter Query" ng-click="Enter()"></button>
+        <button ID="btnExecuteQuery" title="Execute Query" class="Button Execute Query" ng-click="Execute(obj.T_REQUEST_NO)"></button>
+    </div>
+}
+    <div class="container" ng-app="BloodBank" ng-controller="T12301Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div style="margin: .5% auto; width: 70%">
+                <div class="row" style="margin: .5% auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div style="margin: .5% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+                            <table>
+                                <tr style="width: 100%">
+                                    <td class="alnR">
+                                        <label type="text" id="lblRequestNo" ng-bind="getLabel('lblRequestNo')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtRequestNo" ng-model="obj.T_REQUEST_NO" ng-keypress="EnterRequest($event,obj.T_REQUEST_NO)" style="width: 100%" ng-keydown="btnf9_RequestList($event)" ng-dblclick="PopUpRequestList()">
+                                    </td>
+                                    <td colspan="3"></td>
+                                    <td colspan="4">
+                                        <label type="text" id="lblRequestDate" ng-bind="getLabel('lblRequestDate')"></label>
+                                        <input type="text" id="txtRequestDate" style="width: 23%" ng-model="obj.T_REQUEST_DATE" readonly />
+                                        <input type="text" id="txtRequestDate2" style="width: 23%" ng-model="obj.T_REQUEST_DATE_ARB" readonly />
+                                        <label type="text" id="lblHDate" ng-bind="getLabel('lblHDate')"></label>
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%">
+                                    <td class="alnR">
+                                        <label type="text" id="lblPatNo" ng-bind="getLabel('lblPatNo')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtPatNo" ng-model="obj.T_PAT_NO" style="width: 100%" readonly>
+                                    </td>
+                                    <td></td>
+                                    <td colspan="4">
+                                        <input type="text" id="txtPatName" ng-model="obj.T_PAT_NAME" style="width: 100%" readonly />
+                                    </td>
+                                    <td>
+                                        <label type="text" id="lblYear" ng-bind="getLabel('lblYear')"></label>
+                                        <input type="text" id="txtYear" style="width: 19%" ng-model="obj.YRS" readonly />
+                                        <label type="text" id="lblMonth" ng-bind="getLabel('lblMonth')"></label>
+                                        <input type="text" id="txtMonth" style="width: 19%" ng-model="obj.MOS" readonly />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr style="width: 100%">
+                                    <td class="alnR">
+                                        <label type="text" id="lblGender" ng-bind="getLabel('lblGender')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtGender" ng-model="obj.T_GENDER" style="width: 100%" readonly>
+                                    </td>
+                                    <td></td>
+                                    <td class="alnR">
+                                        <label type="text" id="lblNationality" ng-bind="getLabel('lblNationality')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txNationality" ng-model="obj.T_NATIONALITY" style="width: 100%" readonly>
+                                    </td>
+                                    <td class="alnR">
+                                        <label type="text" id="lblMaritialStatus" ng-bind="getLabel('lblMaritialStatus')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txMaritialStatus" ng-model="obj.T_MARITIAL_STATUS" style="width: 100%" readonly>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR">
+                                        <label type="text" id="lblLoc" ng-bind="getLabel('lblLoc')"></label>
+                                    </td>
+                                    <td colspan="5">
+                                        <input type="text" id="txtLocCode" ng-model="obj.T_LOCATION_CODE" style="width: 14%" readonly>
+                                        <input type="text" id="txtLocName" ng-model="obj.T_LOCATION_NAME" style="width: 55%" readonly />
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br />
+                        <div style="margin: .5% auto; border: 1px solid #A21217; border-radius: 5px; padding: 18px;">
+                            <table>
+                                <tr>
+                                    <td class="alnR">
+                                        <label type="text" id="lblBloodBring" ng-bind="getLabel('lblBloodBring')"></label>
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" id="txtBloodBring" ng-model="obj.T_BLOOD_BRING" ng-keyup="onRequestCarryBy()" style="width: 95%" required>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div style="border: 1.5px solid #A21217; width: 50%" class="alnR">
+                                            <label type="text" id="lblLabNo" ng-bind="getLabel('lblLabNo')" style="width: 47%; margin-top: 3%"></label>
+                                            <input type="text" id="txtLabNo" ng-model="obj.T_LAB_NO" style="width: 47%">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%" class="alnR">
+                                        <label type="text" id="lblAssign" ng-bind="getLabel('lblAssign')"></label>
+                                    </td>
+                                    <td style="width: 11%">
+                                        <input type="text" id="txtAssignNo" style="width:100%" ng-blur="onReqSearch_blur(obj.T_EMP_CODE)"  ng-keydown="btnf9_UserList($event)" ng-dblclick="PopUpUserList()" ng-model="obj.T_EMP_CODE">
+
+                                    </td>
+                                    <td style="width: 25%">
+                                        <input type="text" id="txtAssignDesc" style="width: 96%" ng-model="obj.T_USER_NAME" readonly>
+                                    </td>
+                                    <td style="width: 1%"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR">
+                                        <label type="text" id="lblRequest" ng-bind="getLabel('lblRequest')"></label>
+                                    </td>
+                                    <td style="width: 11%">
+                                        <input type="text" id="txtRequestNo2" style="width: 100%" ng-model="obj.Current_T_EMP_CODE" readonly>
+
+                                    </td>
+                                    <td colspan="3">
+                                        <input type="text" id="txtRequestDesc" style="width: 89%" ng-model="obj.Current_T_USER_NAME" readonly>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR">
+                                        <label type="text" id="lblRecordDate" style="width: 150px" ng-bind="getLabel('lblRecordDate')"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtRecordDate" style="width: 106%" ng-model="obj.getCurrentDate" readonly>
+                                    </td>
+
+                                    <td style="width: 26%">
+                                        <label type="text" id="lblRecordTime" style="width: 51%" ng-bind="getLabel('lblRecordTime')"></label>
+                                        <input type="text" id="txtRecordTime" style="width: 43%" ng-model="obj.getCurrentTime" readonly>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    @*Request Modal Start*@
+    <div id="divRequestList" class="omf-modal" style="width: 52% !important">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblRequestPopUpList" ng-bind="getLabel('lblRequestPopUpList')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseRequestListPopup()" />
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                            <tr>
+                                <th style="width: 2%">
+                                    <label id="lblRequestNoPopUp" class="ng-cloak" ng-bind="getLabel('lblRequestNoPopUp')"></label>
+                                </th>
+                                <th style="width: 1%">
+                                    <label id="lblRequestDatePopUp" class="ng-cloak" ng-bind="getLabel('lblRequestDatePopUp')"></label>
+                                </th>
+                                <th style="width: 2%">
+                                    <label id="lblPatNoPopUp" class="ng-cloak" ng-bind="getLabel('lblPatNoPopUp')"></label>
+                                </th>
+                                <th style="width: 2%">
+                                    <label id="lblABOCodePopUp" class="ng-cloak" ng-bind="getLabel('lblABOCodePopUp')"></label>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr dir-paginate="obj in RequestList |filter : SearchUnit |itemsPerPage:10" pagination-id="bList" style="cursor: pointer" ng-click="onRequestPopUpSelect($index)">
+                                <td style="text-align: center"><span id="spnRequestNo{{$index}}" style="width: 100%">{{obj.T_REQUEST_NO}}</span></td>
+                                <td style="text-align: center"><span id="spnRequestDate{{$index}}" style="width: 100%">{{obj.T_REQUEST_DATE}}</span></td>
+                                <td style="text-align: center"><span id="spnPatNo{{$index}}" style="width: 100%">{{obj.T_PAT_NO}}</span></td>
+                                <td style="text-align: center"><span id="spnABOCode{{$index}}" style="width: 100%">{{obj.T_ABO_CODE}}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bList" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        @*Request Modal end*@
+        @*User Modal Start*@
+        <div id="divUserList" class="omf-modal" style="width: 60% !important">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblUserPopUpList" ng-bind="getLabel('lblUserPopUpList')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseUserListPopup()" />
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid" arrow-selector="UnitList">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 12%">
+                                            <label id="lblUserNamePopUp" class="ng-cloak" ng-bind="getLabel('lblUserNamePopUp')"></label>
+                                        </th>
+                                        <th style="width: 1%">
+                                            <label id="lblUserNoPopUp" class="ng-cloak" ng-bind="getLabel('lblUserNoPopUp')"></label>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="obj in UserList |filter : SearchUnit |itemsPerPage:pageSize" current-page="currentPage" pagination-id="uList" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onUserPopUpSelect(PagiIndex($index,currentPage))">
+                                        <td style="text-align: left"><span id="spnT_EMP_CODE{{$index}}" style="width: 100%">{{obj.T_USER_NAME}}</span></td>
+                                        <td style="text-align: center"><span id="spnT_USER_NAME{{$index}}" style="width: 100%">{{obj.T_EMP_CODE}}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="uList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*User Modal end*@
+    </div>

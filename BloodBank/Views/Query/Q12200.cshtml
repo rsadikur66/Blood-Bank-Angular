@@ -1,0 +1,249 @@
+﻿
+@{
+    ViewBag.Title = "Q12200";
+}
+<script src="~/Apps/JSController/Query/Q12200Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12200Service.js"></script>
+<style>
+    tbody tr td {
+        /*border:1px solid;*/
+    }
+    table thead{
+        font-size:18px;
+    }
+    #table1 td {
+        padding: 0px !important;
+    }
+
+    #table2 td {
+        padding: 2px !important;
+    }
+
+    .bgRed {
+        background: #ff0000 !important;
+    }
+    .btn-custom {
+        color: #FAF7F6;
+        background-color: #6D7165;
+        border-color: #6D7165;
+        padding:0px 5px !important;
+    }
+    .TUG {
+        width: 70%;
+        margin: 0 18%;
+        color: black;
+        font-weight: bolder;
+        background-color:cadetblue;
+    }
+    .btnCount {
+        width: 100%;
+        height: 35px;
+        background-color: cadetblue;
+        color:black;
+        font-weight:bolder;
+        font-size:larger;        
+    }
+    
+</style>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12200Controller">
+        @*<button id="btnNew" title="New" class="Button New"></button>*@
+        @*<button id="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>*@
+        <button id="btnNext" title="Next" class="Button Next" ng-click="nextClick()"></button>
+        @*<button id="btnDelete" title="Delete" class="Button Delete"></button>*@
+        @*<button id="btnClear" title="Clear" class="Button Clear" ng-click="ClearAll()"></button>*@
+        @*<button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>*@
+        @*<button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>*@
+        @*<button id="btnPrint1" title="Print1" class="Button Print" ng-click="T12304_print()"></button>*@
+    </div>
+
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12200Controller" name="obj.myDiv" novalidate ng-form style="width: 90%">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <button id="prevBtn" class="btn btn-custom" ng-click="PrevDate(obj.TODAY_DATE)">Prev</button>
+            <input type="text" id="dateText" style="text-align: center; font-weight: bolder;" ng-model="obj.TODAY_DATE" ng-keydown="enterDate($event,obj.TODAY_DATE)" />
+            <button id="NextBtn" class="btn btn-custom" ng-click="NextDate(obj.TODAY_DATE)">Next</button>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+
+        </div>
+    </div>
+    <div class="col-lg-11 col-md-11 col-sm-11" style="">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid gray; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%">
+                <table id="table1" style="width: 100%; margin: 1% auto">
+                    <thead style="text-align: center; width: 100%;display:block">
+                        <tr style="width: 100%">
+                            <th style="width: 1%; text-align: center; white-space: nowrap">
+                                <label id="lblDonorNo" ng-bind="getLabel('lblDonorNo')" for="txtUnit" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 26%; text-align: center">
+                                <label id="lblDonorName" ng-bind="getLabel('lblDonorName')" for="txtRequest" class="ng-cloak" ></label>
+                            </th>
+                            <th></th>
+                            <th></th>
+
+                            <th  style="width: 20%; text-align: center; white-space: nowrap">
+                                <label id="lblExaminationRoom" ng-bind="getLabel('lblExaminationRoom')" for="txtProd" class="ng-cloak"></label>
+                            </th>
+
+                            <th  style="width: 23%; text-align: center">
+                                <label id="lblDonationRoom" ng-bind="getLabel('lblDonationRoom')" for="txtBloodGroup" class="ng-cloak"></label>
+                            </th>
+                            @*<th style="width: 5%; text-align: center">
+                                    <label id="lblUnitStatus" ng-bind="getLabel('lblUnitStatus')" for="txtUnitStatus" class="ng-cloak"></label>
+                                </th>*@
+                            @*<th style="width: 8%; text-align: center">
+                                    <label id="lblDonat" ng-bind="getLabel('lblDonat')" for="txtDonatDate" class="ng-cloak"></label>
+                                </th>*@
+                            @*<th  style="width: 14%; text-align: center">
+                                    <label id="lblExpDay" ng-bind="getLabel('lblExpDay')" for="txtExpiryDate" class="ng-cloak"></label>
+                                </th>*@
+                            @*<th  style="width: 12%; text-align: center">
+                                    <label id="lblType" ng-bind="getLabel('lblType')" for="txtType" class="ng-cloak"></label>
+                                </th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody style="height: 250px !important; display:block;overflow:auto;overflow-x:hidden;height:200px;width:100%; width: 100%;">
+                        <tr style="width: 100%" ng-repeat="obj in obj.GridPart">
+
+                            <td style="width: 10%">
+                                <input type="text" id="txtUnit" ng-model="obj.T_DONOR_NO" style="width: 100%" readonly/>
+                            </td>
+                            <td style="width: 20%">
+                                <input type="text" id="txtRequest" ng-model="obj.T_DONOR_NAME" style="width: 100%" readonly/>
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" id="txtProdId" ng-model="obj.T_DAKHILA_NAME" style="width: 100%" readonly/>
+                            </td>
+                            <td style="width: 6%">
+                                <input type="text" id="txtProd" ng-model="obj.T_DAKHILA_TIME" style="width: 100%" readonly/>
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtBloodGroup" ng-model="obj.EXAMINATION_DESC" style="width: 100%" ng-class="{'bgRed': obj.T_DONATION_ROOM == 'NOT YET'}" readonly/>
+                            </td>
+                            <td style="width: 6%">
+                                <input type="text" id="txtUnitStatus" ng-model="obj.EXAM_TIME" style="width: 100%" readonly/>
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtDonatDate" ng-model="obj.T_DONATION_ROOM" style="width: 100%" ng-class="{'bgRed': obj.T_DONATION_ROOM == 'NOT YET'}" readonly/>
+                            </td>
+                            <td style="width: 6%">
+                                <input type="text" id="txtExpiryDate" ng-model="obj.T_DONATION_ROOM_TIME" style="width: 100%" readonly/>
+                            </td>
+                            @*<td style="width: 14%">
+                                    <input type="text" id="txtType" ng-model="obj.T_TYPE" style="width: 100%" />
+                                </td>*@
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-1 col-md-1 col-sm-1" style="">
+        <div class="row" style="margin: 1.6% auto; padding: 10px;">
+            <div>
+                <table id="table2" style="margin: 1% auto;">
+                    <tr>
+                        <td>
+                            <img style="width: 37px" ng-click="stopInterval()" src="~/Images/stop1.png" />
+                            @*<button class="btn btn-primary" style="background-image:url(../../Images/stop1.png)" ng-click="stopInterval()">Stop</button>*@
+                        </td>
+                        <td>
+                            <img style="width: 45px" ng-click="refreshPage()" src="~/Images/refresh.jpg" />
+                            @*<button class="btn btn-primary" ng-click="refreshPage()">Refresh</button>*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label style="background-color: white; font-weight: bold;font-size:15px;">{{obj.Timer}}</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label id="lblRegistered" style="background-color: white; font-weight: bold;height: 25px;font-size:17px;width:100%;">REGISTERED</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="background-color: #1A524F;border-radius:5px; text-align: center; font-weight: bold;height: 25px;font-size:20px;width:100%;">{{obj.countRegistered}}</label>*@
+                            <button class="btn btn-info btnCount">{{obj.countRegistered}}</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label id="lblRegistered" style="background-color: white; color: red; font-weight: bolder;width:100%;font-size:17px;height:25px;">NOTEXAMINED</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; color: red; text-align: center; background-color: white; font-weight: bold;height: 25px;font-size:20px;">{{obj.countNotExamined}}</label>*@
+                            <button style="width:100%;color:red !important;font-weight:bold;font-size:larger;" class="btn btn-default">{{obj.countNotExamined}}</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 110px; text-align: center; background-color: white; font-weight: bold;width:100%;font-size:17px;height:25px;">EXAMINED</label>*@
+                            <button class="btn btn-default" style="width:100%;font-weight:bold;">EXAMINED</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border-radius: 5px; width: 100%; text-align: center; background-color: lightseagreen; font-weight: bold;height: 25px;font-size:20px;">{{obj.countExamined}}</label>*@
+                            <button class="btn btn-info btnCount">{{obj.countExamined}}</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <label id="lblRegistered" style="border-radius: 5px; width: 100%; text-align: center; background-color: white; color: red; font-weight: bold">NOTDONATED</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; color: red; text-align: center; background-color: white; font-weight: bold; height: 25px;font-size:20px;">{{obj.countNotDonated}}</label>*@
+                            <button class="btn btn-default" style="width:100%;font-weight:bold;font-size:larger;color:red !important;">{{obj.countNotDonated}}</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border-radius: 5px; width: 100%; text-align: center; background-color: white; font-weight: bold">DONATED</label>*@
+                            <button class="btn btn-default" style="width:100%;font-weight:bolder;">DONATED</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; text-align: center; background-color: lightseagreen; font-weight: bold;height: 25px;font-size:20px;">{{obj.countDonated}}</label>*@
+                            <button class="btn btn-info btnCount">{{obj.countDonated}}</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; text-align: center; background-color: lightseagreen; font-weight: bold">TAT</label>*@
+                            <button class="btn btn-info TUG" ng-click="TAT_Print()">TAT</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; text-align: center; background-color: lightseagreen; font-weight: bold">UNITS</label>*@
+                            <button class="btn btn-info TUG" ng-click="UNIT_Print()">UNITS</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            @*<label id="lblRegistered" style="border: 1px solid black; border-radius: 5px; width: 100%; text-align: center; background-color: lightseagreen; font-weight: bold">Graph</label>*@
+                            <button class="btn btn-info TUG" ng-click="Graph_Print()">Graph</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

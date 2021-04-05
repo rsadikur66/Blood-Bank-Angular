@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "T12254";
+}
+<script src="~/Apps/JSController/Transaction/T12254Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12254Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12254Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12254Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 25%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblUnitFrom" for="txtUnitFrom" class="ng-cloak" ng-bind="getLabel('lblUnitFrom')"></label>
+                    </td>
+                    <td style="width: 15%">
+                        <input type="text" id="txtUnitFrom" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblUnitTo" for="txtUnitTo" class="ng-cloak" ng-bind="getLabel('lblUnitTo')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtUnitTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 25%;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 14% auto">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td style="width:15%"></td>
+                            <td style="width:15%"><span id="lblUnit" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td style="width:15%"><span id="lblResult" ng-bind="getLabel('lblResult')"></span></td>
+                            <td style="width:15%"><span id="lblFinal" ng-bind="getLabel('lblFinal')"></span></td>
+                            <td style="width:25%"><span id="lblRemarks" ng-bind="getLabel('lblRemarks')"></span></td>
+                            <td style="width:15%"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.demo" style="width: 100%">
+                            <td style="width:15%"></td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 25%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width:15%"></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr   style="width: 100%">
+                            <td style="width:15%"></td>
+                            <td style="width: 15%" class="alnR">
+                                <span id="lblEntry" ng-bind="getLabel('lblEntry')"></span>
+                            </td>
+                            <td style="width: 30%" colspan="2">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 40%" colspan="2">
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

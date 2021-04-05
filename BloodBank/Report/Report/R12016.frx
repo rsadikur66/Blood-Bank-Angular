@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/10/2018 12:48:00" ReportInfo.Modified="12/05/2018 10:02:16" ReportInfo.CreatorVersion="2016.1.0.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqmmfdjkQxfe1iwShBNGpudwEdyIftGIBrjfzMjSGZrEAH+uc9psYFTziUn1p/XQnzeJlnH7woiqZbD0uZd4ggT7uSjXoQf+EOCT2z1zAl3JZcmEyotWNlko6QZYrX0X9p">
+      <TableDataSource Name="R12016" DataType="System.Int32" Enabled="true" TableName="R12016">
+        <Column Name="T_UNIT_NO" DataType="System.String"/>
+        <Column Name="T_DONATION_DATE" DataType="System.DateTime"/>
+        <Column Name="T_RH_NAME" DataType="System.String"/>
+        <Column Name="T_RH" DataType="System.String"/>
+        <Column Name="T_PRODUCT_CODE" DataType="System.String"/>
+        <Column Name="T_EXPIRY_DATE" DataType="System.DateTime"/>
+        <Column Name="PRODUCTDESC" DataType="System.String"/>
+        <Column Name="T_STORE_AT" DataType="System.String"/>
+        <Column Name="VOLUME" DataType="System.String"/>
+        <Column Name="NEG_VIRUS" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="140" PaperHeight="150">
+    <DataBand Name="Data1" Width="453.6" Height="463.05" DataSource="R12016">
+      <ShapeObject Name="Shape1" Width="453.6" Height="463.05"/>
+      <TextObject Name="Text1" Left="3" Top="3" Width="103.95" Height="18.9" Text="Donation Date"/>
+      <BarcodeObject Name="Barcode1" Left="9.45" Top="28.35" Width="189" Height="75.6" AutoSize="false" Text="[R12016.T_DONATION_DATE]" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <TextObject Name="Text2" Left="305.4" Top="6.45" Width="113.4" Height="47.25" Text="[R12016.T_RH]" HorzAlign="Center" VertAlign="Center" Font="Arial, 25pt, style=Bold"/>
+      <TextObject Name="Text3" Left="267.6" Top="58.15" Width="179.55" Height="43.35" Text="[R12016.T_RH_NAME]" HorzAlign="Center" VertAlign="Center" Font="Arial, 15pt, style=Bold"/>
+      <RichObject Name="Rich1" Left="9.45" Top="103.95" Width="226.8" Height="37.8" Text="{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil Arial;}{\f1\fnil Tahoma;}}&#13;&#10;{\*\generator Riched20 10.0.17134}\viewkind4\uc1 &#13;&#10;\pard\qc\b\f0\fs24 Blood Bank Depertment,\par&#13;&#10;Central Lab and Blood Bank in Ryadh\f1\par&#13;&#10;}&#13;&#10;"/>
+      <RichObject Name="Rich2" Left="237.25" Top="103.95" Width="207.9" Height="37.8" Text="{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Tahoma;}{\f1\fnil Tahoma;}}&#13;&#10;{\*\generator Riched20 10.0.17134}\viewkind4\uc1 &#13;&#10;\pard\b\f0\fs28 RH:                K :\f1\par&#13;&#10;}&#13;&#10;"/>
+      <RichObject Name="Rich3" Left="9.45" Top="141.75" Width="226.8" Height="113.4" Text="{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Arial;}{\f1\fnil Tahoma;}}&#13;&#10;{\*\generator Riched20 10.0.17134}\viewkind4\uc1 &#13;&#10;\pard\qc\fs18 Properly Identify intended Recipient\fs20\par&#13;&#10;\par&#13;&#10;\fs16 See Circular Information for indications,\par&#13;&#10;contraindications,cautions and methods of\par&#13;&#10;infusion. May transmit infectius agents\par&#13;&#10;\fs20\par&#13;&#10;RX Only\par&#13;&#10;\b\fs22 VOLUNTEER DONOR\b0\f1\fs17\par&#13;&#10;}&#13;&#10;"/>
+      <TextObject Name="Text4" Left="9.45" Top="255.15" Width="103.95" Height="18.9" Text="Product Code"/>
+      <TextObject Name="Text5" Left="9.45" Top="355.1" Width="255.15" Height="18.9" Text="[R12016.PRODUCTDESC]" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <BarcodeObject Name="Barcode2" Left="9.45" Top="274.05" Width="103.95" Height="75.6" AutoSize="false" Text="[R12016.T_PRODUCT_CODE]" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <TextObject Name="Text6" Left="9.45" Top="378" Width="179.55" Height="18.9" Text="Volume : [R12016.VOLUME]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="9.45" Top="398.9" Width="226.8" Height="18.9" Text="Store at : [R12016.T_STORE_AT]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text8" Left="236.25" Top="151.2" Width="94.5" Height="18.9" Text="Unit No" VertAlign="Center" Font="Arial, 9pt"/>
+      <BarcodeObject Name="Barcode3" Left="236.25" Top="170.1" Width="189" Height="75.6" AutoSize="false" Text="[R12016.T_UNIT_NO]" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <TextObject Name="Text9" Left="236.25" Top="255.15" Width="103.95" Height="18.9" Text="Expiration Date:" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text10" Left="340.2" Top="255.15" Width="85.05" Height="18.9" Text="23:59" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <BarcodeObject Name="Barcode4" Left="236.25" Top="274.05" Width="189" Height="75.6" AutoSize="false" Text="[R12016.T_EXPIRY_DATE]" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <TextObject Name="Text11" Left="240.44" Top="378.9" Width="207.9" Height="47.25" CanGrow="true" Text="Neg for [R12016.NEG_VIRUS]" Font="Arial, 8pt"/>
+      <TextObject Name="Text12" Left="241.25" Top="434.7" Width="210.9" Height="18.9" Text="Medisys Report ID : R12036B" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </DataBand>
+  </ReportPage>
+</Report>

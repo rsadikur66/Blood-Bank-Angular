@@ -1,0 +1,283 @@
+﻿
+
+@{
+    ViewBag.Title = "T12235";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Apps/JSController/Transaction/T12235Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12235Service.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12235Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()" ng-keydown="EnterControl($event)"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        <button id="btnPrint" title="Print" class="Button Print" ng-click="Print()"></button>
+        @*<button ID="btnDelete" ToolTip="Delete" class="Button Delete" ng-click="Delete()"></button>
+            <button id="btnEnterQuery" tooltip="Enter Query" class="Button Enter" ng-click="EnterQuery()"></button>
+            <button id="btnExecuteQuery" tooltip="Execute Query" class="Button Execute" ng-click="ExecuteQuery()"></button>*@
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12235Controller" name="obj.myDiv" novalidate ng-form style="padding: 20px; margin-left: 25px;">
+        <div class="container">
+            <center>
+                <div class="mainDiv" style="width: 800px; border: 1px solid #c12d2d; margin-top: 10px; border-radius: 5px; padding: 20px;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                                <label id="lblUnitFrom" for="txtUnitFrom" class="ng-cloak" ng-bind="getLabel('lblUnitFrom')"></label><span ng-show="obj.myDiv.untfrom.$error.required" style="color: red">*</span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                                <input id="txtUnitFrom" type="text" ng-dblclick="GetUnitData('f')" class="form-control ng-cloak" name="untfrom" ng-model="obj.UnitFrom" required ng-keydown="EnterControl($event,'f')" ng-blur="UnitValidate(obj.UnitFrom,'UnitFrom')">
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                                <label id="lblUnitTo" for="txtUnitTo" class="ng-cloak" ng-bind="getLabel('lblUnitTo')"></label>
+                                <span ng-show="obj.myDiv.unitto.$error.required" style="color: red">*</span>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3" style="text-align: left">
+                                <input id="txtUnitTo" type="text" ng-dblclick="GetUnitData('t')" class="form-control ng-cloak" name="unitto" ng-model="obj.UnitTo" ng-keydown="EnterControl($event,'t')" ng-blur="UnitValidate(obj.UnitTo,'UnitTo')" required>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                                <input type="button" id="btnConfirmAll" class="ng-cloak" style="width: 100px;background: #A21217; color: #ffffff; height: 23px;  border-radius: 5px;cursor: none" ng-click="checkAll($event)" value="{{getLabel('btnConfirmAll')}}" disabled="disabled">
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <!--For Data Gridview start-->
+        <center>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #A21217; border-radius: 5px; padding: 10px; width: 85%; margin: 1.0% auto; margin-left: 6%;">
+                    <div>
+                        <table class="table table-bordered" style="margin: 5px auto">
+                            <thead style="text-align: center">
+                                <tr style="background-color: #A21217; color: #ffffff;">
+
+                                    <th id="lblAbsConfirm" class="ng-cloak" ng-bind="getLabel('lblAbsConfirm')" style="text-align: center; width: 5%"></th>
+
+                                    <th id="lblUnit" class="ng-cloak" ng-bind="getLabel('lblUnit')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblBlood" class="ng-cloak" ng-bind="getLabel('lblBlood')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblBloodGroup" class="ng-cloak" ng-bind="getLabel('lblBloodGroup')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblAntibody" class="ng-cloak" ng-bind="getLabel('lblAntibody')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblDU" class="ng-cloak" ng-bind="getLabel('lblDU')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblKell" class="ng-cloak" ng-bind="getLabel('lblKell')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblPhenotyping" class="ng-cloak" ng-bind="getLabel('lblPhenotyping')" style="text-align: center; width: 5%"></th>
+
+                                    <th id="lblResult" class="ng-cloak" ng-bind="getLabel('lblResult')" style="text-align: center; width: 25%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in obj.UnitInfo">
+                                    <td style="width: 5%; text-align: center;">
+                                        <input id="chkVerified{{$index}}" type="checkbox" name="verified" ng-model="obj.T_VERIFY" ng-true-value="'1'" ng-false-value="'2'" ng-change="chkVerified()">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtUnit{{$index}}" type="text" style="width: 100%" class="form-control" name="unit" ng-model="obj.T_UNIT_NO" readonly />
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtBlood{{$index}}" type="text" ng-dblclick="GetBloodData($index)" ng-keydown="GetBloodDatabyKeyPress($event,$index)" class="form-control ng-cloak" name="blood" ng-model="obj.T_BLOOD_GROUP" style="width: 100%">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtBloodGroup{{$index}}" type="text" style="width: 100%" class="form-control" name="bloodgroup" ng-model="obj.T_LANG_NAME" readonly>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtAntibody{{$index}}" type="text" name="antibody" class="form-control" ng-dblclick="GetAntibodyData($index)" ng-keydown="GetAntibodyDataKeyPress($event,$index)" style="width: 100%" ng-model="obj.T_ANTIBODY_1" readonly="readonly">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <ui-select ng-model="obj.du.selected" on-select="GetDuData()" id="ddlDU{{$index}}" theme="select2" append-to-body="true" style="width: 100%">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_DU_NAME}}</ui-select-match>
+                                            <ui-select-choices repeat="du in obj.getdu | propsFilter: {T_DU_NAME: $select.search}" ng-model="obj.DuList" id="ddlDUList">
+                                                <div ng-bind-html="du.T_DU_NAME | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+
+                                        <input type="text" id="ddlIDU{{$index}}" ng-model="obj.T_DU" ng-bind="obj.T_DU=obj.du.selected.T_DU" name="du" style="width: 90px" hidden />
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtKell{{$index}}" type="text" style="width: 100%" class="form-control" name="kell" ng-model="obj.RH_KELL">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input id="txtPhenotyping{{$index}}" type="text" name="phenotyping" class="form-control" style="width: 100%" ng-model="obj.RH_PHENO">
+                                    </td>
+                                    <td style="width: 25%">
+                                        <input id="txtResult{{$index}}" type="text" style="width: 100%" class="form-control" name="result" ng-model="obj.RESULT">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </center>
+        <!--For Data Gridview End-->
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                    <label id="lblVerifiedBy" for="txtUnitFrom" class="ng-cloak" ng-bind="getLabel('lblVerifiedBy')"></label>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: left">
+                    <input id="txtVerifiedCode" type="text" ng-model="obj.T_VERIFIED_BY" style="width: 52%;" readonly="readonly" />@*T_EMP_CODE*@
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: left">
+                    <input id="txtVerifiedName" type="text" ng-model="obj.T_USER_NAME" style="width: 100%; margin-left: -110px;" readonly="readonly" />
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                </div>
+            </div>
+        </div>
+
+        @*Unit Modal Start*@
+        <div id="divUnit" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblModelHeader" ng-bind="getLabel('lblUnitHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divUnit')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchUnit" />
+
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid" arrow-selector="onUnitSelect(selectedRow)" >
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%">
+                                            <label id="lblUnitNo" ng-bind="getLabel('lblUnitNo')" class="ng-cloak"></label>
+                                        </th>
+                                        <th style="width: 40%">
+                                            <label id="lblBloodGrup" ng-bind="getLabel('lblBloodGroup')" class="ng-cloak"></label>
+                                        </th>
+                                        <th style="width: 40%">
+                                            <label id="lblDonationDate" ng-bind="getLabel('lblDonationDate')" class="ng-cloak"></label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="obj in UnitList |filter : SearchUnit |itemsPerPage:10" pagination-id="uList" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}"  ng-click="onUnitSelect($index,obj)">
+                                        <td style="text-align: center;width: 20%"><span id="spnUnitNo{{$index}}" style="width: 100%">{{obj.T_UNIT_NO}}</span></td>
+                                        <td style="text-align: left;width: 40%"><span id="spnBloodGroup{{$index}}" style="width: 100%">{{obj.T_BLOOD_GROUP}}</span></td>
+                                        <td style="text-align: left;width: 40%"><span id="spnDonationDate{{$index}}" style="width: 100%">{{obj.T_DONATION_DATE}}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="uList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Unit Modal End*@
+
+        @*Blood Gorup Modal Start*@
+        <div id="divBloodGroup" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblBloodGroupHeader" ng-bind="getLabel('lblBloodGroupHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divBloodGroup')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchBlood" />
+
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50%">
+                                            <label id="lblBloodId" class="ng-cloak" ng-bind="getLabel('lblBloodId')"></label>
+                                        </th>
+                                        <th style="width:50%">
+                                            <label id="lblBloodDesc" ng-bind="getLabel('lblBloodDesc')" class="ng-cloak"></label>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr dir-paginate="obj in bloodGroupList |filter : SearchBlood |itemsPerPage:10" pagination-id="bList" style="cursor: pointer" ng-click="onBloodSelect($index)" >
+                                        <td style="text-align: center; width: 50%"><span id="spnBloodCode{{$index}}" style="width: 100%">{{obj.T_BLOOD_GROUP}}</span></td>
+                                        <td style="text-align: left; width: 50%"><span id="spnBloodDesc{{$index}}" style="width: 100%">{{obj.T_LANG_NAME}}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="bList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Blood Gorup Modal End*@
+
+        @*Antibody Modal Start*@
+        <div id="divAntibody" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblAntibodyHeader" ng-bind="getLabel('lblAntibodyHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divAntibody')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchAntiBody" />
+
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead>
+                                <tr>
+                                    
+                                    <th style="width: 100%">
+                                        <label id="lblAntibod" class="ng-cloak" ng-bind="getLabel('lblAntibody')"></label>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr dir-paginate="obj in AntibodyList |filter : SearchAntiBody |itemsPerPage:10" pagination-id="aList" style="cursor: pointer" ng-click="onAntibodySelect($index)">
+                                        <td style="text-align: center; width: 100%"><span id="spnAntibody1Code{{$index}}" style="width: 100%">{{obj.T_ANTIBODY_1}}</span><span id="spnAntibodyCode{{$index}}" style="width: 100%;display:none">{{obj.T_ANTIBODY}}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="aList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        @*Blood Gorup Modal End*@
+    </div>
+

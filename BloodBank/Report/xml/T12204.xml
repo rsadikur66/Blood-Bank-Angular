@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="T12204" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="T12204" msprop:BaseTable.3="T03" msprop:BaseTable.2="T06" msprop:BaseTable.0="T12022" msprop:BaseTable.1="T01">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="T_DONATION_DATE" msprop:BaseColumn="T_DONATION_DATE" msprop:OraDbType="106" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="T_PAT_NO" msprop:BaseColumn="T_PAT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="PAT_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_GENDER" msprop:BaseColumn="T_GENDER" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="GENDER" msprop:BaseColumn="T_LANG2_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_NTNLTY_ID" msprop:BaseColumn="T_NTNLTY_ID" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_NTNLTY_CODE" msprop:BaseColumn="T_NTNLTY_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="NATIONALITY" msprop:BaseColumn="T_LANG2_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_UNIT_NO" msprop:BaseColumn="T_UNIT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_SEGMENT_NO" msprop:BaseColumn="T_SEGMENT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_BAG_BARCODE" msprop:BaseColumn="T_BAG_BARCODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_DONATION_TIME" msprop:BaseColumn="T_DONATION_TIME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="Pat_BarCode" msdata:DataType="System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" type="xs:anyType" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

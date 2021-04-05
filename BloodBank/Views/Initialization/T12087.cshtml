@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "T12087";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Apps/JSController/Initialization/T12087Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12087Service.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12087Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12087Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+    <div class="container">
+        <!--For Data Gridview start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #4a4949; border-radius: 5px; padding: 10px; width: 100%; margin: 1.0% auto; margin-left: 1%;">
+                <div class="omf-modal-div-placeholder">
+                    <table>
+                        <tr>
+                            <td><input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" style="width: 100%;" /></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div> 
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                <tr style="background-color: #4a4949; color: #ffffff;">
+
+                                    <th id="lblVitalCode" class="ng-cloak" ng-bind="getLabel('lblVitalCode')" style="text-align: center; width: 10%"></th>
+                                    <th id="lblVitalSign" class="ng-cloak" ng-bind="getLabel('lblVitalSign')" style="text-align: center; width: 20%"></th>
+
+                                    <th id="lblNormalValue" class="ng-cloak" ng-bind="getLabel('lblNormalValue')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblMinValue" class="ng-cloak" ng-bind="getLabel('lblMinValue')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblMaxValue" class="ng-cloak" ng-bind="getLabel('lblMaxValue')" style="text-align: center; width: 10%"></th>
+
+                                    <th id="lblMessage" class="ng-cloak" ng-bind="getLabel('lblMessage')" style="text-align: center; width: 40%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="V in obj.VirusInfo |filter : Search |itemsPerPage:5" pagination-id="virus" style="cursor: pointer">
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" id="txtVitalCode" ng-model="V.T_VITAL_CODE" readonly>
+                                    </td>
+                                    <td style="width: 20%">
+                                        <input type="text" style="width: 100%" class="form-control" id="txtVitalSign" ng-model="V.T_VTL_SIGNS" readonly>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" id="txtNormalValue" ng-model="V.T_NORML_VALUE">
+
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" id="txtMinValue" ng-model="V.T_MIN_VALUE">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" id="txtMaxValue" ng-model="V.T_MAX_VALUE">
+                                    </td>
+                                    <td>
+                                        <table class="omf-modal-grid grid">
+                                            <thead style="text-align: center">
+                                            <tr style="background-color: #4a4949; color:#ffffff;">
+                                                <th id="lblMessageCode" class="ng-cloak" ng-bind="getLabel('lblMessageCode')" style="text-align: center; width: 15%"></th>
+
+                                                <th id="lblMessageName" class="ng-cloak" ng-bind="getLabel('lblMessageName')" style="text-align: center; width: 25%"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="obj in V.List ">
+                                                <td style="width: 15%">
+                                                    <input type="text" style="width: 100%" class="form-control" id="txt" ng-model="obj.T_RES_CODE" readonly>
+                                                </td>
+                                                <td style="width: 25%">
+                                                    <input type="text" style="width: 100%" class="form-control" id="txtt" ng-model="obj.T_LANG_NAME">
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="virus" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--For Data Gridview End-->
+    </div>
+</div>

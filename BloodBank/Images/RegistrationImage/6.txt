@@ -1,0 +1,13 @@
+ foreach (InvoiceDetail newChild in childObjectList)
+                {
+                    var org1 = db1.InvoiceMasters.SingleOrDefault(vno => vno.InId == newChild.Vat);
+                    InvoiceMaster deletedObject = db1.InvoiceMasters.Find(newChild.Vat);
+                    if (org1 != null)
+                    {
+                        db1.InvoiceMasters.Remove(deletedObject);
+                    }
+                    masterObject.InvoiceDetails.Add(newChild);
+                }
+                db1.InvoiceMasters.Add(masterObject);
+                db1.SaveChanges();
+                

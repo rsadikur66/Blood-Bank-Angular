@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "Q12263";
+}
+
+<script src="~/Apps/JSController/Query/Q12263Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12263Service.js"></script>
+<style>
+
+    /*table thead {
+        font-size: 18px;
+    }*/
+
+    #table1 td {
+        padding: 0px !important;
+    }
+
+    #table2 td {
+        padding: 2px !important;
+    }
+
+    .bgRed {
+        background-color: #ff0000 !important;
+        color: white !important;
+    }
+
+    .bgGreen {
+        background-color: #006400 !important;
+        color: white !important;
+    }
+
+    .bgYellow {
+        background-color: lightgoldenrodyellow !important;
+        color: black !important;
+    }
+
+    .bgBlue {
+        background-color: #b8aef8 !important;
+        color: black !important;
+    }
+
+    .btn-custom {
+        color: #FAF7F6;
+        background-color: #6D7165;
+        border-color: #6D7165;
+        padding: 0px 5px !important;
+    }
+
+    .TUG {
+        width: 70%;
+        margin: 0 18%;
+        color: black;
+        font-weight: bolder;
+        background-color: cadetblue;
+    }
+
+    .btnCount {
+        width: 100%;
+        height: 35px;
+        background-color: cadetblue;
+        color: black;
+        font-weight: bolder;
+        font-size: larger;
+    }
+    #grid tbody {
+        display: block !important;
+        overflow: auto;
+        height: 300px !important;
+        /*max-height: 300px !important;*/
+        width: 100%;
+    }
+
+    #grid thead tr {
+        display: table !important;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    #grid thead, tbody tr {
+        display: table !important;
+        width: 100%;
+        table-layout: fixed !important;
+    }
+</style>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12263Controller">
+        @*<button id="btnNew" title="New" class="Button New"></button>*@
+        @*<button id="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>*@
+        <button id="btnNext" title="Next" class="Button Next" ng-click="nextClick()"></button>
+        @*<button id="btnDelete" title="Delete" class="Button Delete"></button>*@
+        @*<button id="btnClear" title="Clear" class="Button Clear" ng-click="ClearAll()"></button>*@
+        @*<button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>*@
+        @*<button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>*@
+        @*<button id="btnPrint1" title="Print1" class="Button Print" ng-click="T12304_print()"></button>*@
+    </div>
+
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12263Controller" name="obj.myDiv" novalidate ng-form style="width: 100%">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid gray; border-radius: 5px; padding: 10px;">
+          
+                <table id="grid" style="width: 100%; margin: 1% auto">
+                    <thead style="">
+                        <tr style="width: 100%;border:1px solid gray;background-color:cadetblue">
+                            <th style="width:15%;border:1px solid gray;text-align:center"><label class="ng-cloak">Req No</label></th>
+                            <th style="width:20%;border:1px solid gray;text-align:center"><label class="ng-cloak">Transfusion Hospital</label></th>
+                            <th style="width:15%;border:1px solid gray;text-align:center"><label class="ng-cloak">Delivery By</label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center"><label class="ng-cloak">RQT Date &amp; Time</label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center"><label class="ng-cloak"> Date &amp; Time</label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center"><label class="ng-cloak">Rcv Date &amp; Time</label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center"><label class="ng-cloak">Drop Date &amp; Time</label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center"><label class="ng-cloak">Request</label></th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="">
+                        <tr style="width: 100%;border:1px solid gray" dir-paginate="obj in obj.AllGridData |filter : Search |itemsPerPage:100">
+                            <td style="width:15%;border:1px solid gray; text-align:center">{{obj.T_BLOOD_REQ_NO}}</td>
+                            <td style="width:20%;border:1px solid gray;padding-left:5px !important">{{obj.T_HOSPITAL}}</td>
+                            <td style="width:15%;border:1px solid gray;padding-left:5px !important">{{obj.T_DELIVERY_MAN}}</td>
+                            <td style="width:10%;border:1px solid gray;text-align:center">{{obj.T_ENTRY_DATE|date:'dd/MM/yyyy'}}&nbsp;&nbsp;{{obj.T_ENTRY_TIME}}</td>
+                            <td style="width:10%;border:1px solid gray;text-align:center">{{obj.T_ACPT_CAN_DATE|date:'dd/MM/yyyy'}}&nbsp;&nbsp;{{obj.T_ACPT_CAN_TIME}}</td>
+                            <td style="width:10%;border:1px solid gray">{{obj.T_BLOOD_RCVD_DATE|date:'dd/MM/yyyy'}}&nbsp;&nbsp;{{obj.T_BLOOD_RCVD_TIME}}</td>
+                            <td style="width:10%;border:1px solid gray;text-align:center">{{obj.T_BLOOD_DROP_DATE|date:'dd/MM/yyyy'}}&nbsp;&nbsp;{{obj.T_BLOOD_DROP_TIME}}</td>
+                            <td style="width:10%;border:1px solid gray;padding-left:5px !important">{{obj.T_ACPT_CAN}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+        </div>
+       
+        @*<div class="row">
+            <table>
+                <tr>
+                    <td>
+                        <dir-pagination-controls pagination-id="dashboardResult" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><img style="width: 37px" ng-click="stopInterval()" src="~/Images/stop1.png" /></td>
+                    <td><img style="width: 45px" ng-click="refreshPage()" src="~/Images/refresh.jpg" /></td>
+                    <td><label style="background-color: white; font-weight: bold;font-size:15px;">{{obj.Timer}}</label></td>
+                    <td><label id="lblRegistered" style="background-color: white; font-weight: bold;height: 25px;font-size:17px;width:100%;text-align: center">REQUESTED</label></td>
+                    <td><button class="btn btn-info btnCount">{{obj.countRequested}}</button></td>
+                    <td><label id="lblRegistered" style="background-color: white; color: red; font-weight: bolder;width:100%;font-size:17px;height:25px;text-align: center">RECEIVED</label></td>
+                    <td><button style="width:100%;color:red !important;font-weight:bold;font-size:larger;" class="btn btn-default">{{obj.countRequestRecived}}</button></td>
+                    <td><button class="btn btn-default" style="width:100%;font-weight:bold;">ISSUED</button></td>
+                    <td><button class="btn btn-info btnCount">{{obj.countIssued}}</button></td>
+                    <td><label id="lblRegistered" style="border-radius: 5px; width: 100%; text-align: center; background-color: white; color: red; font-weight: bold">OUT RECVD</label></td>
+                    <td><button class="btn btn-default" style="width:100%;font-weight:bold;font-size:larger;color:red !important;">{{obj.countOutReceived}}</button></td>
+
+
+                </tr>
+            </table>
+        </div>*@
+    </div>
+
+</div>
+

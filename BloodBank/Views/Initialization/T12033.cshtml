@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "T12033";
+}
+<script src="~/Apps/JSController/Initialization/T12033Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12033Service.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+@section container{
+<div id="options" ng-app="BloodBank" ng-controller="T12033Controller">
+    <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+    <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+    <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+    @*<button ID="btnDelete" ToolTip="Delete" class="Button Delete" ng-click="Delete()"></button>*@
+    <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+</div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12033Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+    <div class="container">
+        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            <div style="border: 1px solid #4a4949; margin: 20px auto; margin-top: 10px; width: 80%; border-radius: 5px; padding: 20px;">
+                <table style="width: 100%">
+                    <tr style="width: 100%">
+                        <td>
+                            <label id="lblVirusCode" for="txtVirusCode" class="ng-cloak" ng-bind="getLabel('lblVirusCode')"></label>
+                        </td>
+                        <td>
+                            <input id="txtVirusCode" type="text" ng-model="obj.t12033.T_VIRUS_CODE"  class="form-control ng-cloak" name="viruscode" style="width: 30%;" readonly>
+                        </td>
+                        <td>
+                            <label id="lblPN" for="txtPN" class="ng-cloak" ng-bind="getLabel('lblPN')"></label>
+                        </td>
+                        <td>
+                            <input id="txtPN" type="text" ng-model="obj.t12033.T_PN" ng- style="width: 30%;" >
+                        </td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td>
+                            <label id="lblEnglishName" for="txtEnglishName" class="ng-cloak" ng-bind="getLabel('lblEnglishName')"></label>
+                        </td>
+                        <td>
+                            <input id="txtEnglishName" type="text" ng-model="obj.t12033.T_LANG2_NAME" class="form-control ng-cloak" name="englishName" style="width: 100%;" required>
+                        </td>
+                        <td>
+                            <label id="lblLocalName" for="txtLocalName" class="ng-cloak" ng-bind="getLabel('lblLocalName')"></label>
+                        </td>
+                        <td>
+                            <input id="txtLocalName" type="text" name="localName" ng-model="obj.t12033.T_LANG1_NAME" style="width: 100%; text-align: right;" required>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td>
+                            <label id="lblActiv" for="txtActiv" class="ng-cloak" ng-bind="getLabel('lblActiv')"></label>
+                        </td>
+                        <td>
+                            <input id="txtActiv" type="checkbox" ng-model="obj.t12033.T_ACTIVE" class="form-control ng-cloak" name="check"  ng-true-value="'1'" ng-false-value="''" style="width: 20px;" >
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+
+        <!--For Data Gridview start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #4a4949; border-radius: 5px; padding: 10px; width: 63%; margin: 1.0% auto; margin-left: 18.5%;">
+                <div class="omf-modal-div-placeholder">
+                    <table>
+                        <tr>
+                            <td><input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" style="width: 100%;"/></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                <tr style="background-color: #4a4949; color: #ffffff;">
+
+                                    <th id="lblVirus" class="ng-cloak" ng-bind="getLabel('lblVirusCode')" style="text-align: center; width: 15%"></th>
+
+                                    <th id="lblEnglish" class="ng-cloak" ng-bind="getLabel('lblEnglishName')" style="text-align: center; width: 35%"></th>
+
+                                    <th id="lblLocal" class="ng-cloak" ng-bind="getLabel('lblLocalName')" style="text-align: center; width: 35%"></th>
+
+                                    <th id="lblPN1" class="ng-cloak" ng-bind="getLabel('lblPN')" style="text-align: center; width: 15%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="obj in obj.VirusInfo |filter : Search |itemsPerPage:5" pagination-id="virus" style="cursor: pointer" ng-click="onRowSelect(obj)">
+                                    <td style="text-align: center">{{obj.T_VIRUS_CODE}}</td>
+                                    <td style="text-align: center">{{obj.T_LANG2_NAME}}</td>
+                                    <td style="text-align: center">{{obj.T_LANG1_NAME}}</td>
+                                    <td style="text-align: center">{{obj.T_PN}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="virus" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--For Data Gridview End-->
+    </div>
+</div>
+
+
+
+

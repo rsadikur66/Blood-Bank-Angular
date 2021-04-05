@@ -1,0 +1,96 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Web;
+using BloodBankDAL.Model;
+
+namespace BloodBankDAL.Repository.Query.Transaction
+{
+    public class T12207 : CommonDAL
+    {
+        public DataTable GetRefHospital(string siteCode, string lang)
+        {
+            //return Query($"SELECT DISTINCT A.T_CENTRAL_BANK_CODE T_REF_HOSP,B.T_LANG{lang}_NAME T_LANG_NAME FROM T12338 A, T12337 B WHERE A.T_CENTRAL_BANK_CODE = B.T_BANK_CODE AND A.T_BANK_CODE ='{siteCode}' AND B.T_BANK_TYPE = '1'");
+
+            //return Query($"SELECT T_REFERRAL_CODE T_REF_HOSP, T_LANG{lang}_NAME T_LANG_NAME FROM T02049 WHERE T_REFERRAL_CODE = NVL('{siteCode.ToUpper()}', T_REFERRAL_CODE) ORDER BY 2");
+            return Query($@"SELECT DISTINCT A.T_CENTRAL_BANK_CODE T_REF_HOSP,B.T_LANG{lang}_NAME T_LANG_NAME FROM T12338 A,
+                        T12337 B WHERE A.T_CENTRAL_BANK_CODE = B.T_BANK_CODE AND A.T_BANK_CODE = '{siteCode}' AND A.T_BANK_ACTIVE = '1' ORDER BY 2");
+        }
+
+        public DataTable GetBlood(string lang)
+        {
+            return Query($"SELECT T_ABO_CODE T_BLOOD_GRP,T_LANG{lang}_NAME T_NAME FROM T12004 ORDER BY 1");
+        }
+        public DataTable GetProduct(string lang)
+        {
+            return Query($"SELECT T_PRODUCT_CODE,T_LANG{lang}_NAME T_LAN_NAME FROM T12011 WHERE T_PRODUCT_CODE IN ('CRYO','FFP','PLT','PRBC') ORDER BY T_PRODUCT_CODE");
+        }
+
+        public string Insert_T12207(t12207 t12207, string user, string siteCode)
+        {
+            string msg = "";
+            int count = Query($"SELECT T_BLOOD_REQNO FROM T12065 WHERE T_SITE_CODE='{siteCode}' and T_BLOOD_REQNO  = '{t12207.T_BLOOD_REQNO}'").Rows.Count;
+            var max = Query($"SELECT LPAD(NVL(MAX(T_BLOOD_REQNO),0)+1,7,0) T_BLOOD_REQNO FROM T12065 WHERE T_SITE_CODE='{siteCode}'");
+            var maxbloodReqNo = max.Rows[0]["T_BLOOD_REQNO"];
+            BeginTransaction();
+
+            if (count == 0)
+            {
+                if (Command($"INSERT INTO T12065(T_ENTRY_USER,T_ENTRY_DATE,T_BLOOD_REQNO,T_BLOOD_REQDATE,T_BLOOD_REQTIME,T_REF_HOSP,T_BLOOD_GRP,T_PRODUCT_CODE,T_NUM_UNIT,T_CROSSMATCH_FLAG,T_SITE_CODE,T_REQUEST_STATUS) VALUES ('{user}', TRUNC(SYSDATE), '{maxbloodReqNo}', TRUNC(SYSDATE), TO_CHAR(SYSDATE,'HH24MI'), '{t12207.T_REF_HOSP}','{t12207.T_BLOOD_GRP}','{t12207.T_PRODUCT_CODE}','{t12207.T_NUM_UNIT}','{t12207.T_CROSSMATCH_FLAG}','{siteCode}','1')"))
+                {
+                    CommitTransaction();
+                    msg = "N0040";
+                }
+                else
+                {
+                    RollbackTransaction();
+                    msg = "N0071";
+                }
+            }
+            else
+            {
+                if (Command(
+                    $"UPDATE T12065 SET T_UPD_USER='{user}',T_UPD_DATE=TRUNC(SYSDATE),T_BLOOD_REQDATE=TRUNC(SYSDATE),T_BLOOD_REQTIME=TO_CHAR(SYSDATE,'HH24MI'), T_REF_HOSP='{t12207.T_REF_HOSP}',T_BLOOD_GRP='{t12207.T_BLOOD_GRP}',T_PRODUCT_CODE='{t12207.T_PRODUCT_CODE}',T_NUM_UNIT='{t12207.T_NUM_UNIT}',T_CROSSMATCH_FLAG='{t12207.T_CROSSMATCH_FLAG}' WHERE T_BLOOD_REQNO='{t12207.T_BLOOD_REQNO}' AND T_SITE_CODE='{siteCode}'"))
+                {
+                    CommitTransaction();
+                    msg = "N0041";
+                }
+                else
+                {
+                    RollbackTransaction();
+                    msg = "N0072";
+                }
+            }
+            return msg;
+        }
+
+        public string BloodReceiveFromTransfusion(string del, string blNo, string user, string siteCode)
+        {
+            string msg = "";
+            BeginTransaction();
+            if (Command($"UPDATE T12065 SET T_REQUEST_STATUS = '5', T_TF_RECEIVE_FLG = '1', T_TF_RECEIVE_BY = '{user}', T_TF_RECEIVE_DATE = TRUNC(SYSDATE), T_TF_RECEIVE_TIME = TO_CHAR(SYSDATE,'HH24MI') WHERE T_BLOOD_REQNO = '{blNo}' AND T_SITE_CODE = '{siteCode}'"))
+            {
+                if (Command($"UPDATE T12092 SET T_STATUS = '' WHERE T_EMP_CODE = '{del}'"))
+                {
+                    CommitTransaction();
+                    msg = "N0040";
+                }
+
+            }
+            else
+            {
+                RollbackTransaction();
+                msg = "N0071";
+            }
+            return msg;
+        }
+        public DataTable GetGridDataForTransfusion(string siteCode)
+        {
+            //return Query($"SELECT DISTINCT T12065.T_BLOOD_REQNO, T12065.T_BLOOD_REQDATE, T12065.T_BLOOD_REQTIME, T12065.T_REF_HOSP, (SELECT T02049.T_LANG2_NAME FROM T02049 WHERE T02049.T_REFERRAL_CODE = T12065.T_REF_HOSP) CENTR_HOSP_NAME, T12065.T_BB_RECEIVED_FLAG, T12065.T_BB_RECEIVED_DATE, T12065.T_BB_RECEIVED_TIME, T12065.T_BB_RECEIVED_BY, (SELECT MAX(T12067.T_BB_ISSUED_DATE) FROM T12067 WHERE T12067.T_SITE_CODE = T12065.T_SITE_CODE AND T12067.T_BLOOD_REQNO = T12065.T_BLOOD_REQNO) T_BB_ISSUED_DATE, T12067.T_BB_ISSUED_TIME, (SELECT T_USER_NAME from t01009 where T_EMP_CODE = T12065.T_DELIVERY_MAN) T_DELIVERY_MAN,T12065.T_DELIVERY_MAN DEL_CODE, T12091.T_ESTIMATED_DELIVERY_TIME T_EST_DEL_TIME, T12065.T_REQUEST_STATUS, t12091.T_REQ_ACCEPT_FLG,T12091.T_REQ_ACCEPT_DATE||' '||t12091.T_REQ_ACCEPT_TIME ACC_DT, t12091.T_REQ_CANCEL_FLG,T12091.T_REQ_CANCEL_DATE||' '||t12091.T_REQ_CANCEL_TIME CAN_DT, t12091.T_BLOOD_RCVD_FLG,T12091.T_BLOOD_RCVD_DATE||' '||T12091.T_BLOOD_RCVD_TIME RCV_DT, T12091.T_BLOOD_DROP_FLG, T12091.T_BLOOD_DROP_DATE ||' '||t12091.T_BLOOD_DROP_TIME DROP_DT, CASE T_REQUEST_STATUS WHEN '1' THEN 'New Request' WHEN '2' THEN 'Request Received' WHEN '3' THEN 'Issued' WHEN '4' THEN 'Handovered' WHEN '5' THEN 'Out Received' END T_TRANSF_STATUS FROM T12065 LEFT JOIN T12067 ON T12065.T_BLOOD_REQNO = T12067.T_BLOOD_REQNO LEFT JOIN T12091 ON T12065.T_BLOOD_REQNO = T12091.T_BLOOD_REQ_NO WHERE T12065.T_TF_RECEIVE_FLG IS NULL AND T12065.T_SITE_CODE = '{siteCode}' ORDER BY T12065.T_BLOOD_REQNO DESC");
+
+            return Query($@"SELECT DISTINCT T12065.T_BLOOD_REQNO, T12065.T_BLOOD_REQDATE, T12065.T_BLOOD_REQTIME, T12065.T_REF_HOSP, (SELECT T02049.T_LANG2_NAME FROM T02049 WHERE T02049.T_REFERRAL_CODE = T12065.T_REF_HOSP) CENTR_HOSP_NAME, T12065.T_BB_RECEIVED_FLAG, T12065.T_BB_RECEIVED_DATE, T12065.T_BB_RECEIVED_TIME, T12065.T_BB_RECEIVED_BY, (SELECT MAX(T12067.T_BB_ISSUED_DATE) FROM T12067 WHERE T12067.T_SITE_CODE = T12065.T_SITE_CODE AND T12067.T_BLOOD_REQNO = T12065.T_BLOOD_REQNO) T_BB_ISSUED_DATE, (SELECT MAX (t12067.t_bb_issued_time) FROM t12067 WHERE t12067.t_site_code = t12065.t_site_code AND t12067.t_blood_reqno = t12065.t_blood_reqno) T_BB_ISSUED_TIME, (SELECT T_USER_NAME FROM t01009 WHERE T_EMP_CODE = T12065.T_DELIVERY_MAN) T_DELIVERY_MAN, T12065.T_DELIVERY_MAN DEL_CODE, T12091.T_ESTIMATED_DELIVERY_TIME T_EST_DEL_TIME, T12065.T_REQUEST_STATUS, t12091.T_REQ_ACCEPT_FLG, T12091.T_REQ_ACCEPT_DATE || ' ' || t12091.T_REQ_ACCEPT_TIME ACC_DT, t12091.T_REQ_CANCEL_FLG, T12091.T_REQ_CANCEL_DATE || ' ' || t12091.T_REQ_CANCEL_TIME CAN_DT, t12091.T_BLOOD_RCVD_FLG, T12091.T_BLOOD_RCVD_DATE || ' ' || T12091.T_BLOOD_RCVD_TIME RCV_DT, T12091.T_BLOOD_DROP_FLG, T12091.T_BLOOD_DROP_DATE || ' ' || t12091.T_BLOOD_DROP_TIME DROP_DT, (CASE WHEN T12065.T_REQUEST_STATUS = '1' THEN 'New Request' WHEN T12065.T_REQUEST_STATUS = '2' THEN 'Request Received' WHEN T12065.T_REQUEST_STATUS = '3' AND T12091.T_REQ_ACCEPT_FLG IS NULL THEN 'Issued' WHEN T12065.T_REQUEST_STATUS = '3' AND T12091.T_REQ_ACCEPT_FLG = '1' AND T12091.T_BLOOD_RCVD_FLG IS NULL THEN 'Delivery Accept' WHEN T12065.T_REQUEST_STATUS = '3' AND T12091.T_BLOOD_RCVD_FLG = '1' THEN 'Arrived' WHEN T12065.T_REQUEST_STATUS = '4' AND T12091.T_BLOOD_DROP_FLG IS NULL THEN 'Handovered' WHEN T12065.T_REQUEST_STATUS = '4' AND T12091.T_BLOOD_DROP_FLG = '1' THEN 'Dropped' WHEN T12065.T_REQUEST_STATUS = '5' THEN 'Out Received' ELSE ' ' END) T_TRANSF_STATUS FROM T12065 LEFT JOIN T12067 ON T12065.T_BLOOD_REQNO = T12067.T_BLOOD_REQNO AND T12065.T_SITE_CODE = T12067.T_SITE_CODE LEFT JOIN T12091 ON T12065.T_BLOOD_REQNO = T12091.T_BLOOD_REQ_NO AND t12065.T_SITE_CODE = t12091.T_SITE_CODE WHERE T12065.T_TF_RECEIVE_FLG IS NULL AND T12065.T_SITE_CODE = '{siteCode}' ORDER BY T12065.T_BLOOD_REQDATE DESC, T12065.T_BLOOD_REQNO DESC");
+
+        }
+    }
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="T12025" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="T12025" msprop:BaseTable.3="T19" msprop:BaseTable.2="T63" msprop:BaseTable.0="T23" msprop:BaseTable.1="T65">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="T_BLOOD_GROUP_CODE" msprop:BaseColumn="T_BLOOD_GROUP_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_DONATION_DATE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_EXPIRY_DATE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="EXPER_MILLISECONDS" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" />
+              <xs:element name="NEW_MILLISECONDS" msprop:OraDbType="107" type="xs:decimal" minOccurs="0" />
+              <xs:element name="T_PRODUCT_CODE" msprop:BaseColumn="T_PRODUCT_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_SITE_CODE" msprop:BaseColumn="T_SITE_CODE" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="SITE_NAME" msprop:BaseColumn="T_LANG2_NAME" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_UNIT_NO" msprop:BaseColumn="T_UNIT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_UNIT_TYPE" msprop:BaseColumn="T_UNIT_NO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_USED_FLG" msprop:BaseColumn="T_USED_FLG" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="RH_KELL" msprop:BaseColumn="RH_KELL" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="RH_PHENO" msprop:BaseColumn="RH_PHENO" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_ANTIBODY" msprop:BaseColumn="T_ANTIBODY" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_DU" msprop:BaseColumn="T_DU" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+              <xs:element name="T_NOTES" msprop:BaseColumn="T_NOTES" msprop:OraDbType="126" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

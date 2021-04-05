@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "T12200";
+}
+<script src="~/Apps/JSController/Transaction/T12200Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12200Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12200Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12200Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 35%;" colspan="3"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblSegmentNo" for="txtSegmentNo" class="ng-cloak" ng-bind="getLabel('lblSegmentNo')"></label>
+                    </td>
+                    <td style="width: 20%" colspan="2">
+                        <input type="text" id="txtSegmentNo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%" colspan="2"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblUnitNo" for="txtUnitNo" class="ng-cloak" ng-bind="getLabel('lblUnitNo')"></label>
+                    </td>
+                    <td style="width: 15%">
+                        <input type="text" id="txtUnitNo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblDonationDate" for="txtDonationDate" class="ng-cloak" ng-bind="getLabel('lblDonationDate')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtDonationDate" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%"></td>
+                    <td style="width: 20%;">
+                        <input type="text" id="txtDateTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 35%;" colspan="3"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblNewSegmentNo" for="txtNewSegmentNo" class="ng-cloak" ng-bind="getLabel('lblNewSegmentNo')"></label>
+                    </td>
+                    <td style="width: 20%" colspan="2">
+                        <input type="text" id="txtNewSegmentNo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%" colspan="2"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 50%;" colspan="4"></td>
+                    <td style="width: 20%;text-align:center" colspan="2">
+                        <input type="button" value="{{getLabel('lblUpdate')}}" />
+                    </td>
+                    <td style="width: 30%" colspan="2"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;border-top: 2px solid #C3AAA6;">
+                    <td style="width: 35%;" colspan="3"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblPatNo" for="txtPatNo" class="ng-cloak" ng-bind="getLabel('lblPatNo')"></label>
+                    </td>
+                    <td style="width: 20%" colspan="2">
+                        <input type="text" id="txtPatNo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%" colspan="2"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 20%;" colspan="2"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblPatNo1" for="txtPatNo1" class="ng-cloak" ng-bind="getLabel('lblPatNo')"></label>
+                    </td>
+                    <td style="width: 35%;" colspan="3">
+                        <input type="text" id="txtPatNo1" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%;" colspan="2"></td>
+                </tr>
+                <tr style="width: 100%;height: 30px;">
+                    <td style="width: 35%;" colspan="3"></td>
+                    <td style="width: 35%;text-align:center" colspan="3">
+                        <input type="button" value="{{getLabel('lblDeleteRequest')}}" />
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        &nbsp;
+                        <input type="button" value="{{getLabel('lblAcceptDonor')}}" />
+                    </td>
+                    <td style="width: 30%" colspan="2"></td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    
+</div>
+

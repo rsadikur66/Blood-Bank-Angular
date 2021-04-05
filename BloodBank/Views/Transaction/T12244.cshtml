@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "T12244";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Apps/JSController/Transaction/T12244Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12244Service.js"></script>
+<style>
+    #tblQues tr {
+        height: 35px;
+    }
+</style>
+<form class="form-horizontal" ng-app="BloodBank" ng-controller="T12244Controller">
+    <div class="container  col-lg-12 col-md-12 col-sm-12">
+        <div class="row col-lg-12 col-md-12 col-sm-12" style="text-align: center; border: 1px solid #c12d2d; border-radius: 5px; padding: 5px; width: 96%; margin-left: 23px;height: 550px;margin-top: 20px;padding-top: 180px" id="divQuesStart">
+            <label id="lblDonorId" for="txtDonorId" ng-bind="getLabel('lblDonorId')" class="ng-cloak" style="font-weight: bold; font-size: 1.2em"></label>&nbsp;/&nbsp;
+            <label id="lblDonorId_arb" for="txtDonorId" ng-bind="getLabel('lblDonorId_arb')" class="ng-cloak" style="font-weight: bold; font-size: 1.2em"></label>
+            <br />
+            <input id="txtDonorId" 
+                   type="text" 
+                   ng-model="obj.T12071.T_DONOR_PATNO" 
+                   ng-blur="onPatSrch_blur()"
+                   ng-keydown="onPatSrch_tab($event)" 
+                   numbers-only
+                   my-maxlength="8"
+                   @*restrict-input="{type: 'digitsOnly'}"*@
+            />
+            <br /> <input id="txtDonorNameArb" type="text" ng-model="T_DONOR_NAME_ARB" readonly="readonly" style="width: 35%;text-align: right !important;margin-top:8px;margin-bottom:8px" ><br />
+            <input id="txtDonorNameEng" type="text" ng-model="T_DONOR_NAME_ENG" readonly="readonly" style="width: 35%; text-align: left !important;margin-bottom:8px">
+            <br />
+            <button id="btnStartQuest" type="button" style="background-color: #C12D2D; color: #ffffff; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; display: inline-block; width: 200px" ng-click="getQuesClick(obj.T12071.T_DONOR_PATNO,lang,T_GENDER)" ng-keydown="getQuesEnter(obj.T12071.T_DONOR_PATNO,lang,T_GENDER,$event)" ng-bind="getLabel('btnStartQuest')" class="ng-cloak"></button>
+        </div>
+        <div class="row col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <div class="row col-lg-12 col-md-12 col-sm-12" style="text-align: center; border: 1px solid #c12d2d; border-radius: 5px; padding: 5px; width: 100%; margin: auto; margin-top: 10px; " id="divQuesList">
+
+                    <div style="width: 100%">
+                        <table style="width: 100%;">
+                            <tr style="width: 100%; margin: 5px">
+                                <td style="width: 80%;">
+                                    <input id="txtDonorIdQ" ng-model="obj.T12071.T_DONOR_PATNO" type="text" style="width: 30%" readonly="readonly">
+                                    <input id="txtDonorNameQ1" type="text" ng-model="T_DONOR_NAME1" readonly="readonly" style="width: 68%" ng-show="lang==1" />
+                                    <input id="txtDonorNameQ2" type="text" ng-model="T_DONOR_NAME2" readonly="readonly" style="width: 68%" ng-show="lang==2" />
+                                </td>
+                                <td style="width: 20%;">
+                                    <button type="button" id="btnE" @*style="background-color: #C12D2D; color: #ffffff;"*@ ng-click="getLang(2)" ng-bind="getLabel('btnE')" class="ng-cloak"></button>
+                                    <button type="button" id="btnA" @*style="background-color: #C12D2D; color: #ffffff;"*@ ng-click="getLang(1)" ng-bind="getLabel('btnA')" class="ng-cloak"></button>
+                                </td>
+                            </tr>
+                            <tr style="width: 100%; margin: 5px">
+                                <td style="width: 80%;">
+                                    <input id="txtHeader1" ng-model="QUES_HEADER1" type="text" readonly="readonly" style="width: 98%; background: #EEF2E6" ng-show="lang==1" ng-keydown="sortDataByHeader($event)">
+                                    <input id="txtHeader2" ng-model="QUES_HEADER2" type="text" readonly="readonly" style="width: 98%; background: #EEF2E6" ng-show="lang==2" ng-keydown="sortDataByHeader($event)">
+                                </td>
+                                <td style="width: 20%;"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid pageGrid" style="margin: 5px auto; border: 1px solid #c12d2d; border-radius: 5px;" id="tblQues"  arrow-selector="onNevigate(selectedRow)">
+                            @*<thead style="text-align: center; display: table; width: 100%;">
+                <tr style="background-color: #c12d2d; color: #ffffff">
+                    <th id="lblsl" style="width: 5%; text-align: center;" ng-bind="getLabel('lblsl')" class="ng-cloak"></th>
+                    <th id="lblQuest" style="width: 85%; text-align: center" ng-bind="getLabel('lblQuest')" class="ng-cloak"></th>
+                    <th id="lblY" style="width: 5%;  text-align: center" ng-bind="getLabel('lblY')" class="ng-cloak"></th>
+                    <th id="lblN" style="width: 5%;  text-align: center" ng-bind="getLabel('lblN')" class="ng-cloak"></th>
+                </tr>
+                </thead>*@
+                            <tbody style="text-align: center; display: table; width: 100%;">
+                            <tr ng-repeat="obj in obj.quesList| filter:obj.q | startFrom: obj.currentPage * obj.pageSize| limitTo:obj.pageSize" id="trQues{{$index}}"
+                                ng-style="$index==0?trStyleOn:trStyleOff"
+                                >
+                                <td style="width: 5%; text-align: center" ng-click="changeColor($index)">
+                                    <span ng-bind-html="obj.R" id="txtSL{{$index}}"></span>
+                                    <input type="text" id="txtQnoAns{{$index}}" ng-model="obj.T_QNO_ANS" style="display: none"/>
+                                    @*<input type="text" id="txtQnoAnsD{{$index}}" ng-model="obj.T_QNO_ANSD" style="display:none" ng-bind="obj.T_QNO_ANSD=obj.T_QNO_ANS"/>*@
+                                    <input type="text" id="txtQuesId{{$index}}" ng-model="obj.T_QUES_ID" style="display: none"/>
+                                    <input type="text" id="txtExpAns{{$index}}" ng-model="obj.T_EXP_ANS" style="display: none"/>
+                                    <input type="text" id="txtIfFail{{$index}}" ng-model="obj.T_IF_FAIL" style="display: none"/>
+                                    <input type="text" id="txtQno{{$index}}" ng-model="obj.T_QNO" style="display: none"/>
+                                    <input type="text" id="txtQHead{{$index}}" ng-model="obj.T_QHEAD_NO" style="display: none"/>
+                                    <input type="text" id="txtQHeadDesc1{{$index}}" ng-model="obj.QUES_HEADER1" style="display: none"/>
+                                    <input type="text" id="txtQHeadDesc2{{$index}}" ng-model="obj.QUES_HEADER2" style="display: none"/>
+                                    <input type="text" id="txtDispSeq{{$index}}" ng-model="obj.T_DISP_SEQ" style="display: none"/>
+                                    <input type="text" id="txtDeffDay{{$index}}" ng-model="obj.T_DIFFERAL_DAY" style="display: none"/>
+                                </td>
+                                <td style="width: 85%; cursor: pointer" ng-click="onQuesSelect($index)"
+                                    ng-style="stl">
+                                    <span ng-bind-html="obj.QUES_DESC1" ng-show="lang==1"></span>
+                                    <span ng-bind-html="obj.QUES_DESC2" ng-show="lang==2"></span>
+                                </td>
+                                <td style="width: 5%; text-align: center"><input type="button" style="background: url(../Images/checkcross_fade.png); background-size: 30px; background-repeat: no-repeat; background-position: center; width: 30px; border-color: #ffffff;" ng-style="$index==0?imgStyle:imgStyle" id="btnFail{{$index}}" ng-click="onImgclick($index,'f');"/></td>
+                                <td style="width: 5%; text-align: center;"><input type="button" style="background: url(../Images/checksuccess_fade.png); background-size: 30px; background-repeat: no-repeat; background-position: center; width: 30px; border-color: #ffffff;" ng-style="$index==0?imgStyle:imgStyle" id="btnSuccess{{$index}}" ng-click="onImgclick($index,'s')" ng-bind="hideButton($index,obj)"/></td>
+                            </tr>
+                            </tbody>
+                            <tfoot style="text-align: center; display: table; width: 100%;">
+                            <tr>
+                                <td style="width: 5%">
+                                    <input type="button" style="background: url(../Images/{{prImg}}.png); background-size: 30px; background-repeat: no-repeat; background-position: center; width: 30px; border-color: #FBFBFB;" id="btnBack" ng-disabled="obj.currentPage == 0" ng-click="onBackClick()"/>
+                                </td>
+                                <td colspan="2" style="width: 89%">
+                                    <div style="text-align: center; display: inline"><label>{{obj.currentPage+1}}/{{obj.numberOfPages()}}</label></div>
+                                    <div ng-style="la==1?ale:ala" style="margin-top: -20px;">
+                                        <label id="lblNoAnswer" ng-bind="getLabel('lblNoAnswer')" class="ng-cloak"></label>
+                                        <span id="txtCounter" style="border: 1px solid #c12d2d; border-radius: 5px; padding: 5px;">{{obj.T_COUNTER}}</span>
+                                        @*<input type="text" id="txtCounter" ng-model="obj.T_COUNTER" readonly="readonly" style="width: 75px;" />*@
+                                    </div>
+                                </td>
+                                <td style="width: 5%">
+                                    <input type="button" style="background: url(../Images/{{nImg}}.png); background-size: 30px; background-repeat: no-repeat; background-position: center; width: 30px; border-color: #FBFBFB;" id="btnNext" ng-click="onNextClick()"/>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+        
+    </div>
+    
+    <div id="divConfirm" class="omf-modal">
+        <div class="omf-modal-body">            
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div style="width: 100%; height: 425px; border: 10px solid #8C0000;background-color: #8C0000;">
+                            <div style="width: 100%;height: 380px; text-align:justify; background-color: #E0E0E0;">
+                                <span ng-bind-html="T_CONSENT" style="font-size: 12px"></span>
+                            </div>
+                            <div style="width: 100%;margin-top: 5px;">
+                                <div style="width: 70%; display: inline-block;" class="alnL">
+                                    <input type="checkbox" id="chkAccept" ng-true-value="1" ng-false-value="0" ng-model="obj.T_RESEARCH_STTS" />
+                                    <label id="lblTrunsPatient" style="color:#ffffff" for="chkAccept" ng-bind="getLabel('lblTrunsPatient')" class="ng-cloak"></label>
+                                </div>
+                                <div style="width: 29%; display: inline-block;" class="alnR">
+                                    <button id="lblAgree" type="button" style="background-color: #ffffff; width: 50%" ng-bind="getLabel('lblAgree')" ng-click="onbtnTermsClick()" class="ng-cloak"></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+

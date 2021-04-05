@@ -1,0 +1,829 @@
+﻿
+@{
+    ViewBag.Title = "T12302";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    /*Toggling Div---------------------------Start*/
+    .ultab {
+        list-style: none;
+        padding: 0;
+        /*margin-left: 160px;*/
+    }
+
+    .litab {
+        border-bottom-width: 0;
+        margin: 1px 3px 3px 3px;
+        padding: 5px 5px 25px 5px;
+        background-color: #C12D2D;
+        color: #FFFFFF;
+        border-radius: 2px;
+        transition: 0.2s;
+        /*margin-right: -3px;*/
+        width: 80px;
+        text-align: center;
+        height: 0px;
+        cursor: pointer;
+        border: 1px solid gray;
+    }
+
+        .litab:nth-child(2) {
+            width: 240px;
+        }
+
+        .litab:nth-child(3) {
+            width: 100px;
+        }
+
+
+
+    #mainView {
+        clear: both;
+        padding: 0 1em;
+    }
+
+    .active {
+        background-color: #CCCCCC;
+        color: #000000;
+    }
+    /*Toggling Div---------------------------End*/
+</style>
+<script src="~/Apps/JSController/Transaction/T12302Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12302Service.js"></script>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12302Controller">
+        <button ID="btnNew" title="New" class="Button New"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="save()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear_Click()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+        <button ID="btnPrint1" title="Print1" class="Button Print" ng-click="R12012_Report()"></button>
+        <button ID="btnPrint2" title="Print2" class="Button Print" ng-click="R12065_Report()"></button>
+        <button ID="btnPrint3" title="Print3" class="Button Print" ng-click="R12036A_Report()"></button>
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="T12302Controller" name="obj.myDiv" novalidate ng-form style="width: 97%">
+    <div class="col-lg-12" style="height: 300px">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%">
+                <table style="width: 100%; margin: 0 auto">
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblRequest" ng-bind="getLabel('lblRequest')" class="ng-cloak" for="txtRequest"></label></td>
+                        <td style="width: 10%;">
+                            <input type="text" id="txtRequest" ng-model="obj.T_REQUEST_NO" style="width: 100%"
+                                   ng-dblclick="openReqModal()"
+                                   ng-keydown="onReqSearch_tab($event)"
+                                   ng-blur="onReqSearch_blur()"
+                                   numbers-only
+                                   my-maxlength="8" />
+                        </td>
+                        <td style="width: 15%;" class="alnR"><label id="lblLabNo" ng-bind="getLabel('lblLabNo')" class="ng-cloak" for="txtLabNo"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtLabNo" ng-model="obj.T_LAB_NO" style="width: 100%" readonly /></td>
+                        <td style="width: 15%;" class="alnR"><label id="lblRequestDate" ng-bind="getLabel('lblRequestDate')" class="ng-cloak" for="txtRequestDate"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtRequestDate" ng-model="obj.T_REQUEST_DATE" style="width: 100%" readonly /></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;"><input type="text" id="txtH" ng-model="obj.T_REQUEST_DATE_H" style="width: 100%" readonly /></td>
+                        <td style="width: 5%;" class="alnL"><label id="lblH" ng-bind="getLabel('lblH')" class="ng-cloak" for="txtRequestDate"></label></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblPatNo" ng-bind="getLabel('lblPatNo')" class="ng-cloak" for="txtPatNo"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtPatNo" ng-model="obj.T_PAT_NO" style="width: 100%" /></td>
+                        <td style="width: 50%;" colspan="4"><input type="text" id="txtPatName" ng-model="obj.PAT_NAME" style="width: 100%" readonly /></ td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;">
+                            <label id="lblY" ng-bind="getLabel('lblY')" class="ng-cloak" for="txtY"></label>
+                            <input type="text" id="txtY" ng-model="obj.YRS" style="width: 34%" readonly />
+                            <label id="lblM" ng-bind="getLabel('lblM')" class="ng-cloak" for="txtM"></label>
+                            <input type="text" id="txtM" ng-model="obj.MOS" style="width: 34%" readonly />
+                        </td>
+                        <td style="width: 5%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblGender" ng-bind="getLabel('lblGender')" class="ng-cloak" for="txtGender"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtGender" ng-model="obj.GENDER" style="width: 100%" readonly /></td>
+                        <td style="width: 15%;"></td>
+                        <td style="width: 10%;" class="alnR"><label id="lblNationality" ng-bind="getLabel('lblNationality')" class="ng-cloak" for="txtNationality"></label></td>
+                        <td style="width: 15%;"><input type="text" id="txtNationality" ng-model="obj.NATIONALITY" style="width: 100%" readonly /></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;" class="alnR"><label id="lblStatus" ng-bind="getLabel('lblStatus')" class="ng-cloak" for="txtStatus"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtStatus" ng-model="obj.MRTL_STTS" style="width: 100%" readonly /></td>
+                        <td style="width: 5%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblLocation" ng-bind="getLabel('lblLocation')" class="ng-cloak" for="txtLocCode"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtLocCode" ng-model="obj.T_LOCATION_CODE" style="width: 100%" readonly /></td>
+                        <td style="width: 25%;" colspan="2"><input type="text" id="txtLocDesc" ng-model="obj.LOC_DESC" style="width: 100%" readonly /></td>
+                        <td style="width: 15%;" class="alnR"><label id="lblRequisition" ng-bind="getLabel('lblRequisition')" class="ng-cloak" for="txtRequisitionCode"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtRequisitionCode" ng-model="obj.T_REQUISITION" style="width: 100%" readonly /></td>
+                        <td style="width: 20%;" colspan="2"><input type="text" id="txtRequisitionDesc" ng-model="obj.REQ_DESC" style="width: 100%" readonly /></td>
+                        <td style="width: 5%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblNoofUnit(s)" ng-bind="getLabel('lblNoofUnit(s)')" class="ng-cloak" for="txtNoofUnit"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtNoofUnit" ng-model="obj.T_UNITNO" style="width: 100%" readonly /></td>
+                        <td style="width: 15%;" class="alnR"><label id="lblABODesccription" ng-bind="getLabel('lblABODesccription')" class="ng-cloak" for="txtABODesccription"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtABODesccription" ng-model="obj.ABO_DESC" style="width: 100%" readonly /></td>
+                        <td style="width: 15%;"></td>
+                        <td style="width: 10%;"><input type="button" id="btnXMatchHistory" ng-click="xMatchHistoryReport()" value="{{getLabel('lblXMatchHistory')}}" style="width: 100%;font-weight: bold;" /></td>
+                        <td style="width: 10%;"><input type="button" id="btnBloodGroup" ng-click="bloodGroupReport()" value="{{getLabel('lblBloodGroup')}}" style="width: 100%;font-weight: bold;" /></td>
+                        <td style="width: 10%;"><input type="button" id="btnPatientType" value="{{getLabel('lblPatientType')}}" ng-click="PatientTypeReport()" style="width: 100%;font-weight: bold;" /></td>
+                        <td style="width: 5%;"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;height: 375px;">
+            <div style="width: 100%" id="tabs">
+                <table style="width: 100%; margin: 0 auto">
+                    <tr style="width: 100%">
+                        <td style="width: 100%">
+                            <ul class="ultab">
+                                <li class="litab ng-cloak" ng-repeat="tab in tabs"
+                                    ng-class="{active:isActiveTab(tab.url)}"
+                                    ng-click="onClickTab(tab)"
+                                    ng-style="lang==2?FloatE:FloatA">{{tab.title}}</li>
+                            </ul>
+                            <div style="background-color: #CCCCCC; height: 1px; margin-left: 3px;  margin-right: 3px; margin-top: 32px; border-radius: 2px;"></div>
+                        </td>
+
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 100%">
+                            <div id="mainView">
+                                <div ng-include="currentTab"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/ng-template" id="tabTesting.tpl.html">
+        <fieldset ng-disabled="obj.wd">
+            <div style="width:100%;">
+                <table style="width:100%; margin: 1% auto; margin-top: 20px;">
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkreverse" ng-disabled="obj.AntA" ng-model="obj.T_BG_ND" ng-true-value="'1'" ng-false-value="''" ng-click="onRTNIChange()" /></td>
+                        <td style="width: 22%;" colspan="2" ng-style="lang==2?aL:aR"><label id="lblReverseTestNotIndicated" ng-bind="getLabel('lblReverseTestNotIndicated')" for="chkreverse" class="ng-cloak" style="font-weight:bold"></label></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 5%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkBloodGroup" ng-disabled="obj.AntA" ng-model="obj.T_BG_N" ng-true-value="'1'" ng-false-value="''" ng-click="onBGNDChange()" /></td>
+                        <td style="width: 26%;" colspan="3" ng-style="lang==2?aL:aR"><label id="lblBloodGroupNotDetermined" ng-bind="getLabel('lblBloodGroupNotDetermined')" for="chkBloodGroup" class="ng-cloak" style="font-weight:bold"></label></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 12%;"></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiA" ng-bind="getLabel('lblAntiA')" for="ddlAntiA" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.aa.selected" focus-on="ddlAntiA" id="ddlAntiA" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlAnti||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlAntiB',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="aa in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="aa.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+
+                        </td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 5%;" ng-style="lang==2?aR:aL"><label id="lblAntiB" ng-bind="getLabel('lblAntiB')" for="ddlAntiB" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.ab.selected" focus-on="ddlAntiB" id="ddlAntiB" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlAnti ||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlAntiD',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="ab in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="ab.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblAntiD" ng-bind="getLabel('lblAntiD')" for="ddlAntiD" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.ad.selected" focus-on="ddlAntiD" id="ddlAntiD" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlAnti||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlControl',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="ad in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="ad.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblControl" ng-bind="getLabel('lblControl')" for="ddlControl" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.c.selected" focus-on="ddlControl" id="ddlControl" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlAnti||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlACells',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="c in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="c.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 5%;" ng-style="lang==2?aR:aL"><label id="lblACells" ng-bind="getLabel('lblACells')" for="ddlACells" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.ac.selected" focus-on="ddlACells" id="ddlACells" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlCells||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlBCells',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="ac in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="ac.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblBCells" ng-bind="getLabel('lblBCells')" for="ddlBCells" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.bc.selected" focus-on="ddlBCells" id="ddlBCells" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd || obj.ddlCells||obj.AntA" on-select="onControlSelect(obj.aa.selected.T_ANTI_CODE,obj.ab.selected.T_ANTI_CODE,obj.ad.selected.T_ANTI_CODE,obj.c.selected.T_ANTI_CODE,obj.T_BG_ND,obj.ac.selected.T_ANTI_CODE,obj.bc.selected.T_ANTI_CODE,'ddlBCells',obj.T_PAT_NO)">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="bc in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="bc.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblBloodGroup2" ng-bind="getLabel('lblBloodGroup2')" for="txtBGCodeCode" class="ng-cloak"></label></td>
+                        <td style="width: 12%;"><input type="text" id="txtBGCodeCode" ng-model="obj.T_ABO_CODE_Pop" readonly style="width: 100%" ng-dblclick="openBGModal()" ng-keydown="onbgSearch($event,obj.T_ABO_CODE_Pop)" /></td>
+                        <td style="width: 25%;" colspan="3"><input type="text" id="txtBGCodeDesc" ng-model="obj.T_ABO_DESC_Pop" style="width: 100%" readonly /></td>
+                        <td style="width: 19%; text-align:center" colspan="2"><label id="lblAntibodyScreen" ng-bind="getLabel('lblAntibodyScreen')" class="ng-cloak" style="text-decoration: underline;font-weight:bold"></label></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 12%;"></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblSCI" ng-bind="getLabel('lblSCI')" for="ddlSCI" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.s1.selected" id="ddlSCI" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd||obj.SC">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="s1 in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="s1.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 5%;" ng-style="lang==2?aR:aL"><label id="lblSCII" ng-bind="getLabel('lblSCII')" for="ddlSCII" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.s2.selected" id="ddlSCII" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd||obj.SC">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="s2 in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="s2.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblSCIII" ng-bind="getLabel('lblSCIII')" for="ddlSCIII" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.s3.selected" id="ddlSCIII" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd||obj.SC">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="s3 in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="s3.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;"></td>
+                        <td style="width: 12%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 5%;" ng-style="lang==2?aR:aL"><label id="lblDCT" ng-bind="getLabel('lblDCT')" for="ddlDCT" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.dc.selected" id="ddlDCT" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd||obj.DCT">
+                                <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                <ui-select-choices repeat="dc in obj.dctList | propsFilter: {NAME: $select.search}">
+                                    <div ng-bind-html="dc.NAME | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblAutoControl" ng-bind="getLabel('lblAutoControl')" for="ddlAutoControl" class="ng-cloak"></label></td>
+                        <td style="width: 12%;">
+                            <ui-select ng-model="obj.act.selected" id="ddlAutoControl" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd||obj.AC">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_ANTI_LEVEL}}</ui-select-match>
+                                <ui-select-choices repeat="act in obj.antiList | propsFilter: {T_ANTI_LEVEL: $select.search}">
+                                    <div ng-bind-html="act.T_ANTI_LEVEL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                        </td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntibodyIdentified" ng-bind="getLabel('lblAntibodyIdentified')" for="txtAntibodyIdentified" class="ng-cloak"></label></td>
+                        <td style="width: 85%;" colspan="9"><input type="text" id="txtAntibodyIdentified" ng-model="obj.T_INTERPRETATION" style="width: 100%" ng-dblclick="onSetTime(1)" ng-readonly="obj.anibidet"/></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblStartingTime" ng-bind="getLabel('lblStartingTime')" for="txtStartingTime" class="ng-cloak"></label></td>
+                        <td style="width: 12%;"><input type="text" id="txtStartingTime" ng-model="obj.T_TS_START_TIME" style="width: 100%" readonly/></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblEndingTime" ng-bind="getLabel('lblEndingTime')" for="txtEndingTime" class="ng-cloak"></label></td>
+                        <td style="width: 10%;"><input type="text" id="txtEndingTime" ng-model="obj.T_TS_END_TIME" readonly style="width: 100%" ng-dblclick="onSetTime(2)" /></td>
+                        <td style="width: 5%;"></td>
+                        <td style="width: 12%;" ng-style="lang==2?aR:aL"><label id="lblTechCode" ng-bind="getLabel('lblTechCode')" for="txtTechCode" class="ng-cloak"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtTechCode" ng-model="obj.T_TECH_CODE" style="width: 100%" readonly ng-dblclick="openTechModal()" ng-keydown="onTechSearch($event,obj.T_TECH_CODE)" /></td>
+                        <td style="width: 29%;" colspan="3"><input type="text" id="txtTechDesc" ng-model="obj.T_USER_NAME" style="width: 100%" readonly /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblRemarks" ng-bind="getLabel('lblRemarks')" for="txtRemarks" class="ng-cloak"></label></td>
+                        <td style="width: 85%;" colspan="9"><input type="text" id="txtRemarks" ng-model="obj.T_REMARKS" style="width: 100%" ng-readonly="obj.rmk"/></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblDate" ng-bind="getLabel('lblDate')" for="txtDate" class="ng-cloak"></label></td>
+                        <td style="width: 12%;"><input type="text" id="txtDate" ng-model="obj.T_ENTRY_DATE" style="width: 100%" readonly/></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblEntryUser" ng-bind="getLabel('lblEntryUser')" for="txtEntryUser" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" id="txtEntryUser" ng-model="obj.T_ENTRY_USER" style="width: 100%" readonly /></td>
+                        <td style="width: 26%;" colspan="3"><input type="text" id="txtEntryUserName" ng-model="obj.ENTRY_DESC" style="width: 100%" readonly /></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 12%;"></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </script>
+    <script type="text/ng-template" id="tabAntiIdenPheno.tpl.html">
+        <fieldset ng-disabled="obj.wd">
+            <div style="width:100%;">
+                <table style="width:100%; margin: 1% auto; margin-top: 20px;">
+                    <tr style="width:100%">
+                        <td style="width: 100%;" ng-style="lang==2?aL:aR" colspan="8"><label id="lblAntibodyIdentification1" ng-bind="getLabel('lblAntibodyIdentification1')" class="ng-cloak" style="text-decoration: underline;font-weight:bold"></label></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 3%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkAuto" ng-model="obj.AUTO_ANTI" ng-change="onAutoChange(obj.AUTO_ANTI)" /></td>
+                        <td style="width: 7%;" ng-style="lang==2?aL:aR"><label id="lblAUTOANTI" ng-bind="getLabel('lblAUTOANTI')" for="chkAuto" class="ng-cloak"></label></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiTypeAuto" ng-bind="getLabel('lblAntiTypeAuto')" for="txtAntiTypeAuto" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" style="width:100%" id="txtAntiTypeAuto" ng-model="obj.T_ANTI_TYPE_AUTO" ng-dblclick="openAntTypAutoModal('1')" ng-keydown="onAntTypAutoSearch($event,'1')" /></td>
+                        <td style="width: 25%;"><input type="text" style="width:100%" id="txtAntiTypeAutoDesc" ng-model="obj.T_ANTI_TYPE_AUTODESC" readonly /></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAutoOthers" ng-bind="getLabel('lblAutoOthers')" for="txtAutoOthers" class="ng-cloak"></label></td>
+                        <td style="width: 30%;" colspan="2"><input type="text" style="width:100%" id="txtAutoOthers" ng-model="obj.T_AUTO_OTHERS" readonly="readonly" /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 3%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkAllo" ng-model="obj.ALLO_ANTI" ng-change="onAlloChange(obj.ALLO_ANTI)" /></td>
+                        <td style="width: 7%;" ng-style="lang==2?aL:aR"><label id="lblALLOANTI" ng-bind="getLabel('lblALLOANTI')" for="chkAllo" class="ng-cloak"></label></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiTypeAllo" ng-bind="getLabel('lblAntiTypeAllo')" for="txtAntiTypeAllo" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" style="width:100%" id="txtAntiTypeAllo" ng-model="obj.T_ANTI_TYPE_ALLO" ng-dblclick="openAntTypAutoModal('2')" ng-keydown="onAntTypAutoSearch($event,'2')" /></td>
+                        <td style="width: 25%;"><input type="text" style="width:100%" id="txtAntiTypeAlloDesc" ng-model="obj.T_ANTI_TYPE_ALLODESC" readonly /></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiType" ng-bind="getLabel('lblAntiType')" for="txtAntiType" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" style="width:100%" id="txtAntiType" ng-model="obj.T_ANTI_FINAL" ng-dblclick="openAntTypFinalModal('0')" ng-keydown="onAntTypFinalSearch($event,'0')" /></td>
+                        <td style="width: 25%;"><input type="text" style="width:100%" id="txtAntiTypeDesc" ng-model="obj.T_ANTI_FINALDESC" readonly /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 3%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiType1" ng-bind="getLabel('lblAntiType1')" for="txtAntiType1" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" style="width:100%" id="txtAntiType1" ng-model="obj.T_ANTI_FINAL1" ng-dblclick="openAntTypFinalModal('1')" ng-keydown="onAntTypFinalSearch($event,'1')" /></td>
+                        <td style="width: 25%;"><input type="text" style="width:100%" id="txtAntiType1Desc" ng-model="obj.T_ANTI_FINAL1DESC" readonly /></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAntiType11" ng-bind="getLabel('lblAntiType11')" for="txtAntiType11" class="ng-cloak"></label></td>
+                        <td style="width: 5%;"><input type="text" style="width:100%" id="txtAntiType11" ng-model="obj.T_ANTI_FINAL2" ng-dblclick="openAntTypFinalModal('2')" ng-keydown="onAntTypFinalSearch($event,'2')" /></td>
+                        <td style="width: 25%;"><input type="text" style="width:100%" id="txtAntiType11Desc" ng-model="obj.T_ANTI_FINAL2DESC" readonly /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 3%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAlloOthers" ng-bind="getLabel('lblAlloOthers')" for="txtAlloOthers" class="ng-cloak"></label></td>
+                        <td style="width: 75%;" colspan="5"><input type="text" style="width:100%" id="txtAlloOthers" ng-model="obj.T_ALLO_OTHERS" readonly /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 3%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkNONSPEC" ng-model="obj.NON_SPEC" ng-change="onNonSpecChange(obj.NON_SPEC)" /></td>
+                        <td style="width: 7%;" ng-style="lang==2?aL:aR"><label id="lblNONSPEC" ng-bind="getLabel('lblNONSPEC')" for="chkNONSPEC" class="ng-cloak"></label></td>
+                        <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblComments" ng-bind="getLabel('lblComments')" for="txtComments" class="ng-cloak"></label></td>
+                        <td style="width: 75%;" colspan="5"><input type="text" style="width:100%" id="txtComments" ng-model="obj.T_NONS_OTHERS" readonly /></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 100%;" colspan="8">
+                            <div style="background-color: black; height: 1px; margin-right: -20px; margin-top: 10px;"></div>
+                        </td>
+                    </tr>
+                </table>
+                <table style="width:100%; margin: 1% auto; margin-top: 20px;">
+                    <tr style="width:100%">
+                        <td style="width: 14%;" ng-style="lang==2?aL:aR"><label id="lblAntigenPhenotype" ng-bind="getLabel('lblAntigenPhenotype')" class="ng-cloak" style="text-decoration: underline;font-weight:bold"></label></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkD" ng-model="obj.T_D" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,0,obj.T_D)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblD" ng-bind="getLabel('lblD')" class="ng-cloak" for="chkD"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkC" ng-model="obj.T_CC" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,1,obj.T_CC)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblC" ng-bind="getLabel('lblC')" class="ng-cloak" for="chkC"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkc1" ng-model="obj.T_CS" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,2,obj.T_CS)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblc1" ng-bind="getLabel('lblc1')" class="ng-cloak" for="chkc1"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkE" ng-model="obj.T_EC" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,3,obj.T_EC)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblE" ng-bind="getLabel('lblE')" class="ng-cloak" for="chkE"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chke1" ng-model="obj.T_ES" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,4,obj.T_ES)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lble1" ng-bind="getLabel('lble1')" class="ng-cloak" for="chke1"></label></td>
+                        @*<td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkK" ng-model="obj.T_KC" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,5,obj.T_KC)" /></td>*@
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkK" ng-model="obj.T_KC" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,5,obj.T_KC)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblK" ng-bind="getLabel('lblK')" class="ng-cloak" for="chkK"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkk1" ng-model="obj.T_KS" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,6,obj.T_KS)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblk" ng-bind="getLabel('lblk1')" class="ng-cloak" for="chkk1"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkJKa" ng-model="obj.T_JKA" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,7,obj.T_JKA)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblJKa" ng-bind="getLabel('lblJKa')" class="ng-cloak" for="chkJKa"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkJKb" ng-model="obj.T_JKB" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,8,obj.T_JKB)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblJKb" ng-bind="getLabel('lblJKb')" class="ng-cloak" for="chkJKb"></label></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 14%;"></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 10%;"></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkFya" ng-model="obj.T_FYA" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,9,obj.T_FYA)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblFya" ng-bind="getLabel('lblFya')" class="ng-cloak" for="chkFya"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkFyb" ng-model="obj.T_FYB" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,10,obj.T_FYB)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblFyb" ng-bind="getLabel('lblFyb')" class="ng-cloak" for="chkFyb"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkM" ng-model="obj.T_M" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,11,obj.T_M)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblM" ng-bind="getLabel('lblM')" class="ng-cloak" for="chkM"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkN" ng-model="obj.T_N" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,12,obj.T_N)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblN" ng-bind="getLabel('lblN')" class="ng-cloak" for="chkN"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkS" ng-model="obj.T_SC" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,13,obj.T_SC)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblS" ng-bind="getLabel('lblS')" class="ng-cloak" for="chkS"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chks1" ng-model="obj.T_SS" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,14,obj.T_SS)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lbls1" ng-bind="getLabel('lbls1')" class="ng-cloak" for="chks1"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkLea" ng-model="obj.T_LEA" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,15,obj.T_LEA)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblLea" ng-bind="getLabel('lblLea')" class="ng-cloak" for="chkLea"></label></td>
+                        <td style="width: 4%;" ng-style="lang==2?aR:aL"><input type="checkbox" id="chkLeb" ng-model="obj.T_LEB" ng-true-value="'1'" ng-false-value="''" ng-click="onPhenoTypeChange($event,16,obj.T_LEB)" /></td>
+                        <td style="width: 4%;" ng-style="lang==2?aL:aR"><label id="lblLeb" ng-bind="getLabel('lblLeb')" class="ng-cloak" for="chkLeb"></label></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 4%;"></td>
+                    </tr>
+                    <tr style="width:100%">
+                        <td style="width: 14%;"></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 10%;" ng-style="lang==2?aR:aL"><label id="lblPhenoType" ng-bind="getLabel('lblPhenoType')" class="ng-cloak" for="txtPhenoType"></label></td>
+                        <td style="width: 76%;" colspan="18"><input type="text" id="txtPhenoType" style="width:100%" ng-model="obj.T_PHENO" readonly /></td>
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
+    </script>
+    <script type="text/ng-template" id="tabCrossMatch.tpl.html">
+        <fieldset ng-disabled="obj.wd">
+            <div style="width:100%;">
+                <table style="width:100%; margin: 1% auto; margin-top: 20px;" ng-show="obj.tblCrossMatch">
+                    <thead style="text-align: center; display: table;width:100%">
+                        <tr style="width:100%">
+                            <th style="width: 8%; text-align:center"><label id="lblUnit" ng-bind="getLabel('lblUnit')" class="ng-cloak"></label></th>
+                            <th style="width: 9%; text-align:center"><label id="lblBloodGroup3" ng-bind="getLabel('lblBloodGroup3')" class="ng-cloak"></label></th>
+                            <th style="width: 9%; text-align:center"><label id="lblProd" ng-bind="getLabel('lblProd')" class="ng-cloak"></label></th>
+                            <th style="width: 9%; text-align:center"><label id="lblExpiryDate" ng-bind="getLabel('lblExpiryDate')" class="ng-cloak"></label></th>
+                            <th style="width: 10%; text-align:center"><label id="lblIS" ng-bind="getLabel('lblIS')" class="ng-cloak"></label></th>
+                            <th style="width: 10%; text-align:center"><label id="lbl37c" ng-bind="getLabel('lbl37c')" class="ng-cloak"></label></th>
+                            <th style="width: 10%; text-align:center"><label id="lblAHG" ng-bind="getLabel('lblAHG')" class="ng-cloak"></label></th>
+                            <th style="width: 10%; text-align:center"><label id="lblCCC" ng-bind="getLabel('lblCCC')" class="ng-cloak"></label></th>
+                            <th style="width: 10%; text-align:center"><label id="lblGelAHG" ng-bind="getLabel('lblGelAHG')" class="ng-cloak"></label></th>
+                            <th style="width: 15%; text-align:center"><label id="lblComStatus" ng-bind="getLabel('lblComStatus')" class="ng-cloak"></label></th>
+                        </tr>
+                    </thead>
+                    <tbody style="max-height: 225px;overflow: auto; overflow-x: hidden;display: block;width:100%">
+                        <tr style="width:100%" ng-repeat="obj in obj.CrossList">
+                            <td style="width: 8%;"><input type="text" id="txtUnit{{$index}}" ng-model="obj.T_UNIT_NO" @*ng-dblclick="openUnitModal($index,obj.T_UNIT_NO)"*@ ng-keydown="selectSingleUnit($event,$index,obj.T_UNIT_NO)" style="width: 100%" ng-Readonly="obj.T_AUTO_ISSUE_DET_ID!=null"/></td>
+                            <td style="width: 9%;"><input type="text" id="txtBloodGroup3{{$index}}" ng-model="obj.T_BLOOD_GROUP" style="width: 100%" /></td>
+                            <td style="width: 9%;"><input type="text" id="txtProd{{$index}}" ng-model="obj.T_PROD_CODE" style="width: 100%" /></td>
+                            <td style="width: 9%;"><input type="text" id="txtExpiryDate{{$index}}" ng-model="obj.T_EXPIRY_DATE" style="width: 100%" /></td>
+                            <td style="width: 10%;">
+                                <ui-select ng-model="obj.tis.selected" id="txtIS{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="tis in obj.dctList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="tis.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txtIS{{$index}}" ng-model="obj.T_IS" style="width: 100%" />*@
+                            </td>
+                            <td style="width: 10%;">
+                                <ui-select ng-model="obj.t37.selected" id="txtIS{{txt37c}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="t37 in obj.dctList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="t37.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txt37c{{$index}}" ng-model="obj.T_37C" style="width: 100%" />*@
+                            </td>
+                            <td style="width: 10%;">
+                                <ui-select ng-model="obj.ahg.selected" id="txtAHG{{txt37c}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="ahg in obj.dctList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="ahg.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txtAHG{{$index}}" ng-model="obj.T_AHG" style="width: 100%" />*@
+                            </td>
+                            <td style="width: 10%;">
+                                <ui-select ng-model="obj.tccc.selected" id="txtCCC{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="tccc in obj.dctList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="tccc.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txtCCC{{$index}}" ng-model="obj.T_CCC" style="width: 100%" />*@
+                            </td>
+                            <td style="width: 10%;">
+                                <ui-select ng-model="obj.gAhg.selected" id="txtGelAHG{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="gAhg in obj.dctList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="gAhg.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txtGelAHG{{$index}}" ng-model="obj.T_GEL_AHG" style="width: 100%" />*@
+                            </td>
+                            <td style="min-width: 15%;">
+                                <ui-select ng-model="obj.cList.selected" id="txtComStatus{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.wd">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="cList in obj.ComList | propsFilter: {NAME: $select.search}">
+                                        <div ng-bind-html="cList.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                    @*<input type="text" id="txtComStatus{{$index}}" ng-model="obj.T_COM_STTS" style="width: 100%" />*@
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot style="display: table;width:100%;margin-top: 10px;">
+                        <tr style="width:100%">
+                            <td style="width: 8%;"></td>
+                            <td style="width: 9%;" ng-style="lang==2?aR:aL"><label id="lblUserCode" ng-bind="getLabel('lblUserCode')" for="txtUserCode" class="ng-cloak"></label></td>
+                            <td style="width: 9%;"><input type="text" id="txtUserCode" ng-model="obj.T_USER_CODE" style="width: 100%" readonly /></td>
+                            <td style="width: 49%;" colspan="5"><input type="text" id="txtUserDesc" ng-model="obj.T_USER_DESC" style="width: 100%" readonly /></td>
+                            <td style="width: 10%;"></td>
+                            <td style="width: 15%;"></td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </fieldset>
+    </script>
+    <div id="divReq" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblRequestHeader" ng-bind="getLabel('lblRequestHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseReqPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchReq" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblReqNo" ng-bind="getLabel('lblReqNo')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <label id="lblPatientNo" ng-bind="getLabel('lblPatientNo')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <label id="lblReqDate" ng-bind="getLabel('lblReqDate')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <label id="lblAboCode" ng-bind="getLabel('lblAboCode')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <label id="lblProdCode" ng-bind="getLabel('lblProdCode')" class="ng-cloak"></label>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.reqList |filter : SearchReq |itemsPerPage:pageSize" current-page="currentPage" pagination-id="req" ng-click="onReqSelect(PagiIndex($index,currentPage))" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnReqNo{{$index}}" style="width: 100%">{{obj.T_REQUEST_NO}}</span></td>
+                                    <td style="width: 20%" class="alnL"><span id="spnPatientNo{{$index}}" style="width: 100%">{{obj.T_PAT_NO}}</span></td>
+                                    <td style="width: 20%" class="alnL"><span id="spnReqDate{{$index}}" style="width: 100%">{{obj.T_REQUEST_DATE|date:'dd-MMM-yyyy'}}</span></td>
+                                    <td style="width: 20%" class="alnL"><span id="spnAboCode{{$index}}" style="width: 100%">{{obj.T_ABO_CODE}}</span></td>
+                                    <td style="width: 20%" class="alnL"><span id="spnProdCode{{$index}}" style="width: 100%">{{obj.T_REQUISITION}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="req" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divBloodGroup" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblBloodGroupHeader" ng-bind="getLabel('lblBloodGroupHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosebgPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchBG" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblReasonId" ng-bind="getLabel('lblBGId')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 80%">
+                                        <label id="lblReasonDesc" ng-bind="getLabel('lblBGDesc')" class="ng-cloak"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.bgList |filter : SearchBG |itemsPerPage:10" pagination-id="bg" ng-click="onbgSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnbgCode{{$index}}" style="width: 100%">{{obj.T_ABO_CODE}}</span></td>
+                                    <td style="width: 80%" class="alnL"><span id="spnbgDesc{{$index}}" style="width: 100%">{{obj.T_ABO_DESC}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bg" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divTech" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblTechHeader" ng-bind="getLabel('lblTechHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseTechPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchTech" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblTechCode" ng-bind="getLabel('lblTechCode')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 80%">
+                                        <label id="lblTechName" ng-bind="getLabel('lblTechName')" class="ng-cloak"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.techList |filter : SearchTech |itemsPerPage:10" pagination-id="tech" ng-click="onTechSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnTechCode{{$index}}" style="width: 100%">{{obj.T_EMP_CODE}}</span></td>
+                                    <td style="width: 80%" class="alnL"><span id="spnTechDesc{{$index}}" style="width: 100%">{{obj.T_USER_NAME}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="tech" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divantTypAuto" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblantTypAutoHeader" ng-bind="getLabel('lblantTypAutoHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseAntTypAutoPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchantTypAuto" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblantTypAutoCode" ng-bind="getLabel('lblantTypAutoCode')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 80%">
+                                        <label id="lblantTypAutoName" ng-bind="getLabel('lblantTypAutoName')" class="ng-cloak"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.antTypAutoList |filter : SearchantTypAuto |itemsPerPage:10" pagination-id="antTypAuto" ng-click="onAntTypAutoSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnantTypAutoCode{{$index}}" style="width: 100%">{{obj.T_ANTI_TYPE}}</span></td>
+                                    <td style="width: 80%" class="alnL"><span id="spnantTypAutoDesc{{$index}}" style="width: 100%">{{obj.T_ANTI_TYPE_DESC}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="antTypAuto" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divantTypFinal" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblantTypFinalHeader" ng-bind="getLabel('lblantTypFinalHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseAntTypFinalPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchantTypFinal" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblantTypFinalCode" ng-bind="getLabel('lblantTypFinalCode')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 80%">
+                                        <label id="lblantTypFinalName" ng-bind="getLabel('lblantTypFinalName')" class="ng-cloak"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.antTypFinalList |filter : SearchantTypFinal |itemsPerPage:10" pagination-id="antTypFinal" ng-click="onAntTypFinalSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 20%"><span id="spnantTypFinalCode{{$index}}" style="width: 100%">{{obj.T_ANTI_TYPECODE}}</span></td>
+                                    <td style="width: 80%" class="alnL"><span id="spnantTypFinalDesc{{$index}}" style="width: 100%">{{obj.T_ANTI_TYPEDESC}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="antTypFinal" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="divUnit" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblUnitHeader" ng-bind="getLabel('lblUnitHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseUnitPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchUnit" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10%">
+                                        <label id="lblUnitNo" ng-bind="getLabel('lblUnitNo')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 15%">
+                                        <label id="lblABONo" ng-bind="getLabel('lblABONo')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 15%">
+                                        <label id="lblABONoDesc" ng-bind="getLabel('lblABONoDesc')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 15%">
+                                        <label id="lblProdNoCode" ng-bind="getLabel('lblProdNoCode')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 25%">
+                                        <label id="lblProdNoDesc" ng-bind="getLabel('lblProdNoDesc')" class="ng-cloak"></label>
+                                    </th>
+                                    <th style="width: 20%">
+                                        <label id="lblProdExpDate" ng-bind="getLabel('lblProdExpDate')" class="ng-cloak"></label>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in obj.unitList |filter : SearchUnit |itemsPerPage:10" pagination-id="unit" ng-click="onUnitSelect($index)" style="cursor: pointer">
+                                    <td style="text-align: center; width: 10%"><span id="spnUnitNo{{$index}}" style="width: 100%">{{obj.UNIT_NO}}</span></td>
+                                    <td style="width: 15%" class="alnL"><span id="spnABONo{{$index}}" style="width: 100%">{{obj.T_ABO_NO_CODE}}</span></td>
+                                    <td style="width: 15%" class="alnL"><span id="spnlABONoDesc{{$index}}" style="width: 100%">{{obj.ABO_NO_DESC}}</span></td>
+                                    <td style="width: 15%" class="alnL"><span id="spnProdNoDesc{{$index}}" style="width: 100%">{{obj.T_PRODUCT_CODE}}</span></td>
+                                    <td style="width: 25%" class="alnL"><span id="spnProdNoCode{{$index}}" style="width: 100%">{{obj.PRODUCT_DESC}}</span></td>
+                                    <td style="width:20%" class="alnL"><span id="spnProdExpDate{{$index}}" style="width: 100%">{{obj.T_EXPIRY_DATE|date:'dd-MMM-yyyy'}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="unit" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

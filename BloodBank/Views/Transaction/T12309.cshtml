@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "T12309";
+}
+<script src="~/Apps/JSController/Transaction/T12309Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12309Service.js"></script>
+<style>
+    /*For PopUp start*/
+    .omf-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 300px;
+        width: 60%;
+        height: 50vw;
+        background-color: rgba(128, 128, 128, 0.00);
+        overflow: auto;
+        z-index: 99999;
+    }
+
+    .omf-modal .omf-modal-body {
+        width: 68.25%;
+        padding: 1px 1px 12px;
+        margin: auto;
+        margin-top: 150px;
+        margin-left: 122px;
+        background-color: #FFFFFF;
+        border-style: ridge;
+    }
+
+    nav .nav .btn {
+        margin-top: 3px;
+    }
+
+    #mainBody {
+        margin-top: 20px;
+        z-index: 999999;
+    }
+/*For PopUp end*/
+</style>
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12309Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-click="Save_Click()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="onClear()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+        <button id="btnPrint" title="Print" class="Button Print"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12309Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d;margin-top: 10px; border-radius: 5px;padding: 5px 0 5px 0;">
+                <table>
+                    <tr>
+                        <td> <label id="lblUnit" class="alnR" @*ng-bind="getLabel('lblUnit')"*@ for="txtUnit" style="width: 75px">Unit No</label></td>
+                        <td colspan="2"><input id="txtUnit" type="text" ng-model="obj.T12309.T_UNIT_NO" style="width: 150px" ng-dblclick="ShowUnitPopup()"/></td>
+                        <td><label id="lblProduct" class="alnR" @*ng-bind="getLabel('lblUnit')"*@ for="txtProductCode" style="width: 100px">Product</label></td>
+                        <td><input id="txtProductCode" type="text" ng-model="obj.T12309.T_PRODUCT_CODE" style="width: 100px" /></td>
+                        <td colspan="5"><input id="txtProductName" type="text" ng-model="obj.T12309.PRODUCT_NAME" style="width: 240px" /></td>
+                        <td><label id="lblFactor" class="alnR" @*ng-bind="getLabel('lblUnit')"*@ for="txtFactor" style="width: 85px">Factor</label></td>
+                        <td><input id="txtFactor" type="text" ng-model="obj.T12309.T_UNIT_NO" style="width: 100px" /></td>
+                    </tr>
+                    <tr>
+                        <td> <label id="lblRequestNo" class="alnR"  for="txtRequestNo" style="width: 75px">Reqt No</label></td>
+                        <td><input id="txtRequestNo" type="text" ng-model="obj.T12309.T_REQUEST_NO" style="width: 150px" /></td>
+                        <td><label id="lblDate" class="alnR"  for="txtDateEng" style="width: 30px">Date</label></td>
+                        <td><input id="txtDateEng" type="text" ng-model="obj.T12309.T_REQUEST_DATE" style="width: 100px" /></td>
+                        <td><input id="txtDateHiz" type="text" ng-model="obj.T12309.REQUEST_HIJ" style="width: 100px" /></td>
+                        <td>H</td>
+                        <td><label id="lblIssueDate" class="alnR"  for="txtIssueDate" style="width: 115px">Issue Date</label></td>
+                        <td><input id="txtIssueDate" type="text" ng-model="obj.T12309.T_ISSUE_DATE" style="width: 100px" /></td>
+                        <td><label id="lblIssueTime" class="alnR" for="txtIssueTime" style="width: 85px">Issue Time</label></td>
+                        <td><input id="txtIssueTime" type="text" ng-model="obj.T12309.T_ISSUE_TIME" style="width: 125px" /></td>
+                        <td><label id="lblExpDate" class="alnR"  for="txtExpDate" style="width: 85px">Exp Date</label></td>
+                        <td><input id="txtExpDate" type="text" ng-model="obj.T12309.T_EXPIRY_DATE" style="width: 100px" /></td>
+                    </tr>
+                    <tr>
+                        <td> <label id="lblPatientNo" class="alnR"  for="txtPatientNo" style="width: 75px">Pat No</label></td>
+                        <td><input id="txtPatientNo" type="text" ng-model="obj.T12309.T_PAT_NO" style="width: 150px" /></td>
+                        <td colspan="8"><input id="txtPatName" type="text" ng-model="obj.T12309.PAT_NAME" style="width: 488px" /></td>
+                        <td><label id="lblYear" class="alnR"  for="txtYear" style="width: 85px">Y</label></td>
+                        <td>
+                            <input id="txtYear" type="text" ng-model="obj.T12309.YEAR" style="width: 30px" />
+                            <label id="lblMonth" class="alnR"  for="txtMonth" style="width: 32px">M</label>
+                            <input id="txtMonth" class="alnR" type="text" ng-model="obj.T12309.MONTH" style="width: 30px" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <label id="lblGender" class="alnR"  for="txtGender" style="width: 75px">Gender</label></td>
+                        <td colspan="5"><input id="txtGender" type="text" ng-model="obj.T12309.GENDER" style="width: 150px" /></td>
+                        <td><label id="lblNationality" class="alnR"  for="txtNationality" style="width: 115px">Nationality</label></td>
+                        <td colspan="3"><input id="txtNationality" type="text" ng-model="obj.T12309.NATIONALITY" style="width: 324px" /></td>
+                        <td><label id="lblStatus" class="alnR"  for="txtStatus" style="width: 85px">Status</label></td>
+                        <td><input id="txtStatus" type="text" ng-model="obj.T12309.MARL_STATUS_NAME" style="width: 100px" /></td>
+                        
+                    </tr>
+                    <tr>
+                        <td> <label id="lblLocation" class="alnR" for="txtLocation" style="width: 75px">Location</label></td>
+                        <td><input id="txtLocation" type="text" ng-model="obj.T12309.T_LOCATION_CODE" style="width: 150px" /></td>
+                        <td colspan="10"><input id="txtLocationName" type="text" ng-model="obj.T12309.LOCATION_NAME" style="width: 712px" /></td>
+                        
+                        
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d;margin-top: 10px; border-radius: 5px;padding: 5px 0 5px 0;">
+                <center>
+                    <table>
+                        <tr>
+                            <td valign="top"> <label id="lblRaesonForReturn" class="alnR"  for="txtRaesonForReturn" style="width: 150px">Request For Return</label></td>
+                            <td colspan="5"><textarea id="txtRaesonForReturn" type="text" ng-model="obj.T12309.DateEng" style="min-width: 409px; min-height: 95px; max-width: 409px;max-height: 95px" ng-blur="setDateTime()"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td> <label id="lblCancelDate" class="alnR" for="txtCancelDateEng" style="width: 150px">Cancel Date</label></td>
+                            <td><input id="txtCancelDateEng" type="text" ng-model="obj.T12309.Can_Date" style="width: 100px"/></td>
+                            <td><input id="txtCancelDateHij" type="text" ng-model="obj.T12309.Can_Date_Hij" style="width: 100px"/></td>
+                            <td>H</td>
+                            <td><label id="lblTime" class="alnR"  for="txtTime" style="width: 75px">Time</label></td>
+                            <td><input id="txtTime" type="text" ng-model="obj.T12309.Time" style="width: 100px"/></td>
+                        </tr>
+                        <tr>
+                            <td> <label id="lblRequestCancel" class="alnR"  for="txtRequestCancel" style="width: 150px">Request Cancel By</label></td>
+                            <td><input id="txtRequestCancel" type="text" ng-model="obj.T12309.Cancel_By_Id" style="width: 100px"/></td>
+                            <td colspan="4"><input id="txtRequestCancelName" type="text" ng-model="obj.T12309.Cancel_By_Name" style="width: 303px"/></td>
+                            
+                        </tr>
+                    </table>
+                </center>
+            </div>
+        </div>
+        @*Bed popup start*@
+        <div id="UnitPopUp" class="omf-modal popup">
+
+            <div class="omf-modal-body">
+            
+                <div class="omf-modal-header">
+                    @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                    <label class="ng-cloak" id="lblBedInfromation"  style="width: 97%"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePatientPopup('UnitPopUp')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                    <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+                </div>
+                <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                    <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table id="bedPopUpTable" class="omf-modal-grid grid" style="width: 550px">
+                                <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak" >Unit No</th>
+                                    <th style="width: 100px; text-align: center;" class="ng-cloak" >Product Code</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="B in obj.Unitlist |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,B)">
+                                    <td style="width: 53px; ">{{B.T_UNIT_NO}}</td>
+                                    <td style="width: 100px;">{{B.T_PRODUCT_CODE}}</td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @*style="text-align: center;display:table; width:100%;"*@
+        @*Bed popup end*@
+       
+    </div>
+</div>
+
+
+

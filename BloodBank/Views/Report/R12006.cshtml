@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewBag.Title = "R12006";
+}
+
+<script src="~/Apps/JSController/Report/R12006Controller.js"></script>
+<script src="~/Apps/JSService/Report/R12006Service.js"></script>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="R12006Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="ClearAll()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+        <button id="btnPrint1" title="Print" class="Button Print" ng-click="T12304_print()"></button>
+        <button id="btnPrint1" title="Print" class="Button Print" ng-click="R12215_print()"></button>
+    </div>
+
+}
+
+<div class="container" ng-app="BloodBank" ng-controller="R12006Controller" name="obj.myDiv" novalidate ng-form style="width:90%">
+    <div class="col-lg-12">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <table>
+                    <tr>
+                        <td><label id="lblDateFromG" ng-bind="getLabel('lblDateFromG')" class="ng-cloak"></label></td>
+                        <td>
+                            <datepicker date-format="dd/MM/yyyy" id="datepicker1">
+                                <input ng-model="obj.Date_From" type="text" id="txtDateFromG" style="cursor: pointer; width: 180px;" required  ng-change="FromDateHizri()" placeholder="DD/MM/YYYY" @*ng-keydown="EnterControl($event,'txtBirthDateEng')"*@ @*ng-blur="Date_Write_From(obj.Date_From)"*@/>
+                            </datepicker>
+                        </td>
+                        <td><label id="lblDateTo" ng-bind="getLabel('lblDateTo')" class="ng-cloak"></label></td>
+                        <td>
+                            <datepicker date-format="dd/MM/yyyy" id="datepicker2">
+                                <input ng-model="obj.Date_To" type="text" id="txtDateToG" style="cursor: pointer; width: 180px;" required ng-change="ToDateHizri()" placeholder="DD/MM/YYYY" @*ng-keydown="EnterControl($event,'txtBirthDateEng')"*@ @*ng-blur="Date_Click_To(obj.Date_To)"*@ />
+                            </datepicker>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblDateFromH" ng-bind="getLabel('lblDateFromH')" class="ng-cloak"></label></td>
+                        <td>
+                            @*<datepicker date-format="dd/MM/yyyy">
+                                <input ng-model="obj.Date_From" type="text" id="txtDateFromG" style="cursor: pointer; width: 180px;" required ng-click="onBirthDateSelect()" ng-change="getAge()" placeholder="DD/MM/YYYY" ng-keydown="EnterControl($event,'txtBirthDateEng')" readonly />
+                            </datepicker>*@
+                            <input ng-model="obj.Date_From_H" type="text" id="txtDateFromH" style="width: 180px;" required readonly />
+                        </td>
+                        <td><label id="lblToH" ng-bind="getLabel('lblToH')" class="ng-cloak"></label></td>
+                        <td>
+                            @*<datepicker date-format="dd/MM/yyyy">
+            <input ng-model="obj.Date_From" type="text" id="txtDateFromG" style="cursor: pointer; width: 180px;" required ng-click="onBirthDateSelect()" ng-change="getAge()" placeholder="DD/MM/YYYY" ng-keydown="EnterControl($event,'txtBirthDateEng')" readonly />
+        </datepicker>*@
+                            <input ng-model="obj.Date_To_H" type="text" id="txtDateToH" style="width: 180px;" required readonly />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblNationality" ng-bind="getLabel('lblNationality')" class="ng-cloak"></label></td>
+                        <td colspan="2">
+                            <ui-select id="ddlHospital" ng-model="obj.g.selected" theme="select2" append-to-body="true" style="width: 200px" ng-change="Hospital_Select(obj.g.selected.nationalityId)" focus-on="ddlTitleId">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_LANG2_NAME}}</ui-select-match>
+                                <ui-select-choices repeat="g in obj.nationalityList | propsFilter: {T_LANG2_NAME: $select.search}">
+                                    <div ng-bind-html="g.T_LANG2_NAME | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input type="text" id="ddlITitleId" ng-model="obj.nationalityId" name="title" ng-bind="obj.nationalityId=obj.g.selected.nationalityId" class="hidden" />
+                        </td>
+                        @*<td colspan="2"><input type="text" style="width: 100%;" /></td>*@
+                    </tr>
+                    <tr>
+                        <td><label id="lblTimeFrom" ng-bind="getLabel('lblTimeFrom')" class="ng-cloak"></label></td>
+                        <td><input type="text" ng-model="obj.TIME_FROM"/></td>
+                        <td style="width: 15%;"><label id="lblTimeToHrs" ng-bind="getLabel('lblTimeToHrs')" class="ng-cloak"></label></td>
+                        <td><input type="text" ng-model="obj.TIME_TO_HRS"/></td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblUnitFrom" ng-bind="getLabel('lblUnitFrom')" class="ng-cloak"></label></td>
+                        <td><input type="text" ng-model="obj.T_UNIT_FROM"/></td>
+                        <td><label id="lblUnitToHrs" ng-bind="getLabel('lblUnitToHrs')" class="ng-cloak"></label></td>
+                        <td><input type="text" ng-model="obj.T_UNIT_TO_HRS"/></td>
+                    </tr>
+                    <tr>
+                        <td><label id="lblDonationReason" ng-bind="getLabel('lblDonationReason')" class="ng-cloak"></label></td>
+                        <td colspan="2">
+                            <ui-select id="ddlHospital" ng-model="obj.h.selected" theme="select2" append-to-body="true" style="width: 200px" ng-change="Hospital_Select(obj.h.selected.T_DOTN_RSN_CODE)" focus-on="ddlTitleId">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_LANG2_NAME}}</ui-select-match>
+                                <ui-select-choices repeat="h in obj.reasonlist | propsFilter: {T_LANG2_NAME: $select.search}">
+                                    <div ng-bind-html="h.T_LANG2_NAME | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input type="text" id="ddlITitleId" ng-model="obj.T_DOTN_RSN_CODE" name="title" ng-bind="obj.T_DOTN_RSN_CODE=obj.h.selected.T_DOTN_RSN_CODE" class="hidden" />
+                        </td>
+                        @*<td colspan="2"><input type="text" style="width: 100%;" /></td>*@
+                    </tr>
+                    <tr>
+                        <td><label id="lblPatientId" ng-bind="getLabel('lblPatientId')" class="ng-cloak"></label></td>
+                        <td><input type="text" id="txtPatId" placeholder="Enter Patient ID" ng-model="obj.T_PAT_NO" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2"><input type="checkbox" ng-true-value="'1'" ng-false-value="''" /><span><strong><label style="color: #a21217" id="lblUnitGenByUsers" ng-bind="getLabel('lblUnitGenByUsers')" class="ng-cloak"></label></strong></span></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%"><label id="lblCheckToStart" ng-bind="getLabel('lblCheckToStart')" class="ng-cloak"></label></td>
+                        <td colspan="2">
+                            <input type="text" style="width: 25%" ng-model="obj.TECH_PIN" ng-dblclick="showTechPopup()"/>
+                            <input type="text" ng-model="obj.TECH_USER"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="2"><input type="checkbox" ng-true-value="'1'" ng-false-value="''" /><span><strong><label style="color: #a21217" id="lblHamla" ng-bind="getLabel('lblHamla')" class="ng-cloak"></label></strong></span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+        </div>
+
+    </div>
+    <div id="formConfirmation" class="col-lg-12 col-md-12 col-sm-12 hidden" style="width: 100%">
+        <table style="width: 97%; margin-left: 20px">
+            <tr>
+                <td style="width: 30%">{{obj.T_COUNTRY_LANG2_NAME}}</td>
+                <td style="width: 30%; text-align: center;font-size: 20px;">Blood Bank</td>
+                <td style="text-align: right;width: 30%">{{obj.T_COUNTRY_LANG1_NAME}}</td>
+                <td style="width: 10%"></td>
+            </tr>
+            <tr>
+                <td style="width: 30%">{{obj.T_MIN_LANG2_NAME}} </td>
+                <td rowspan="3" style="width: 30%;text-align: center">
+                    <img src="~/Images/logo.png" />
+                </td>
+                <td style="text-align: right;width: 30%">{{obj.T_MIN_LANG1_NAME}}</td>
+                <td style="width: 10%"></td>
+            </tr>
+            <tr>
+                <td style="width: 30%">{{obj.T_SITE_LANG2_NAME}}</td>
+                <td style="text-align: right;width: 30%">{{obj.T_SITE_LANG1_NAME}}</td>
+                <td style="width: 10%"></td>
+            </tr>
+            <tr style="height: 45px;">
+                <td style="width: 30%"></td>
+                <td style="width: 30%"></td>
+                <td style="width: 10%"></td>
+            </tr>
+            
+        </table>
+        <table style="width: 97%; margin-left: 20px">
+            <tr style="background: #808080b3; width: 100%;font-size: 15px">
+                <td style="width: 15%;text-align: center">{{obj.TOTAL}}</td>
+                <td colspan="2" style="width: 30%">Units Collected By Users On </td>
+                <td style="width: 15%"> {{obj.T_DAY}}</td>
+                <td style="width: 15%">{{obj.TO_DATE_HIJ}}</td>
+                <td style="width: 15%">{{obj.TO_DATE}}</td>
+                
+            </tr>
+            <tr style=" width: 100%; font-size: 10px;">
+                <td style="width: 15%;color: red">TOTAL REGISTERED :<span style="color: black">{{obj.REGISTERED}}</span></td>
+                <td style="width: 15%;color: red">NOT EXAMINED :<span style="color: black">{{obj.NOT_EXAMINED}}</span></td>
+                <td style="width: 15%;color: red"> EXAMINED :<span style="color: black">{{obj.EXAMINED}}</span></td>
+                <td style="width: 15%;color: red"> NOT DONATED :<span style="color: black">{{obj.DONATED}}</span></td>
+                <td style="width: 15%;color: red"> REJECTED :<span style="color: black">{{obj.REJECTED}}</span></td>
+                <td style="width: 15%;color: red"> CANCELLED :<span style="color: black">{{obj.CANCELLED}}</span></td>
+            </tr>
+        </table>
+        <table id="table" style="width: 97%; margin-left: 20px">
+            <tr ng-repeat="clt in obj.collectorList " style="width: 20%; float: left; height: 250px">
+                <td style="width: 20%;">
+                    <h4 style="background: #80808063">{{clt.T_USER_NAME}}</h4>
+                    <h5 style="color: black; background: yellow; text-align: center; margin-top: -10px;" ng-repeat="Time in obj.timelist"
+                        ng-if="clt.T_EMP_CODE==Time.T_EMP_CODE" ng-model="obj.check" ng-bind="obj.check=Time.T_COUNT_TIME"></h5>
+                    <table style="margin-top: -10px;">
+                        <tr ng-repeat="Dcltn in obj.DcollectionList" ng-if="clt.T_EMP_CODE==Dcltn.T_EMP_CODE">
+                            <td>{{Dcltn.DONATION_TIME}}</td>
+                        </tr>
+                    </table>
+                    <h5 style="color: red; background: #80808063; text-align: center; margin-top: 0px;">{{clt.T_COUNT}}</h5>
+                </td>
+
+            </tr>
+        </table>
+
+    </div>
+
+
+    @*Unit From Modal Start*@
+    <div id="divTech" class="omf-modal" style="width: 80% !important">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblTechUser" ng-bind="getLabel('lblTechUser')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseDivTechPopup()" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="select..." class="omf-modal-placeholder" ng-model="SearchUnitFrom" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid" arrow-selector="UnitList">
+                            <thead>
+                            <tr>
+                                <th style="width: 20%">
+                                    <label id="lblPin" class="ng-cloak" ng-bind="getLabel('lblPin')"></label>
+                                </th>
+                                <th><label id="lblTechUserName" class="ng-cloak" ng-bind="getLabel('lblTechUserName')"></label></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="obj in TechList |filter : SearchUnitFrom |itemsPerPage:10" pagination-id="uListFrom" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onUserSelect($index,obj)">
+                                <td style="text-align: center"><span id="spnUserPin{{$index}}" style="width: 100%">{{obj.T_PIN}}</span></td>
+                                <td style="text-align: center"><span id="spnUserName{{$index}}" style="width: 100%">{{obj.T_USER_NAME}}</span></td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="uListFrom" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Unit From Modal end*@
+</div>

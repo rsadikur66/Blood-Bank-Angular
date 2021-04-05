@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "R12016";
+}
+<script src="~/Apps/JSController/Report/R12016Controller.js"></script>
+<script src="~/Apps/JSService/Report/R12016Service.js"></script>
+@section container
+{
+<div id="options" ng-app="BloodBank" ng-controller="R12016Controller">
+    <button id="btnPrint" tooltip="Print" class="Button Print" ng-click="obj.onPrint()"></button>
+    <button id="btnPrint" tooltip="Print" class="12006 Button Print" ng-click="T12304_print()"></button>
+</div>
+    
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="R12016Controller" name="obj.myDiv" novalidate ng-form>
+        <div class="container">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                <div class="col-lg-6 col-md-6 col-sm-6" style="border: 1px solid #c12d2d; margin-top: 10px; border-radius: 5px; padding: 20px;">
+                    <div class="row col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 5px">
+                        <div style="width: 100%">
+                            <table style="width: 100%">
+                                <tr style="width: 100%">
+                                    <td style="width: 20%" class="alnR"><label id="lblUnitForm" for="txtUnitForm" ng-bind="getLabel('lblUnitForm')" class="ng-cloak"></label></td>
+                                    <td style="width: 30%">
+                                        <input ng-model="obj.formUnit" type="text" id="txtUnitForm" readonly="readonly" style="width: 100%;" ng-click="getUnitList('f')" required />
+                                    </td>
+                                    <td style="width: 20%" class="alnR">
+                                        <label id="lblUnitTo" for="txtUnitTo" ng-bind="getLabel('lblUnitTo')" class="ng-cloak"></label>
+                                    </td>
+                                    <td style="width: 30%">
+                                        <input ng-model="obj.toUnit" type="text" id="txtUnitTo" style="width: 100%;" ng-click="getUnitList('t')" readonly="readonly" required />
+                                    </td>
+                                </tr>
+                                <tr style="width: 100%">
+                                    <td style="width: 20%" class="alnR"><label id="lblProduct" for="txtProductCode" ng-bind="getLabel('lblProduct')" class="ng-cloak"></label></td>
+                                    <td style="width: 30%"> <input ng-model="obj.ProductCode" type="text" id="txtProductCode" style="width: 100%;" required ng-click="getProductList()"/></td>
+                                    <td style="width: 50%" colspan="2">
+                                        <input ng-model="obj.ProductDesc" type="text" id="txtProductDesc" style="width: 100%;" readonly="readonly" required />
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            </div>
+        </div>
+        <div id="divUnit" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblUnitHeader" ng-bind="getLabel('lblUnitHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseUnitPopup()" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchUnit" />
+
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%">
+                                            <label id="lblUnit" ng-bind="getLabel('lblUnit')" class="ng-cloak"></label>
+                                        </th>
+                                        <th style="width: 80%">
+                                            <label id="lblDonationDate" ng-bind="getLabel('lblDonationDate')" class="ng-cloak"></label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="obj in obj.UnitList |filter : SearchUnit |itemsPerPage:10" pagination-id="unit" ng-click="onUnitSelect($index)" style="cursor: pointer">
+                                        <td style="text-align: center; width: 20%"><span id="spnUnit{{$index}}" style="width: 100%">{{obj.T_UNIT_NO}}</span></td>
+                                        <td style="width: 80%" class="alnL"><span id="spnDonationDate{{$index}}" style="width: 100%">{{obj.T_DONATION_DATE | date :  "dd-MMM-yyyy" }}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="unit" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="divProduct" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblProductHeader" ng-bind="getLabel('lblProductHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseProductPopup()" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchProduct" />
+
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 20%">
+                                            <label id="lblProductCode" ng-bind="getLabel('lblProductCode')" class="ng-cloak"></label>
+                                        </th>
+                                        <th style="width: 80%">
+                                            <label id="lblProductDesc" ng-bind="getLabel('lblProductDesc')" class="ng-cloak"></label>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="obj in obj.ProductList |filter : SearchProduct |itemsPerPage:10" pagination-id="product" ng-click="onProductSelect($index)" style="cursor: pointer">
+                                        <td style="text-align: center; width: 20%"><span id="spnProductCode{{$index}}" style="width: 100%">{{obj.T_PRODUCT_CODE}}</span></td>
+                                        <td style="width: 80%" class="alnL"><span id="spnProductDesc{{$index}}" style="width: 100%">{{obj.PRODUCT_DESC}}</span></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="product" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

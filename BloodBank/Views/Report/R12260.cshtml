@@ -1,0 +1,113 @@
+﻿
+@{
+    ViewBag.Title = "R12260";
+}
+<script src="~/Apps/JSController/Report/R12260Controller.js"></script>
+<script src="~/Apps/JSService/Report/R12260Service.js"></script>
+<link href="~/Content/calender.css" rel="stylesheet" />
+<script src="~/Scripts/calender.js"></script>
+
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="R12260Controller">
+        <button id="btnPrint1" tooltip="Print" class="Button Print" ng-click="obj.onPrint()"></button>
+        <button id="btnPrint" tooltip="Print" class="12006 Button Print" ng-click="print_2()"></button>
+    </div>
+
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="R12260Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6" style="border: 1px solid #c12d2d; margin-top: 10px; border-radius: 5px; padding: 20px;">
+                <div class="row col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 5px">
+                    <div style="width: 100%">
+                        <table style="width: 100%">
+                            <tr style="width: 100%">
+                                <td style="width: 20%" class="alnR"><label id="lblFromDate" for="txtFromDate" class="ng-cloak">Form Date</label></td>
+                                <td style="width: 30%">
+                                    <datepicker date-format="dd/MM/yy">
+                                        <input id="txtFromDate" ng-model="obj.R12260.FromDate" type="text" readonly="readonly" style="cursor: pointer; width: 90%" />
+                                    </datepicker>
+                                    @*<input ng-model="obj.formDate" type="text" id="txtFormDate" readonly="readonly" style="width: 100%;"/>*@
+                                </td>
+                                <td style="width: 20%" class="alnR">
+                                    <label id="lblToDate" for="txtToDate" class="ng-cloak">To Date</label>
+                                </td>
+                                <td style="width: 30%">
+                                    <datepicker date-format="dd/MM/yy">
+                                        <input id="txtToDate" ng-model="obj.R12260.Todate" type="text" readonly="readonly" style="cursor: pointer; width: 90%" />
+                                    </datepicker>
+                                    @*<input ng-model="obj.toDate" type="text" id="txtToDate" style="width: 100%;"  />*@
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                </div>
+                @*<button id="clickbind" ng-click="PDF()">Click</button>*@
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+        </div>
+
+        <div id="formConfirmation" class="col-lg-12 col-md-12 col-sm-12 hidden" style="width: 100%">
+            <table style="width: 97%; margin-left: 20px">
+                <tr>
+                    <td style="width: 30%">{{obj.T_COUNTRY_LANG2_NAME}}</td>
+                    <td style="width: 30%; text-align: center;font-size: 20px;">Blood Bank</td>
+                    <td style="text-align: right;width: 30%">{{obj.T_COUNTRY_LANG1_NAME}}</td>
+                    <td style="width: 10%"></td>
+                </tr>
+                <tr>
+                    <td style="width: 30%">{{obj.T_MIN_LANG2_NAME}} </td>
+                    <td rowspan="3" style="width: 30%;text-align: center">
+                        <img src="~/Images/logo.png" />
+                    </td>
+                    <td style="text-align: right;width: 30%">{{obj.T_MIN_LANG1_NAME}}</td>
+                    <td style="width: 10%"></td>
+                </tr>
+                <tr>
+                    <td style="width: 30%">{{obj.T_SITE_LANG2_NAME}}</td>
+                    <td style="text-align: right;width: 30%">{{obj.T_SITE_LANG1_NAME}}</td>
+                    <td style="width: 10%"></td>
+                </tr>
+                <tr style="height: 45px;">
+                    <td style="width: 30%"></td>
+                    <td style="width: 30%"></td>
+                    <td style="width: 10%"></td>
+                </tr>
+                <tr style="background: #808080b3">
+                    <td style="width: 30%">{{obj.T_USER_NAME}}</td>
+                    <td style="width: 40%">Between :{{obj.FDate}}</td>
+                    <td style="width: 30%">And :{{obj.TDate}}</td>
+                </tr>
+            </table>
+            
+            <table id="table" style="width: 97%; margin-left: 20px">
+                
+                <tr ng-repeat="Dt in obj.DateList" style="width: 20%; float: left; height: 250px">
+                    <td style="width: 20%;">
+                        <h5 style="background: #80808063">{{Dt.T_DATE_DAY}}</h5>
+                        <h5 style="color: black; background: yellow; text-align: center; margin-top: -10px;" ng-repeat="Time in obj.TimeList"
+                            ng-if="Dt.T_DATE==Time.T_DATE" ng-model="obj.check" ng-bind="obj.check=Time.T_COUNT_TIME"></h5>
+                        <table style="margin-top: -10px;">
+                            <tr ng-repeat="Data in obj.DataList" ng-if="Dt.T_DATE==Data.T_DATE">
+                                <td >{{Data.DONATION_TIME}}</td>
+                            </tr>
+                        </table>
+                        <h5 style="color: red; background: #80808063; text-align: center; margin-top: 0px;">{{Dt.T_COUNT}}</h5>
+                    </td>
+
+                </tr>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+

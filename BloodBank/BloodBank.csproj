@@ -1,0 +1,827 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FB71F2C4-A632-42EA-9E49-CEE2897BC836}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BloodBank</RootNamespace>
+    <AssemblyName>BloodBank</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FastReport, Version=2018.2.22.0, Culture=neutral, PublicKeyToken=db7e5ce63278458c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\FastReport.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\BloodBankDAL\bin\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Initialization\InitializationController.cs" />
+    <Compile Include="Controllers\Initialization\T01004Controller.cs" />
+    <Compile Include="Controllers\Initialization\T01009Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12011Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12028Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12033Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12068Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12081Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12087Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12132Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12199Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12246Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12281Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12332Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12337Controller.cs" />
+    <Compile Include="Controllers\Initialization\T12338Controller.cs" />
+    <Compile Include="Controllers\Menu\MenuController.cs" />
+    <Compile Include="Controllers\Query\Q03001Controller.cs" />
+    <Compile Include="Controllers\Query\Q12012Controller.cs" />
+    <Compile Include="Controllers\Query\Q12018Controller.cs" />
+    <Compile Include="Controllers\Query\Q12025Controller.cs" />
+    <Compile Include="Controllers\Query\Q12017Controller.cs" />
+    <Compile Include="Controllers\Query\Q12207Controller.cs" />
+    <Compile Include="Controllers\Query\Q12252Controller.cs" />
+    <Compile Include="Controllers\Query\Q12200Controller.cs" />
+    <Compile Include="Controllers\Query\Q12263Controller.cs" />
+    <Compile Include="Controllers\Query\Q12352Controller.cs" />
+    <Compile Include="Controllers\Query\QueryController.cs" />
+    <Compile Include="Controllers\Report\R12006Controller.cs" />
+    <Compile Include="Controllers\Report\R12016Controller.cs" />
+    <Compile Include="Controllers\Report\R12025Controller.cs" />
+    <Compile Include="Controllers\Report\R12260Controller.cs" />
+    <Compile Include="Controllers\Report\R12304Controller.cs" />
+    <Compile Include="Controllers\Report\R12302Controller.cs" />
+    <Compile Include="Controllers\Report\Report12204Controller.cs" />
+    <Compile Include="Controllers\Report\ReportController.cs" />
+    <Compile Include="Controllers\Report\R12201ReportController.cs" />
+    <Compile Include="Controllers\Transaction\T06210Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12003Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12091Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12201Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12202Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12204Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12207Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12214Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12232Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12233Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12236Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12241Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12244Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12245Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12235Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12250Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12252Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12262Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12263Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12264Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12265Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12266Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12300Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12301Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12302Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12304Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12309Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12325Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12328Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12349Controller.cs" />
+    <Compile Include="Controllers\Transaction\T12322Controller.cs" />
+    <Compile Include="Controllers\Transaction\T13054Controller.cs" />
+    <Compile Include="Controllers\Transaction\TransactionController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AuthorizeUserAccessLevel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Apps\app.js" />
+    <Content Include="Apps\JSController\Account\LoginController.js" />
+    <Content Include="Apps\JSController\Initialization\T01004Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T01009Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12011Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12028Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12033Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12068Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12081Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12087Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12132Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12199Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12246Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12281Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12332Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12337Controller.js" />
+    <Content Include="Apps\JSController\Initialization\T12338Controller.js" />
+    <Content Include="Apps\JSController\Menu\menuController.js" />
+    <Content Include="Apps\JSController\Query\Q03001Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12012Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12018Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12025Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12017Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12207Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12252Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12200Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12263Controller.js" />
+    <Content Include="Apps\JSController\Query\Q12352Controller.js" />
+    <Content Include="Apps\JSController\Report\R12006Controller.js" />
+    <Content Include="Apps\JSController\Report\R12016Controller.js" />
+    <Content Include="Apps\JSController\Report\R12260Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T06210Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12003Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12091Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12200Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12201Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12202Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12207Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12213Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12214Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12262Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12264Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12265Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12266Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12318Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12232Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12233Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12235Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12236Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12239Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12241Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12244Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12204Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12245Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12250Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12252Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12253Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12254Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12256Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12258Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12263Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12287Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12300Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12301Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12302Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12304Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12306Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12309Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12317Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12319Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12320Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12322Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12325Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12326Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12327Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12328Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12330Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12346Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12349Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T12366Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T13054Controller.js" />
+    <Content Include="Apps\JSController\Transaction\T13122Controller.js" />
+    <Content Include="Apps\JSFactory\Transaction\T12235BloodTypeFactory.js" />
+    <Content Include="Apps\JSService\Initialization\T01004Service.js" />
+    <Content Include="Apps\JSService\Initialization\T01009Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12011Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12028Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12033Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12068Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12081Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12087Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12132Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12199Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12246Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12281Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12332Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12337Service.js" />
+    <Content Include="Apps\JSService\Initialization\T12338Service.js" />
+    <Content Include="Apps\JSService\LabelService.js" />
+    <Content Include="Apps\JSService\LoginService.js" />
+    <Content Include="Apps\JSService\Menu\menuService.js" />
+    <Content Include="Apps\JSService\Query\Q03001Service.js" />
+    <Content Include="Apps\JSService\Query\Q12012Service.js" />
+    <Content Include="Apps\JSService\Query\Q12018Service.js" />
+    <Content Include="Apps\JSService\Query\Q12025Service.js" />
+    <Content Include="Apps\JSService\Query\Q12017Service.js" />
+    <Content Include="Apps\JSService\Query\Q12207Service.js" />
+    <Content Include="Apps\JSService\Query\Q12252Service.js" />
+    <Content Include="Apps\JSService\Query\Q12200Service.js" />
+    <Content Include="Apps\JSService\Query\Q12263Service.js" />
+    <Content Include="Apps\JSService\Query\Q12352Service.js" />
+    <Content Include="Apps\JSService\Report\R12006Service.js" />
+    <Content Include="Apps\JSService\Report\R12016Service.js" />
+    <Content Include="Apps\JSService\Report\R12260Service.js" />
+    <Content Include="Apps\JSService\T12302Service.js" />
+    <Content Include="Apps\JSService\Transaction\T06210Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12003Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12091Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12200Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12201Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12202Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12207Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12214Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12262Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12264Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12265Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12266Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12318Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12232Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12233Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12236Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12239Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12241Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12244Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12204Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12245Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12235Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12250Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12252Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12253Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12254Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12256Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12258Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12263Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12287Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12300Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12301Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12302Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12304Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12306Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12309Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12317Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12319Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12320Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12322Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12325Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12326Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12327Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12328Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12330Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12346Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12349Service.js" />
+    <Content Include="Apps\JSService\Transaction\T12366Service.js" />
+    <Content Include="Apps\JSService\Transaction\T13054Service.js" />
+    <Content Include="Apps\JSService\Transaction\T13122Service.js" />
+    <Content Include="Content\angular-datepicker_Custom.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\calender.css" />
+    <Content Include="Content\Custom.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Font-awesome\font-awesome.min.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\jquery.mCustomScrollbar.css" />
+    <Content Include="Content\jquery.mCustomScrollbar.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\main.css" />
+    <Content Include="Content\menuarb.css" />
+    <Content Include="Content\menueng.css" />
+    <Content Include="Content\metallic.css" />
+    <Content Include="Content\normalize.css" />
+    <Content Include="Content\pagearb.css" />
+    <Content Include="Content\pagearb.min.css" />
+    <Content Include="Content\pageeng.css" />
+    <Content Include="Content\pageeng.min.css" />
+    <Content Include="Content\PDFCSS.css" />
+    <Content Include="Content\Rating\jk-rating-stars.min.css" />
+    <Content Include="Content\responsive.css" />
+    <Content Include="Content\select.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.png" />
+    <Content Include="Content\selectize.default.css" />
+    <Content Include="Content\ui-grid.min.css" />
+    <Content Include="Content\validationEngine.jquery.css" />
+    <Content Include="Content\xeditable.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\ambulance_in.png" />
+    <Content Include="Images\Amb_MarkerG.png" />
+    <Content Include="Images\Amb_MarkerG11.png" />
+    <Content Include="Images\Amb_MarkerR.png" />
+    <Content Include="Images\back.png" />
+    <Content Include="Images\back1.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\BloodBank.png" />
+    <Content Include="Images\ButonRed.png" />
+    <Content Include="Images\buttonGreen.png" />
+    <Content Include="Images\buttonWhite.png" />
+    <Content Include="Images\buttonWhite1.png" />
+    <Content Include="Images\buttonYellow.png" />
+    <Content Include="Images\calender.png" />
+    <Content Include="Images\cancelquery.png" />
+    <Content Include="Images\Cancel_White.png" />
+    <Content Include="Images\Chat_img\add.png" />
+    <Content Include="Images\Chat_img\Circle_green.png" />
+    <Content Include="Images\Chat_img\minus_green.png" />
+    <Content Include="Images\Chat_img\minus_white.png" />
+    <Content Include="Images\Chat_img\plus_green.png" />
+    <Content Include="Images\Chat_img\plus_white.png" />
+    <Content Include="Images\Chat_img\substract.png" />
+    <Content Include="Images\checkcross.png" />
+    <Content Include="Images\checkcross_fade.png" />
+    <Content Include="Images\checksuccess.png" />
+    <Content Include="Images\checksuccess_fade.png" />
+    <Content Include="Images\clear.png" />
+    <Content Include="Images\Clip.png" />
+    <Content Include="Images\close_delete.png" />
+    <Content Include="Images\delete.png" />
+    <Content Include="Images\enterquery.png" />
+    <Content Include="Images\executequery.png" />
+    <Content Include="Images\headerbg.png" />
+    <Content Include="Images\help.png" />
+    <Content Include="Images\Hemocare HR.png" />
+    <Content Include="Images\Hospital.jpg" />
+    <Content Include="Images\hosplogo.png" />
+    <Content Include="Images\leftpanelbg.png" />
+    <Content Include="Images\leftpanelbgarb.png" />
+    <Content Include="Images\li.png" />
+    <Content Include="Images\loader.gif" />
+    <Content Include="Images\login.png" />
+    <Content Include="Images\loginbg.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logout.png" />
+    <Content Include="Images\logoutpg.png" />
+    <Content Include="Images\logoutpg1.png" />
+    <Content Include="Images\medisys.png" />
+    <Content Include="Images\ministrylogo.png" />
+    <Content Include="Images\mm_20_green.png" />
+    <Content Include="Images\mm_20_red.png" />
+    <Content Include="Images\navdir.png" />
+    <Content Include="Images\navdirarb.png" />
+    <Content Include="Images\new.png" />
+    <Content Include="Images\nextblock.png" />
+    <Content Include="Images\numpadbg.png" />
+    <Content Include="Images\pageleftpanelbg.png" />
+    <Content Include="Images\pageleftpanelbgarb.png" />
+    <Content Include="Images\passicon.png" />
+    <Content Include="Images\plus.png" />
+    <Content Include="Images\plus1.png" />
+    <Content Include="Images\print.png" />
+    <Content Include="Images\query.png" />
+    <Content Include="Images\ques_Back.png" />
+    <Content Include="Images\ques_Next.png" />
+    <Content Include="Images\refresh.jpg" />
+    <Content Include="Images\RegistrationImage\1.png" />
+    <Content Include="Images\RegistrationImage\1p.png" />
+    <Content Include="Images\RegistrationImage\2c.png" />
+    <Content Include="Images\RegistrationImage\6.txt" />
+    <Content Include="Images\Reject.png" />
+    <Content Include="Images\report.png" />
+    <Content Include="Images\save.png" />
+    <Content Include="Images\security.png" />
+    <Content Include="Images\setup.png" />
+    <Content Include="Images\start.png" />
+    <Content Include="Images\stop.png" />
+    <Content Include="Images\stop1.png" />
+    <Content Include="Images\tips.png" />
+    <Content Include="Images\topbarbg.png" />
+    <Content Include="Images\topbarbgarb.png" />
+    <Content Include="Images\topbarseparator.png" />
+    <Content Include="Images\topbarseparatorarb.png" />
+    <Content Include="Images\transaction.png" />
+    <Content Include="Images\user.png" />
+    <Content Include="Images\usericon.png" />
+    <Content Include="Images\whitelogo.png" />
+    <Content Include="Images\working.gif" />
+    <Content Include="Images\x.png" />
+    <Content Include="Report\Report\R12260Popup.html" />
+    <Content Include="Report\xml\R12006.xml" />
+    <Content Include="Report\xml\R12012.xml" />
+    <Content Include="Report\xml\R12016.xml" />
+    <Content Include="Report\xml\R12036.xml" />
+    <Content Include="Report\xml\R12046.xml" />
+    <Content Include="Report\xml\R12065.xml" />
+    <Content Include="Report\xml\R12215.xml" />
+    <Content Include="Report\xml\R12260.xml" />
+    <Content Include="Report\xml\R12302xmatch.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Report\xml\T12025.xml" />
+    <Content Include="Report\xml\T12050.xml" />
+    <Content Include="Report\xml\T12201.xml" />
+    <Content Include="Report\xml\T12204.xml" />
+    <Content Include="Scripts\angular-chart.js" />
+    <Content Include="Scripts\angular-chart.min.js" />
+    <Content Include="Scripts\angular-datepicker_Custom.js" />
+    <Content Include="Scripts\angular-flash.js" />
+    <Content Include="Scripts\angular\ai.0.15.0-build58334.js" />
+    <Content Include="Scripts\angular\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\angular\angular-animate.js" />
+    <Content Include="Scripts\angular\angular-datatables.js" />
+    <Content Include="Scripts\angular\angular-mocks.js" />
+    <Content Include="Scripts\angular\angular-modal-service.js" />
+    <Content Include="Scripts\angular\angular-route.js" />
+    <Content Include="Scripts\angular\angular-sanitize.js" />
+    <Content Include="Scripts\angular\angular.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\angular\angularjs-google-maps.js" />
+    <Content Include="Scripts\angular\jquery.dataTables.js" />
+    <Content Include="Scripts\angular\jquery.js" />
+    <Content Include="Scripts\angular\map_api.js" />
+    <Content Include="Scripts\angular\ng-map.js" />
+    <Content Include="Scripts\angular\xeditable.js" />
+    <Content Include="Scripts\ar-sa.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\angular\angular.min.js.map" />
+    <Content Include="Report\Report\R12201.frx" />
+    <Content Include="Report\Report\R12016.frx" />
+    <Content Include="Report\Report\R12025.frx" />
+    <None Include="Properties\PublishProfiles\BloodBank.pubxml" />
+    <Content Include="Report\Report\R12050.frx" />
+    <Content Include="Report\Report\R12065.frx" />
+    <Content Include="Report\Report\R12049.frx" />
+    <Content Include="Report\Report\R12036A.frx" />
+    <Content Include="Report\Report\R12012.frx" />
+    <Content Include="Report\Report\R12046.frx" />
+    <Content Include="Report\Report\R12006.frx" />
+    <Content Include="Report\Report\R12215.frx" />
+    <Content Include="Report\Report\R12251A.frx" />
+    <Content Include="Report\Report\R12260.frx" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\calender.js" />
+    <Content Include="Scripts\dirPagination.js" />
+    <Content Include="Scripts\html2canvas.min.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.1.2.min.js" />
+    <Content Include="Scripts\jquery.simplemodal.1.4.4.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validationEngine-en.js" />
+    <Content Include="Scripts\jquery.validationEngine.js" />
+    <Content Include="Scripts\kendo.all.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.8.3.min.js" />
+    <Content Include="Scripts\Module\fileUploader.js" />
+    <Content Include="Scripts\moment-hijri.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\pdfmake.min.js" />
+    <Content Include="Scripts\Rating\jk-rating-stars.min.js" />
+    <Content Include="Scripts\Rating\script.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\select.js" />
+    <Content Include="Scripts\Test_T04202\angular-sanitize.js" />
+    <Content Include="Scripts\Test_T04202\demo.js" />
+    <Content Include="Scripts\Test_T04202\dirPagination.js" />
+    <Content Include="Scripts\Test_T04202\select.js" />
+    <Content Include="Scripts\ui-grid.min.js" />
+    <Content Include="Scripts\zebra_datepicker.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Transaction\T12204.cshtml" />
+    <Content Include="Views\Transaction\T12244.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Transaction\T12214.cshtml" />
+    <Content Include="Views\Transaction\T12201.cshtml" />
+    <Content Include="Views\Transaction\T12202.cshtml" />
+    <Content Include="Views\Initialization\T12068.cshtml" />
+    <Content Include="Views\Report\R12204.cshtml" />
+    <Content Include="Report\Report\R12204.frx" />
+    <Content Include="Views\Transaction\T12235.cshtml" />
+    <Content Include="Views\Transaction\T12245.cshtml" />
+    <Content Include="Views\Transaction\T12236.cshtml" />
+    <Content Include="Views\Report\R12201.cshtml" />
+    <Content Include="Views\Transaction\T13054.cshtml" />
+    <Content Include="Views\Transaction\T12328.cshtml" />
+    <Content Include="Views\Transaction\T12325.cshtml" />
+    <Content Include="Views\Transaction\T12250.cshtml" />
+    <Content Include="Views\Transaction\T12241.cshtml" />
+    <Content Include="Views\Transaction\T12349.cshtml" />
+    <Content Include="Views\Transaction\T12232.cshtml" />
+    <Content Include="Views\Report\R12204.frx" />
+    <Content Include="Views\Transaction\T12233.cshtml" />
+    <Content Include="Views\Report\R12016.cshtml" />
+    <Content Include="Views\Initialization\T12199.cshtml" />
+    <Content Include="Views\Initialization\T01004.cshtml" />
+    <Content Include="Views\Initialization\T12132.cshtml" />
+    <Content Include="Views\Initialization\T12011.cshtml" />
+    <Content Include="Views\Initialization\T12033.cshtml" />
+    <Content Include="Views\Initialization\T12081.cshtml" />
+    <Content Include="Views\Initialization\T12087.cshtml" />
+    <Content Include="Views\Initialization\T12028.cshtml" />
+    <Content Include="Views\Transaction\T12003.cshtml" />
+    <Content Include="Views\Transaction\T12300.cshtml" />
+    <Content Include="Views\Transaction\T12301.cshtml" />
+    <Content Include="Views\Initialization\T12246.cshtml" />
+    <Content Include="Views\Transaction\T12302.cshtml" />
+    <Content Include="Views\Initialization\T12281.cshtml" />
+    <Content Include="Views\Initialization\T12332.cshtml" />
+    <Content Include="Views\Initialization\T12337.cshtml" />
+    <Content Include="Views\Initialization\T12338.cshtml" />
+    <Content Include="Views\Transaction\T12207.cshtml" />
+    <Content Include="Views\Query\Q03001.cshtml" />
+    <Content Include="Views\Transaction\T12263.cshtml" />
+    <Content Include="Views\Query\Q12025.cshtml" />
+    <Content Include="Views\Transaction\T06210.cshtml" />
+    <Content Include="Views\Transaction\T12213.cshtml" />
+    <Content Include="Views\Initialization\T01009.cshtml" />
+    <Content Include="Views\Query\Q12012.cshtml" />
+    <Content Include="Views\Transaction\T12304.cshtml" />
+    <Content Include="Views\Query\Q12018.cshtml" />
+    <Content Include="Views\Transaction\T12309.cshtml" />
+    <Content Include="Views\Report\R12006.cshtml" />
+    <Content Include="Views\Report\R12260.cshtml" />
+    <Content Include="Views\Transaction\T12252.cshtml" />
+    <Content Include="Views\Query\Q12200.cshtml" />
+    <Content Include="Views\Query\Q12017.cshtml" />
+    <Content Include="Views\Query\Q12252.cshtml" />
+    <Content Include="Views\Transaction\T12239.cshtml" />
+    <Content Include="Views\Transaction\T12346.cshtml" />
+    <Content Include="Views\Transaction\T12318.cshtml" />
+    <Content Include="Views\Transaction\T12317.cshtml" />
+    <Content Include="Views\Transaction\T12366.cshtml" />
+    <Content Include="Views\Transaction\T12322.cshtml" />
+    <Content Include="Views\Transaction\T12253.cshtml" />
+    <Content Include="Views\Transaction\T12256.cshtml" />
+    <Content Include="Views\Transaction\T12258.cshtml" />
+    <Content Include="Views\Transaction\T12330.cshtml" />
+    <Content Include="Views\Transaction\T13122.cshtml" />
+    <Content Include="Views\Transaction\T12319.cshtml" />
+    <Content Include="Views\Transaction\T12327.cshtml" />
+    <Content Include="Views\Transaction\T12200.cshtml" />
+    <Content Include="Views\Transaction\T12287.cshtml" />
+    <Content Include="Views\Transaction\T12320.cshtml" />
+    <Content Include="Views\Transaction\T12254.cshtml" />
+    <Content Include="Views\Transaction\T12326.cshtml" />
+    <Content Include="Views\Transaction\T12306.cshtml" />
+    <Content Include="Views\Transaction\T12091.cshtml" />
+    <Content Include="Views\Transaction\T12262.cshtml" />
+    <Content Include="Views\Transaction\T12264.cshtml" />
+    <Content Include="Views\Transaction\T12265.cshtml" />
+    <Content Include="Views\Transaction\T12266.cshtml" />
+    <Content Include="Views\Query\Q12207.cshtml" />
+    <Content Include="Views\Query\Q12263.cshtml" />
+    <Content Include="Views\Query\Q12352.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Apps\JSFactory\Initialization\" />
+    <Folder Include="Apps\JSFactory\Menu\" />
+    <Folder Include="Apps\JSFactory\Query\" />
+    <Folder Include="Apps\JSFactory\Report\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
+    <Folder Include="Scripts\i18n\" />
+    <Folder Include="Scripts\js\" />
+    <Folder Include="Scripts\locale\" />
+    <Folder Include="Views\Q03001\" />
+    <Folder Include="Views\Q12012\" />
+    <Folder Include="Views\Q12018\" />
+    <Folder Include="Views\Q12025\" />
+    <Folder Include="Views\Q12200\" />
+    <Folder Include="Views\Q12352\" />
+    <Folder Include="Views\R12006\" />
+    <Folder Include="Views\R12025\" />
+    <Folder Include="Views\R12050\" />
+    <Folder Include="Views\R12260\" />
+    <Folder Include="Views\R12304\" />
+    <Folder Include="Views\T03001\" />
+    <Folder Include="Views\T06210\" />
+    <Folder Include="Views\T12252\" />
+    <Folder Include="Views\T12263\" />
+    <Folder Include="Views\T12304\" />
+    <Folder Include="Views\T12309\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BloodBankDAL\BloodBankDAL.csproj">
+      <Project>{6876465b-2e96-4bb1-9a20-6ff68479f9a9}</Project>
+      <Name>BloodBankDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>3987</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:3987/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

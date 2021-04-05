@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "T01004";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Apps/JSController/Initialization/T01004Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T01004Service.js"></script>
+
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T01004Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="insert()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="clear()"></button>
+        @*<button ID="btnDelete" ToolTip="Delete" class="Button Delete" ng-click="delete()"></button>*@
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T01004Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-2 col-md-2 col-sm-3"></div>
+            <div class="col-lg-8 col-md-8 col-sm-6" style="border: 1px solid #c12d2d; margin-top: 10px; border-radius: 5px; padding: 20px;">
+                <div class="row col-lg-12 col-md-12 col-sm-12" style="margin-bottom: 5px">
+                    <div style="width: 100%">
+                        <table style="width: 100%">
+                            <tr style="width: 100%">
+                                <td style="width: 20%" class="alnR"><label id="lblMsgCode" for="txtMsgCode" ng-bind="getLabel('lblMsgCode')" class="ng-cloak"></label></td>
+                                <td style="width: 30%">
+                                    <input type="text" id="txtMsgCode" ng-model="obj.T01004.T_MSG_CODE " style="width: 25%" maxlength="5" capitalize/>
+                                </td>
+                            </tr>
+
+                            <tr style="width: 100%">
+                                <td style="width: 20%" class="alnR"><label id="lbllangEnglish" for="txtlangEnglish" ng-bind="getLabel('lbllangEnglish')" class="ng-cloak"></label></td>
+                                <td style="width: 30%">
+                                    <input type="text" id="txtlangEnglish" ng-model="obj.T01004.T_LANG2_MSG" style="width: 100%" />
+                                </td>
+                                @*<td style="width: 20%" class="alnR"><label id="lblActive" for="chkActive" ng-bind="getLabel('lblActive')" class="ng-cloak"></label></td>
+                                    <td style="width: 30%">
+                                        <input type="checkbox" id="chkActive" ng-model="obj.T01004.T_ACTV_STTS"/>
+                                    </td>*@
+                            </tr>
+                            <tr style="width: 100%">
+                                <td style="width: 20%" class="alnR"><label id="lbllangLocal" for="txtlangLocal" ng-bind="getLabel('lbllangLocal')" class="ng-cloak"></label></td>
+                                <td style="width: 30%">
+                                    <input type="text" id="txtlangLocal" ng-model="obj.T01004.T_LANG1_MSG" style="width: 100%" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-3"></div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 popup" id="divMsg">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d; margin-top: 10px; border-radius: 5px; padding: 5px; padding-bottom: 2%;">
+                <table class="omf-modal-grid grid pageGrid col-lg-12 col-md-12 col-sm-12" style="margin: 5px auto">
+                    <thead style="text-align: center;width: 100%">
+                    <tr style="background-color: #c12d2d; color: #ffffff;">
+                        <th style="text-align: center; " >{{getLabel('lblthMsgCode')}}</th>
+                        <th style="text-align: center; " >
+                            {{getLabel('lblthmsgEnglish')}}
+                        </th>
+                        <th style="text-align: center; ">
+                            {{getLabel('llblthmsgLocal')}}
+                        </th>
+                        @*<th style="text-align: center;" class="col-lg-2 col-md-2 col-sm-2">
+                                {{getLabel('lblthActive')}}
+                            </th>*@
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr dir-paginate="obj in obj.msgList |filter : Search |itemsPerPage:10" pagination-id="message" style="cursor: pointer" ng-click="onRowSelect(obj)">
+                        <td style="text-align: center"><span>{{obj.T_MSG_CODE}}</span></td>
+                        <td style="text-align: left"><span>{{obj.T_LANG2_MSG}}</span></td>
+                        <td style="text-align: right"><span>{{obj.T_LANG1_MSG}}</span></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <dir-pagination-controls pagination-id="message" max-size="10"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*lbllangEnglish
+    lbllangLocal
+    lblMsgCode
+    lblActive
+
+    lblthMsgCode
+    lblthmsgEnglish
+    llblthmsgLocal
+    lblthActive*@

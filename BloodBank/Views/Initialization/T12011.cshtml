@@ -1,0 +1,130 @@
+﻿
+
+
+<script src="~/Apps/JSController/Initialization/T12011Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12011Service.js"></script>
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+@section container{
+<div id="options" ng-app="BloodBank" ng-controller="T12011Controller">
+    <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+    <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+    <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+    @*<button ID="btnDelete" ToolTip="Delete" class="Button Delete" ng-click="Delete()"></button>*@
+    <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+</div>
+}
+
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12011Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+    <div class="container">
+        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        <div class="col-lg-10 col-md-10 col-sm-10">
+            <div style="margin: 0 auto; margin-top: 5%; border: 2px solid #908d8d; padding: 30px; -ms-border-radius: 5px; border-radius: 5px; width: 100%;">
+                <table style="margin: 0 auto;" cellspacing="5px;">
+                    <tr>
+                        <td>
+                            <label id="lblProductCode" for="txtProductCode" class="ng-cloak" ng-bind="getLabel('lblProductCode')"></label>
+                        </td>
+                        <td>
+                            <input id="txtProductCode" type="text" ng-model="obj.t12011.T_PRODUCT_CODE" style="width: 100px;" required>
+                        </td>
+                        <td>
+                            <label id="lblEnglishName" for="txtEnglishName" class="ng-cloak" ng-bind="getLabel('lblEnglishName')"></label>
+                        </td>
+                        <td>
+                            <input id="txtEnglishName" type="text" ng-model="obj.t12011.T_LANG2_NAME" style="width: 100%;" required>
+                        </td>
+                        <td>
+                            <label id="lblArabicName" for="txtArabicName" class="ng-cloak" ng-bind="getLabel('lblArabicName')"></label>
+                        </td>
+                        <td>
+                            <input id="txtArabicName" type="text" ng-model="obj.t12011.T_LANG1_NAME" style="width: 100%;" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblExpiryDays" for="txtExpiryDays" class="ng-cloak" ng-bind="getLabel('lblExpiryDays')"></label>
+                        </td>
+                        <td>
+                            <input id="txtExpiryDays" type="text" ng-model="obj.t12011.T_EXPIRY_DAYS" style="width: 100px;" required>
+                        </td>
+                        <td>
+                            <label id="lblProductPriority" for="txtProductPriority" class="ng-cloak" ng-bind="getLabel('lblProductPriority')"></label>
+                        </td>
+                        <td>
+                            <input id="txtProductPriority" type="text" ng-model="obj.t12011.T_PROD_PRIORITY" style="width: 100px;" required>
+                        </td>
+                        <td>
+                            <label id="lblStoreAt" for="txtStoreAt" class="ng-cloak" ng-bind="getLabel('lblStoreAt')"></label>
+                        </td>
+                        <td>
+                            <input id="txtStoreAt" type="text" ng-model="obj.t12011.T_STORE_AT" style="width: 100px;" required>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblActive" for="chkActive" class="ng-cloak" ng-bind="getLabel('lblActive')"></label>
+                        </td>
+                        <td>
+                            <input id="chkActive" type="checkbox" ng-model="obj.t12011.T_ACTIVE" ng-true-value="'1'" ng-false-value="''" style="width: 100px;">
+                        </td>
+                        <td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        <!--For Data Gridview start-->
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10" style="border: 2px solid #908d8d; border-radius: 5px; padding: 10px; width: 79%; margin: 5px auto; margin-left: 10.5%;">
+                <div class="omf-modal-div-placeholder">
+                    <table>
+                        <tr>
+                            <td><input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" style="width: 100%;"/></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                <tr style="background-color: #4a4949; color: #ffffff;">
+
+                                    <th id="lblProduct" class="ng-cloak" ng-bind="getLabel('lblProductCode')" style="text-align: center; width: 13%"></th>
+
+                                    <th id="lblEnglish" class="ng-cloak" ng-bind="getLabel('lblEnglishName')" style="text-align: center; width: 30%"></th>
+
+                                    <th id="lblExpiryDay" class="ng-cloak" ng-bind="getLabel('lblExpiryDays')" style="text-align: center; width: 12%"></th>
+
+                                    <th id="lblStore" class="ng-cloak" ng-bind="getLabel('lblStoreAt')" style="text-align: center; width: 15%"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr dir-paginate="obj in obj.ProductInfo |filter : Search |itemsPerPage:5" pagination-id="product" style="cursor: pointer" ng-click="onRowSelect(obj)">
+                                    <td style="text-align: center">{{obj.T_PRODUCT_CODE}}</td>
+                                    <td style="text-align: center">{{obj.T_NAME}}</td>
+                                    <td style="text-align: center">{{obj.T_EXPIRY_DAYS}}</td>
+                                    <td style="text-align: center">{{obj.T_STORE_AT}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="product" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+        <!--For Data Gridview End-->
+    </div>
+</div>
+
+

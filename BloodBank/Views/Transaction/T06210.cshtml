@@ -1,0 +1,331 @@
+﻿
+@{
+    ViewBag.Title = "T06210";
+}
+
+<style>
+    /*Toggling Div---------------------------Start*/
+    .ultab {
+        list-style: none;
+        padding: 0;
+        /*margin-left: 160px;*/
+    }
+
+    .litab {
+        border-bottom-width: 0;
+        margin: 1px 3px 3px 3px;
+        padding: 5px 5px 22px 5px;
+        background-color: #C12D2D;
+        color: #FFFFFF;
+        border-radius: 2px;
+        transition: 0.2s;
+        /*margin-right: -3px;*/
+        width: 80px;
+        text-align: center;
+        height: 0px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+
+
+    #mainView {
+        clear: both;
+        padding: 0 1em;
+    }
+
+    .active {
+        background-color: #CCCCCC;
+        color: #000000;
+    }
+    /*Toggling Div---------------------------End*/
+</style>
+<script>
+    function isNumeric(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode(key);
+        var regex = /[0-9]|\./;
+        if (!regex.test(key)) {
+            theEvent.returnValue = false;
+            if (theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+
+</script>
+<script src="~/Apps/JSController/Transaction/T06210Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T06210Service.js"></script>
+@*@section container
+    {
+        <div id="options" ng-app="BloodBank" ng-controller="T12300Controller">
+            <button id="btnNew" tooltip="New" class="Button New" ng-click="onNew()"></button>
+            <button id="btnSave" tooltip="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="Save_Click()"></button>
+            <button id="btnNext" tooltip="Next" class="Button Next" ng-click="Next_Click()"></button>
+            <button id="btnDelete" tooltip="Delete" class="Button Delete"  ng-click="onDelete()"></button>
+            <button id="btnClear" tooltip="Clear" class="Button Clear" ng-click="onClear()"></button>
+            <button id="btnEnterQuery" tooltip="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+            <button id="btnExecuteQuery" tooltip="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+            <button id="btnPrint" tooltip="Print" class="Button Print" ng-click="onPrint()"></button>
+
+
+        </div>
+    }*@
+<div class="container" ng-app="BloodBank" ng-controller="T06210Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="col-lg-12" style="height: 300px">
+        <input class="hidden" ng-model="isFocus" />
+
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px; height: 364px;">
+            <div style="width: 100%" id="tabs">
+                <table style="width: 100%; margin: 0 auto">
+                    <tr style="width: 100%">
+                        <td style="width: 100%">
+                            <ul class="ultab">
+                                <li class="litab ng-cloak" ng-repeat="tab in tabs"
+                                    ng-class="{active:isActiveTab(tab.url)}"
+                                    ng-click="onClickTab(tab)">{{tab.title}}</li>
+                            </ul>
+                            <div style="background-color: #CCCCCC; height: 1px; margin-left: 3px; margin-right: 3px; margin-top: 10px; border-radius: 2px;"></div>
+                        </td>
+
+                    </tr>
+                    <tr style="width: 100%;height:100%">
+                        <td style="width: 100%;">
+                            <div id="mainView">
+                                <div ng-include="currentTab"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+<script type="text/ng-template" id="tabRequisition.tpl.html">
+        <div style="width:100%;">
+            <table style="width:90%; margin: 1% auto; margin-top: 20px;">
+                <tr style="width:100%">
+                    <td ng-style="lang==2?aR:aL" style="width:10%">
+                        <label id="lblRequestDate" class="ng-cloak">Request Date</label>
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtRequestDate" ng-model="obj.T_REQUEST_DATE" style="width: 100%" />
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtRequestDate1" ng-model="obj.T_REQUEST_DATE_1" style="width: 100%" />
+                    </td>
+                    <td style="width:0.9%"></td>
+                    <td style="width:0.8%"></td>
+                    <td style="width:6%;" ng-style="lang==2?aR:aL">
+                        <label id="lblRequestTime" class="ng-cloak">Request Time</label>
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtRequestTime" ng-model="obj.T_REQUEST_TIME" style="width: 100%" />
+                    </td>
+                </tr>
+                <tr style="width:100%">
+                    <td ng-style="lang==2?aR:aL">
+                        <label id="lblPriority" class="ng-cloak">Priority</label>
+                    </td>
+                    <td style="width: 6%" colspan="2">
+                        <select ng-model="selectedPriority" id="txtPriority" ng-options="y for y in priority" style="width: 75%;margin-bottom: 1%;"></select>
+                    </td>
+
+                    <td style="width:6%;" ng-style="lang==2?aR:aL">
+                        <label id="lblDate" class="ng-cloak">Date</label>
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtDate" ng-model="obj.T_DATE" style="width: 100%" />
+                    </td>
+                    <td style="width:16%;" ng-style="lang==2?aR:aL">
+                        <label id="lblTime" class="ng-cloak">Time(24H)</label>
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtTime" ng-model="obj.T_TIME" style="width: 100%" />
+                    </td>
+                </tr>
+                <tr style="width:100%">
+                    <td ng-style="lang==2?aR:aL">
+                        <label id="lblRequisition" class="ng-cloak">Requisition</label>
+                    </td>
+                    <td style="width: 6%" colspan="2">
+                        <select ng-model="selectedRequisition" id="txtRequisition" ng-options="x for x in requisition" style="width: 90%"></select>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td style="width:6%;" ng-style="lang==2?aR:aL">
+                        <label id="lblRequiredUnit" class="ng-cloak">No of Unit(s) Required</label>
+                    </td>
+                    <td style="width: 6%">
+                        <input type="text" id="txtRequiredUnit" ng-model="obj.T_REQUIRED_UNIT" style="width: 100%" />
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <table>
+                <tr>
+                    @*<td style="width:5%"></td>*@
+                    <td ng-style="lang==2?aR:aL">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">Irradiated
+                        </label>
+                    </td>
+                    <td></td>
+                    <td ng-style="lang==2?aR:aL">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">Leukocyte Poor (Filtered)
+                        </label>
+                    </td>
+
+                    <td ng-style="lang==2?aR:aL">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" value="">Volume
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtVolume" ng-model="obj.T_VOLUME" style="width: 60%" />
+                    </td>
+                    <td style="width:20%"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label id="lblDocName" class="ng-cloak">Physician Filling the Request Name</label>
+                    </td>
+
+                    <td style="width: 7%">
+                        <input type="text" id="txtDocCode" ng-model="obj.T_DOC_CODE" style="width: 100%" />
+                    </td>
+                    <td style="width: 2%" colspan="2">
+                        <input type="text" id="txtDocName" ng-model="obj.T_DOC_NAME" style="width: 100%" />
+                    </td>
+                    <td style="width:24%"></td>
+
+                </tr>
+                <tr>
+                    <td ng-style="lang==2?aR:aL">
+                        <label id="lblConsultantName" class="ng-cloak">Requesting Consultant's Name</label>
+                    </td>
+                    <td style="width: 2%">
+                        <input type="text" id="txtConstCode" ng-model="obj.T_CONST_CODE" style="width: 100%" />
+                    </td>
+                    <td style="width: 2%" colspan="2">
+                        <input type="text" id="txtConstName" ng-model="obj.T_CONST_NAME" style="width: 100%" />
+                    </td>
+                    <td></td>
+
+                </tr>
+                <tr>
+                    <td ng-style="lang==2?aR:aL">
+                        <label id="lblClinicalDiagnosis" class="ng-cloak">Clinical Diagnosis</label>
+                    </td>
+                    <td style="width: 20%" colspan="5">
+                        <input type="text" id="txtClinicalDiagnosis" ng-model="obj.T_CLINIC_DIAG" style="width: 80%" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td ng-style="lang==2?aR:aL">
+                        <label id="lblBloodGroup" class="ng-cloak">Blood Group(If known)</label>
+                    </td>
+                    <td>
+                        <input type="text" id="txtBloodGroupCode" ng-model="obj.T_ABO_CODE" style="width: 100%" />
+                    </td>
+                    <td style="width: 20%">
+                        <input type="text" id="txtBloodGroup" ng-model="obj.T_BLOOD_GRP" style="width: 100%" />
+                    </td>
+
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </script>
+
+<script type="text/ng-template" id="tabDetail.tpl.html">
+        <div style="width:100%;">
+            <table style="width:90%; margin: 1% auto; margin-top: 20px;">
+                <tr style="width:100%">
+                    <td style="width: 1%;"><label id="lblAnemiaHb" class="ng-cloak" ng-bind="getLabel('lblAnemiaHb')"></label></td>
+                    <td style="width: 10%" colspan="3"><input type="text" id="txtAmenia" ng-model="obj.T_AMENIA_HB" style="width: 28%" /></td>
+                    
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblPltCount" class="ng-cloak" ng-bind="getLabel('lblPltCount')"></label></td>
+                    <td style="width: 13%"><input type="text" id="txtPltCount" ng-model="obj.T_PLT_COUNT" style="width: 100%" /></td>
+                </tr>
+
+                <tr style="width:100%">
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblCoaPt" class="ng-cloak" ng-bind="getLabel('lblCoaPt')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtCoaPt" ng-model="obj.T_COA_PT" style="width: 100%" /></td>
+
+                    <td style="width: 15%;" ng-style="lang==2?aR:aL"><label id="lblAppt" class="ng-cloak" ng-bind="getLabel('lblAppt')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtAppt" ng-model="obj.T_APPT" style="width: 100%" /></td>
+                    <td style="width: 19%;" ng-style="lang==2?aR:aL"><label id="lblFibrinogen" class="ng-cloak" ng-bind="getLabel('lblFibrinogen')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtFibrinogen" ng-model="obj.T_FIBRINOGEN" style="width: 100%" /></td>
+                </tr>
+                <tr style="width:100%">
+                    <td style="width: 8%;" ><label id="lblOthers" class="ng-cloak" ng-bind="getLabel('lblOthers')"></label></td>
+                    <td style="width: 10%" colspan="2"><input type="text" id="txtOthers" ng-model="obj.T_OTHERS" style="width: 100%" /></td>
+                </tr>
+                <tr style="width:100%"></tr>
+            </table>
+            
+            <table>
+                <h5>Transfusion History</h5>
+                <tr>
+                    <td></td>
+                    <td colspan="3">
+                        <label class="checkbox-inline" id="lblPreTransfusion" ng-bind="getLabel('lblPreTransfusion')"><input type="checkbox" value=""></label>
+                    </td>                    
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <label class="checkbox-inline" id="lblPrePregnancies" ng-bind="getLabel('lblPrePregnancies')"><input type="checkbox" value=""></label>
+                    </td>
+                    <td></td>
+                    <td colspan="4">
+                        <label id="lblAntibodyHis" class="ng-cloak" ng-bind="getLabel('lblAntibodyHis')"></label>                        
+                        <input type="text" id="txtAntibodyHis" ng-model="obj.T_ANTIBODY_HISTORY" style="width: 100%" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="width:1%" colspan="2">
+                        <label class="checkbox-inline" id="lblPostTransfusion" ng-bind="getLabel('lblPostTransfusion')"><input type="checkbox" value=""></label>                    
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <label class="checkbox-inline" id="lblNone" ng-bind="getLabel('lblNone')"><input type="checkbox" value="">None</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblNurseName" class="ng-cloak" ng-bind="getLabel('lblNurseName')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtNurseCode" ng-model="obj.T_NURSE_CODE" style="width: 100%" /></td>
+                    <td style="width: 22%"><input type="text" id="txtNurseName" ng-model="obj.T_NURSE_NAME" style="width: 100%" /></td>
+                    <td style="width: 9%"></td>
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblDate" class="ng-cloak" ng-bind="getLabel('lblDate')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtDate" ng-model="obj.T_DATE" style="width: 100%" /></td>
+
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblTime" class="ng-cloak" ng-bind="getLabel('lblTime')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtTime" ng-model="obj.T_TIME" style="width: 100%" /></td>
+                </tr>
+                <tr>
+                    <td style="width: 7%;" ng-style="lang==2?aR:aL"><label id="lblVerifiedBy" class="ng-cloak" ng-bind="getLabel('lblVerifiedBy')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtVerifiedCode" ng-model="obj.T_VERI" style="width: 100%" /></td>
+                    <td style="width: 10%"><input type="text" id="txtVerifiedName" ng-model="obj.T12300.T_UNITNO" style="width: 100%" /></td>
+                    <td></td>
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblDate" class="ng-cloak" ng-bind="getLabel('lblDate')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtDate" ng-model="obj.T12300.T_UNITNO" style="width: 100%" /></td>
+
+                    <td style="width: 1%;" ng-style="lang==2?aR:aL"><label id="lblTime" class="ng-cloak" ng-bind="getLabel('lblTime')"></label></td>
+                    <td style="width: 10%"><input type="text" id="txtTime" ng-model="obj.T12300.T_UNITNO" style="width: 100%" /></td>
+                </tr>
+                <tr>
+                    <td colspan="8" ng-style="lang==2?aR:aL">
+                        <input type="button" id="btnExit" value="Exit" style="width:12%;background:lightgray"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+</div>

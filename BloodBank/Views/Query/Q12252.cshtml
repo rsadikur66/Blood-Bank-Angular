@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Q12252";
+}
+<script src="~/Apps/JSController/Query/Q12252Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12252Service.js"></script>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12252Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Clear" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Save" class="Button Execute"></button>
+        <button id="btnPrint" title="Next" class="Button Print"></button>
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12252Controller" name="obj.myDiv" novalidate ng-form style="width: 97%">
+    <div class="col-lg-12" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+        <table style="width: 90%; margin: 0 auto">
+            <tr style="width: 100%;">
+                <th style="width: 10%;"></th>
+                <th style="width: 5%;" class="alnR"><label id="lblUnit" ng-bind="getLabel('lblUnit')" class="ng-cloak" for="txtUnit"></label></th>
+                <td style="width: 9%;" class=""><input type="text" id="txtUnit" 
+                    ng-model="v12051.T_UNIT_NO"
+                    ng-keydown="getData($event,v12051.T_UNIT_NO)" 
+                    numbers-only
+                    my-maxlength="7"
+                    style="width: 100%;"/></td>
+                <th style="width: 15%;" class="alnR"><label id="lblDonationDate" ng-bind="getLabel('lblDonationDate')" class="ng-cloak" for="txtDonationDate"></label></th>
+                <td style="width: 9%;" class=""><input readonly type="text" id="txtDonationDate" ng-model="v12051.T_DONATION_DATE|date:'dd-MMM-yyyy'" style="width: 100%;"/></td>
+                <td style="width: 9%;" class=""><input readonly type="text" id="txtDonationDateH" ng-model="v12051.T_DONATION_DATE|date:'dd-MMM-yyyy'" style="width: 100%;"/></td>
+                <th style="width: 2%;" class=""><label id="lblH" ng-bind="getLabel('lblH')" class="ng-cloak"></label></th>
+                <th style="width: 8%;" class="alnR"><label id="lblDonorID" ng-bind="getLabel('lblDonorID')" class="ng-cloak" for="txtDonorID"></label></th>
+                <td style="width: 9%;" class="alnR"><input readonly type="text" id="txtDonorID" ng-model="v12051.DONORID" style="width: 100%;"/></td>
+                <th style="width: 5%;" class="alnR"><label id="lblNationalityID" ng-bind="getLabel('lblNationalityID')" class="ng-cloak" for="NationalityID"></label></th>
+                <td style="width: 9%;" class="alnR"><input readonly type="text" id="NationalityID" ng-model="v12051.T_DONOR_NTNLTY_ID" style="width: 100%;"/></td>
+                <th style="width: 10%;"></th>
+            </tr>
+           
+        </table>
+    </div>
+    <div class="col-lg-12" id="DetailDataDiv" style="margin: 1% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+        <div style="width: 100%;">
+            <table style="width: 100%; margin:auto;">
+                <thead style="text-align: center; display: table; width: 100%">
+                <tr style="width: 100%">
+                    <th style="width: 10%; text-align:center"><label id="lblGUnit" ng-bind="getLabel('lblGUnit')" class="ng-cloak"></label></th>
+                    <th style="width: 10%; text-align:center"><label id="lblGDonationDate" ng-bind="getLabel('lblGDonationDate')" class="ng-cloak"></label></th>
+                    <th style="width: 10%; text-align:center"><label id="lblSegment" ng-bind="getLabel('lblSegment')" class="ng-cloak"></label></th>
+                    <th style="width: 8%; text-align:center"><label id="lblWeight" ng-bind="getLabel('lblWeight')" class="ng-cloak"></label></th>
+                    <th style="width: 8%; text-align:center"><label id="lblPulse" ng-bind="getLabel('lblPulse')" class="ng-cloak"></label></th>
+                    <th style="width: 8%; text-align:center"><label id="lblHB" ng-bind="getLabel('lblHB')" class="ng-cloak"></label></th>
+                    <th style="width: 8%; text-align:center"><label id="lblTemp" ng-bind="getLabel('lblTemp')" class="ng-cloak"></label></th>
+                    <th colspan="2" style="width: 16%; text-align:center"><label id="lblUlblBPnit" ng-bind="getLabel('lblBP')" class="ng-cloak"></label></th>
+                    <th style="width: 10%; text-align:center"><label id="lblExamTime" ng-bind="getLabel('lblExamTime')" class="ng-cloak"></label></th>
+                    <th style="width: 12%; text-align:center"><label id="lblDonationTime" ng-bind="getLabel('lblDonationTime')" class="ng-cloak"></label></th>
+                </tr>
+                </thead>
+            <tbody style="max-height: 157px; overflow: auto; overflow-x: hidden; display: block; width: 100%">
+                <tr style="width: 100%;" ng-repeat="obj in FirstGrid">
+                    <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_UNIT_NO" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_DONATION_DATE|date:'dd-MMM-yyyy'" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_SEGMENT_NO" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_WEIGHT" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_PULS" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_HB" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_TEMPTURE" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_BP_HIGH" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 8%;"> <input readonly type="text" ng-model="obj.T_BP_LOW" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_ENTRY_TIME" style="width: 100%;text-align: center" /></td>
+                    <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_DONATION_TIME" style="width: 100%;text-align: center" /></td>
+                </tr>
+            </tbody>
+            <tfoot style="text-align: center; display: table; width: 100%">
+            <tr style="width: 100%">
+                <th style="width: 10%; text-align:right"><label id="lblExaminBy" ng-bind="getLabel('lblExaminBy')" class="ng-cloak"></label></th>
+                <td colspan="3" style="width: 28%; text-align:left"><input readonly type="text" ng-model="FirstGrid[0].EXAMIN_BY" style="width: 100%;" /></td>
+                <th colspan="7"></th>
+            </tr>
+            </tfoot>
+            </table>
+        </div>
+        <div style="width:100%;height: 10px"></div>
+    <div style="width: 100%;">
+    <table style="width: 100%; margin:auto;">
+    <thead style="text-align: center; display: table; width: 100%">
+        <tr style="width: 100%">
+            <th style="width: 10%; text-align:center"><label id="lblGUlblG1Unitnit" ng-bind="getLabel('lblG1Unit')" class="ng-cloak"></label></th>
+            <th style="width: 12%; text-align:center"><label id="lblG1DonationDate" ng-bind="getLabel('lblG1DonationDate')" class="ng-cloak"></label></th>
+            <th style="width: 12%; text-align:center"><label id="lblProdBag" ng-bind="getLabel('lblProdBag')" class="ng-cloak"></label></th>
+            <th style="width: 12%; text-align:center"><label id="lblBloodGroup" ng-bind="getLabel('lblBloodGroup')" class="ng-cloak"></label></th>
+            <th style="width: 12%; text-align:center"><label id="lblGSegment" ng-bind="getLabel('lblGSegment')" class="ng-cloak"></label></th>
+            <th style="width: 12%; text-align:center"><label id="lblAntibody" ng-bind="getLabel('lblAntibody')" class="ng-cloak"></label></th>
+            <th style="width: 20%; text-align:center"><label id="lblUnitStatus" ng-bind="getLabel('lblUnitStatus')" class="ng-cloak"></label></th>
+            <th style="width: 10%; text-align:center"><label id="lblRequest" ng-bind="getLabel('lblRequest')" class="ng-cloak"></label></th>
+        </tr>
+    </thead>
+        <tbody style="max-height: 157px; overflow: auto; overflow-x: hidden; display: block; width: 100%">
+            <tr style="width: 100%;text-align: center" ng-repeat="obj in SesondGrid">
+                <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_UNIT_NO" style="width: 100%;text-align: center" /></td>
+                <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_DONATION_DATE|date:'dd-MMM-yyyy'" style="width: 100%;text-align: center" /></td>
+                <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_PRODUCT_CODE" style="width: 100%;text-align: center" /></td>
+                <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_BLOOD_BAG_GROUP" style="width: 100%;text-align: center" /></td>
+                <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_SEG_ABO" style="width: 100%;text-align: center" /></td>
+                <td style="width: 12%;"><input readonly type="text" ng-model="obj.T_ANTIBODY_1" style="width: 100%;text-align: center" /></td>
+                <td style="width: 20%;"><input readonly type="text" ng-model="obj.UNIT_STATUS_DESC" style="width: 100%;" /></td>
+                <td style="width: 10%;"><input readonly type="text" ng-model="obj.T_PAT_REQ_NO" style="width: 100%;text-align: center" /></td>
+            </tr>
+        </tbody>
+        <tfoot style="text-align: center; display: table; width: 100%">
+        <tr style="width: 100%">
+            <th style="width: 10%; text-align:right"><label id="lblBloodTaken" ng-bind="getLabel('lblBloodTaken')" class="ng-cloak"></label></th>
+            <td colspan="2" style="width: 24%; text-align:left"><input readonly type="text" ng-model="SesondGrid[0].TAKEN_BY" style="width: 100%;" /></td>
+            <th style="width: 12%;"></th>
+            <th style="width: 12%; text-align:right"><label id="lblBloodSeparate" ng-bind="getLabel('lblBloodSeparate')" class="ng-cloak"></label></th>
+            <td colspan="2" style="width: 32%; text-align:left"><input readonly type="text" ng-model="SesondGrid[0].SEPARATED_BY" style="width: 100%;" /></td>
+            <th style="width: 10%;"></th>
+        </tr>
+        </tfoot>
+    </table>
+    </div>
+        <div style="width:100%;"></div>
+    </div>
+</div>

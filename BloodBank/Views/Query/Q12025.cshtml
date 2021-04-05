@@ -1,0 +1,552 @@
+﻿
+@{
+    ViewBag.Title = "Q12025";
+}
+<style>
+    .spann {
+        display: inline-block;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .redd {
+        background-color: #fa6262;
+        color: #ffffff;
+    }
+</style>
+<script src="~/Apps/JSController/Query/Q12025Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12025Service.js"></script>
+@*@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12025Controller">
+        <button id="btnNew" title="New" class="Button New" ng-click="onNew()"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="Save_Click()"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete" ng-click="onDelete()"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear_Click()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+        <button id="btnPrint" title="Print" class="Button Print" ng-click="Print_Click()"></button>
+
+
+    </div>
+}*@
+<div class="container" ng-app="BloodBank" ng-controller="Q12025Controller">
+    <div class="container">
+
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <table>
+                <tr style="width: 100%">
+                    @*ng-bind="getLabel('lblReasonHeader')"*@
+                    <td style="width: 20%;" class="alnR"><label id="lblDonaTimeFrom" class="ng-cloak" for="txtDonaTimeFrom">{{getLabel('lblDonaTimeFrom')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                    <td style="width: 10%;">
+                        <datepicker date-format="dd/MM/yyyy">
+                            <input id="txtDonaTimeFrom" ng-model="obj.T12025.DonationTimeFrom" ng-change="DonTimFrom_Click()" type="text" readonly="readonly" style="cursor: pointer; width: 100%" />
+                        </datepicker>
+                    </td>
+                    <td style="width: 20%;" class="alnR"><label id="lblDonaTimeTo" class="ng-cloak" for="txtDonaTimeTo">{{getLabel('lblDonaTimeTo')}}</label></td>
+                    <td style="width: 10%;">
+                        <datepicker date-format="dd/MM/yyyy">
+                            <input id="txtDonaTimeTo" ng-model="obj.T12025.DonationTimeTo" type="text" readonly="readonly" style="cursor: pointer; width: 100%" />
+                        </datepicker>
+                    </td>
+                    <td style="width: 10%;" class="alnR"><label id="lblSiteCode" class="ng-cloak" for="txtSiteCode">{{getLabel('lblSiteCode')}}</label></td>
+                    <td style="width: 10%;"><input style="width: 100%" type="text" id="txtSiteCode" ng-model="obj.T12025.T_SITE_CODE" ng-dblclick="ShowSitePopup('SitePopUp')" ng-keydown="key_press($event,'Site')" /></td>
+                    <td style="width: 20%;"><input style="width: 100%" type="text" id="txtSiteName" ng-model="obj.T12025.SITE_NAME" /></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 20%;" class="alnR"><label id="lblBloodGroup" class="ng-cloak" for="txtBloodGroupCode">{{getLabel('lblBloodGroup')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                    <td style="width: 10%;"><input style="width: 100%" type="text" id="txtBloodGroupCode" ng-model="obj.T12025.BLD_CODE" ng-dblclick="ShowBloodGrouoPopUp('BloodGrouoPopUp')" ng-keydown="key_press($event,'BloodGrouo')" /></td>
+                    <td style="width: 20%;"><input style="width: 100%" type="text" id="txtBloodGroupName" ng-model="obj.T12025.T_BLOOD_NAME" /></td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 20%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 20%;" class="alnR"><label id="lblProductCode" class="ng-cloak" for="txtProductCode">{{getLabel('lblProductCode')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                    <td style="width: 10%;"><input style="width: 100%" type="text" id="txtProductCode" ng-model="obj.T12025.T_PRODUCT_CODE" ng-dblclick="ShowProductPopup('ProductPopUp')" ng-keydown="key_press($event,'Product')" /></td>
+                    <td style="width: 20%;"><input style="width: 100%" type="text" id="txtProductName" ng-model="obj.T12025.PRODUCT_NAME" /></td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%;"></td>
+                    @*<td style="width: 10%;font-weight: bold">N.B:Red color's</td>*@
+                    <td hidden style="width: 30%;font-weight: bold" colspan="2">{{getLabel('lblNBRow')}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <table style="width: 100%; border:1px solid #A21217">
+                <thead style="width: 100%;display: table;">
+                    <tr style="display: table;width: 100%;border:1px solid gray;background-color:#c12d2d;color:white;">
+                        <th style="width: 5%; text-align: center;">{{getLabel('lblUnitN0')}}</th>
+                        <th style="width: 5%; text-align: center;">{{getLabel('lblUnitType')}}</th>
+                        <th style="width: 10%; text-align: center;">{{getLabel('lblBlGroup')}} </th>
+                        <th style="width: 5%; text-align: center;">{{getLabel('lblPro')}}</th>
+                        <th style="width: 8%; text-align: center;">{{getLabel('lblDonDate')}} </th>
+                        <th style="width: 8%; text-align: center;">{{getLabel('lblExDate')}} </th>
+                        <th style="width: 10%; text-align: center;">{{getLabel('lblAntibody')}}</th>
+                        <th style="width: 3%; text-align: center;">{{getLabel('lblDU')}}</th>
+                        <th style="width: 5%; text-align: center;">{{getLabel('lblKell')}}</th>
+                        <th style="width: 10%; text-align: center;">{{getLabel('lblPheTyping')}}</th>
+                        <th style="width: 10%; text-align: center;">{{getLabel('lblResult')}}</th>
+                        <th style="width: 21%; text-align: center;">{{getLabel('lblSiteName')}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="T in obj.StockList |filter : Search |itemsPerPage:10" pagination-id="stock" ng-class="{'selected':$index == selectedRow,'redd': (T.EXPER_MILLISECONDS < T.NEW_MILLISECONDS)}" style="height:20px;border:1px solid black">
+                        <td style="width: 5%; text-align: center;">{{T.T_UNIT_NO}}</td>
+                        <td style="width: 5%; text-align: center;">{{T.T_UNIT_TYPE}}</td>
+                        <td style="width: 10%; text-align: center;">{{T.T_BLOOD_GROUP_CODE}}</td>
+                        <td style="width: 7%; text-align: center;">{{T.T_PRODUCT_CODE}}</td>
+                        <td style="width: 7%; text-align: center;">{{T.T_DONATION_DATE}}</td>
+                        <td style="width: 7%; text-align: center;">{{T.T_EXPIRY_DATE}}</td>
+                        <td style="width: 10%; text-align: center;">{{T.T_ANTIBODY}}</td>
+                        <td style="width: 5%; text-align: center;">{{T.T_DU}}</td>
+                        <td style="width: 5%; text-align: center;">{{T.RH_KELL}}</td>
+                        <td style="width: 10%; text-align: center;">{{T.RH_PHENO}}</td>
+                        <td style="width: 10%; text-align: center;">{{T.T_NOTES}}</td>
+                        <td style="width: 21%; text-align: center;"><span class="spann" title="{{T.SITE_NAME}}">{{T.SITE_NAME}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls pagination-id="stock" max-size="5"
+                                     direction-links="true"
+                                     boundary-links="true">
+            </dir-pagination-controls>
+        </div>
+    </div>
+
+    @*Site popup start*@
+    <div id="SitePopUp" class="omf-modal">
+
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                <label style="width: 97%">{{getLabel('lblSiteInfro')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('SitePopUp')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+            </div>
+
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblSiteCode')}}</th>
+                                    <th style="width: 200px; text-align: center;">{{getLabel('lblSiteName')}}</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="S in obj.SiteList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,S,'SitePopUp')">
+                                    <td style="width: 53px; ">{{S.T_SITE_CODE}}</td>
+                                    <td style="width: 200px;">{{S.SITE_NAME}}</td>
+
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Site popup end*@
+
+    @*Site popup start*@
+    <div id="BloodGrouoPopUp" class="omf-modal popup">
+
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                <label style="width: 97%">{{getLabel('lblBldGrInfro')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('BloodGrouoPopUp')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+            </div>
+
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblBldGrCode')}} </th>
+                                    <th style="width: 100px; text-align: center;">{{getLabel('lblBldGrName')}}</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="B in obj.BloodList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,B,'BloodGrouoPopUp')">
+                                    <td style="width: 53px; ">{{B.BLD_CODE}}</td>
+                                    <td style="width: 100px;">{{B.T_BLOOD_NAME}}</td>
+
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Site popup end*@
+
+    @*Site popup start*@
+    <div id="ProductPopUp" class="omf-modal">
+
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                <label style="width: 97%">{{getLabel('lblProInformation')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('ProductPopUp')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+            </div>
+
+            <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead style="text-align: center">
+                                <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                    <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblProCode')}}</th>
+                                    <th style="width: 100px; text-align: center;">{{getLabel('lblProName')}}</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="P in obj.ProductList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,P,'ProductPopUp')">
+                                    <td style="width: 53px; ">{{P.T_PRODUCT_CODE}}</td>
+                                    <td style="width: 100px;">{{P.PRODUCT_NAME}}</td>
+
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+
+
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    @*Site popup end*@
+
+</div>
+
+
+@{
+    ViewBag.Title = "Q12025";
+}
+<style>
+    .spann {
+        display: inline-block;
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .redd {
+        background-color: #fa6262;
+        color: #ffffff;
+    }
+</style>
+<script src="~/Apps/JSController/Query/Q12025Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12025Service.js"></script>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12025Controller">
+        <button id="btnNew" title="New" class="Button New" ng-click="onNew()"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="Save_Click()"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete" ng-click="onDelete()"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear_Click()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+        <button id="btnPrint" title="Print" class="Button Print" ng-click="Print_Click()"></button>
+
+
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12025Controller">
+    <div class="container">
+
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <table>
+                <tr style="width: 100%">
+                    @*ng-bind="getLabel('lblReasonHeader')"*@
+                <td style="width: 20%;" class="alnR"><label id="lblDonaTimeFrom" class="ng-cloak" for="txtDonaTimeFrom">{{getLabel('lblDonaTimeFrom')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                <td style="width: 10%;">
+                    <datepicker date-format="dd/MM/yyyy">
+                        <input id="txtDonaTimeFrom" ng-model="obj.T12025.DonationTimeFrom" ng-change="DonTimFrom_Click()" type="text" readonly="readonly" style="cursor: pointer; width: 100%" />
+                    </datepicker>
+                </td>
+                <td style="width: 20%;" class="alnR"><label id="lblDonaTimeTo" class="ng-cloak" for="txtDonaTimeTo">{{getLabel('lblDonaTimeTo')}}</label></td>
+                <td style="width: 10%;">
+                    <datepicker date-format="dd/MM/yyyy">
+                        <input id="txtDonaTimeTo" ng-model="obj.T12025.DonationTimeTo" type="text" readonly="readonly" style="cursor: pointer; width: 100%" />
+                    </datepicker>
+                </td>
+                <td style="width: 10%;" class="alnR"><label id="lblSiteCode" class="ng-cloak" for="txtSiteCode">{{getLabel('lblSiteCode')}}</label></td>
+                <td style="width: 10%;"><input style="width: 100%" type="text" id="txtSiteCode" ng-model="obj.T12025.T_SITE_CODE" ng-dblclick="ShowSitePopup('SitePopUp')" ng-keydown="key_press($event,'Site')" /></td>
+                <td style="width: 20%;"><input style="width: 100%" type="text" id="txtSiteName" ng-model="obj.T12025.SITE_NAME" /></td>
+            </tr>
+            <tr style="width: 100%">
+                <td style="width: 20%;" class="alnR"><label id="lblBloodGroup" class="ng-cloak" for="txtBloodGroupCode">{{getLabel('lblBloodGroup')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                <td style="width: 10%;"><input style="width: 100%" type="text" id="txtBloodGroupCode" ng-model="obj.T12025.BLD_CODE" ng-dblclick="ShowBloodGrouoPopUp('BloodGrouoPopUp')" ng-keydown="key_press($event,'BloodGrouo')" /></td>
+                <td style="width: 20%;"><input style="width: 100%" type="text" id="txtBloodGroupName" ng-model="obj.T12025.T_BLOOD_NAME" /></td>
+                <td style="width: 10%;"></td>
+                <td style="width: 10%;"></td>
+                <td style="width: 10%;"></td>
+                <td style="width: 20%;"></td>
+            </tr>
+            <tr style="width: 100%">
+                <td style="width: 20%;" class="alnR"><label id="lblProductCode" class="ng-cloak" for="txtProductCode">{{getLabel('lblProductCode')}}</label></td>@*ng-bind="getLabel('lblPatNo')"*@
+                <td style="width: 10%;"><input style="width: 100%" type="text" id="txtProductCode" ng-model="obj.T12025.T_PRODUCT_CODE" ng-dblclick="ShowProductPopup('ProductPopUp')" ng-keydown="key_press($event,'Product')" /></td>
+                <td style="width: 20%;"><input style="width: 100%" type="text" id="txtProductName" ng-model="obj.T12025.PRODUCT_NAME" /></td>
+                <td style="width: 10%;"></td>
+                <td style="width: 10%;"></td>
+                @*<td style="width: 10%;font-weight: bold">N.B:Red color's</td>*@
+                <td hidden style="width: 30%;font-weight: bold" colspan="2">{{getLabel('lblNBRow')}}</td>
+            </tr>
+        </table>
+    </div>
+
+    @*<div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+        <table style="width: 100%; border:1px solid black">
+            <thead style="width: 100%;">
+                <tr style="width: 100%;background:#e7e7ea">
+                    <th style="width: 5%; text-align: center;">{{getLabel('lblUnitN0')}}</th>
+                    <th style="width: 5%; text-align: center;">{{getLabel('lblUnitType')}}</th>
+                    <th style="width: 10%; text-align: center;">{{getLabel('lblBlGroup')}} </th>
+                    <th style="width: 5%; text-align: center;">{{getLabel('lblPro')}}</th>
+                    <th style="width: 8%; text-align: center;">{{getLabel('lblDonDate')}} </th>
+                    <th style="width: 8%; text-align: center;">{{getLabel('lblExDate')}} </th>
+                    <th style="width: 10%; text-align: center;">{{getLabel('lblAntibody')}}</th>
+                    <th style="width: 3%; text-align: center;">{{getLabel('lblDU')}}</th>
+                    <th style="width: 5%; text-align: center;">{{getLabel('lblKell')}}</th>
+                    <th style="width: 10%; text-align: center;">{{getLabel('lblPheTyping')}}</th>
+                    <th style="width: 10%; text-align: center;">{{getLabel('lblResult')}}</th>
+                    <th style="width: 21%; text-align: center;">{{getLabel('lblSiteName')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="T in obj.StockList |filter : Search |itemsPerPage:10" pagination-id="stock" ng-class="{'selected':$index == selectedRow,'redd': (T.EXPER_MILLISECONDS < T.NEW_MILLISECONDS)}" style="height:20px;border:1px solid black">
+                    <td style="width: 5%; text-align: center;">{{T.T_UNIT_NO}}</td>
+                    <td style="width: 5%; text-align: center;">{{T.T_UNIT_TYPE}}</td>
+                    <td style="width: 10%; text-align: center;">{{T.T_BLOOD_GROUP_CODE}}</td>
+                    <td style="width: 7%; text-align: center;">{{T.T_PRODUCT_CODE}}</td>
+                    <td style="width: 7%; text-align: center;">{{T.T_DONATION_DATE}}</td>
+                    <td style="width: 7%; text-align: center;">{{T.T_EXPIRY_DATE}}</td>
+                    <td style="width: 10%; text-align: center;">{{T.T_ANTIBODY}}</td>
+                    <td style="width: 5%; text-align: center;">{{T.T_DU}}</td>
+                    <td style="width: 5%; text-align: center;">{{T.RH_KELL}}</td>
+                    <td style="width: 10%; text-align: center;">{{T.RH_PHENO}}</td>
+                    <td style="width: 10%; text-align: center;">{{T.T_NOTES}}</td>
+                    <td style="width: 21%; text-align: center;"><span class="spann" title="{{T.SITE_NAME}}">{{T.SITE_NAME}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls pagination-id="stock" max-size="5"
+                                 direction-links="true"
+                                 boundary-links="true">
+        </dir-pagination-controls>
+    </div>*@
+</div>
+
+@*Site popup start*@
+<div id="SitePopUp" class="omf-modal">
+
+    <div class="omf-modal-body">
+        <div class="omf-modal-header">
+            @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+            <label style="width: 97%">{{getLabel('lblSiteInfro')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('SitePopUp')" />
+        </div>
+        <div class="omf-modal-div-placeholder">
+            @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+            <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+        </div>
+
+        <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+            <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="omf-modal-grid grid">
+                        <thead style="text-align: center">
+                            <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblSiteCode')}}</th>
+                                <th style="width: 200px; text-align: center;">{{getLabel('lblSiteName')}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="S in obj.SiteList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,S,'SitePopUp')">
+                                <td style="width: 53px; ">{{S.T_SITE_CODE}}</td>
+                                <td style="width: 200px;">{{S.SITE_NAME}}</td>
+
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls pagination-id="bed" max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@*Site popup end*@
+
+@*Site popup start*@
+<div id="BloodGrouoPopUp" class="omf-modal popup">
+
+    <div class="omf-modal-body">
+        <div class="omf-modal-header">
+            @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+            <label style="width: 97%">{{getLabel('lblBldGrInfro')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('BloodGrouoPopUp')" />
+        </div>
+        <div class="omf-modal-div-placeholder">
+            @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+            <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+        </div>
+
+        <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+            <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="omf-modal-grid grid">
+                        <thead style="text-align: center">
+                            <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblBldGrCode')}} </th>
+                                <th style="width: 100px; text-align: center;">{{getLabel('lblBldGrName')}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="B in obj.BloodList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,B,'BloodGrouoPopUp')">
+                                <td style="width: 53px; ">{{B.BLD_CODE}}</td>
+                                <td style="width: 100px;">{{B.T_BLOOD_NAME}}</td>
+
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls pagination-id="bed" max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@*Site popup end*@
+
+@*Site popup start*@
+<div id="ProductPopUp" class="omf-modal">
+
+    <div class="omf-modal-body">
+        <div class="omf-modal-header">
+            @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+            <label style="width: 97%">{{getLabel('lblProInformation')}}</label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePopup('ProductPopUp')" />
+        </div>
+        <div class="omf-modal-div-placeholder">
+            @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+            <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+        </div>
+
+        <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+            <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <table class="omf-modal-grid grid">
+                        <thead style="text-align: center">
+                            <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                <th style="width: 53px; text-align: center;" class="ng-cloak">{{getLabel('lblProCode')}}</th>
+                                <th style="width: 100px; text-align: center;">{{getLabel('lblProName')}}</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="P in obj.ProductList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,P,'ProductPopUp')">
+                                <td style="width: 53px; ">{{P.T_PRODUCT_CODE}}</td>
+                                <td style="width: 100px;">{{P.PRODUCT_NAME}}</td>
+
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls pagination-id="bed" max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+
+
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@*Site popup end*@
+
+</div>
+

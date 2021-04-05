@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/03/2018 11:27:41" ReportInfo.Modified="10/14/2018 10:39:39" ReportInfo.CreatorVersion="2016.1.0.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqmmfdjkQxfe1iwShBNGpudwEdyIftGIBrjfzMjSGZrED+O0OELbn07XDFCvpY/hWZkqj9yxVmF5R9yfICTR+0IeQTnWmZU9v67zIzVHHp45j4NYti3w3LwxsocNLIMG2w">
+      <TableDataSource Name="T12204" DataType="System.Int32" Enabled="true" TableName="T12204">
+        <Column Name="T_DONATION_DATE" DataType="System.DateTime"/>
+        <Column Name="T_PAT_NO" DataType="System.String"/>
+        <Column Name="PAT_NAME" DataType="System.String"/>
+        <Column Name="T_GENDER" DataType="System.String"/>
+        <Column Name="GENDER" DataType="System.String"/>
+        <Column Name="T_NTNLTY_ID" DataType="System.String"/>
+        <Column Name="T_NTNLTY_CODE" DataType="System.String"/>
+        <Column Name="NATIONALITY" DataType="System.String"/>
+        <Column Name="T_UNIT_NO" DataType="System.String"/>
+        <Column Name="T_SEGMENT_NO" DataType="System.String"/>
+        <Column Name="T_BAG_BARCODE" DataType="System.String"/>
+        <Column Name="T_DONATION_TIME" DataType="System.String"/>
+        <Column Name="Pat_BarCode" DataType="System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" BindableControl="Picture"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="110" PaperHeight="40">
+    <PageHeaderBand Name="PageHeader1" Width="340.2" Height="198.45">
+      <TextObject Name="Text1" Left="47.25" Top="9.45" Width="198.45" Height="18.9" Text="BB  [T12204.T_DONATION_DATE]   [T12204.T_DONATION_TIME]" Format="Date" Format.Format="d" Font="Arial, 14pt"/>
+      <PictureObject Name="Picture1" Left="28.35" Top="18.9" Width="226.8" Height="76.6" DataColumn="T12204.Pat_BarCode"/>
+      <TextObject Name="Text5" Left="85.05" Top="75.6" Width="132.3" Height="18.9" Text="* [T12204.T_UNIT_NO] *" Font="Arial, 14pt"/>
+      <TextObject Name="Text2" Top="94.5" Width="141.75" Height="18.9" Text="[T12204.T_SEGMENT_NO]" HorzAlign="Right" Font="Arial, 14pt"/>
+      <TextObject Name="Text3" Left="141.75" Top="94.5" Width="189" Height="18.9" Text="[T12204.T_PAT_NO]" Font="Arial, 14pt"/>
+    </PageHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="202.62" Width="340.2"/>
+  </ReportPage>
+</Report>

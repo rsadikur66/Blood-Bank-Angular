@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/24/2019 09:14:47" ReportInfo.Modified="04/24/2019 15:10:01" ReportInfo.CreatorVersion="2016.1.0.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqmmfdjkQxfe1iwShBNGpudwEdyIftGIBrjfzMjSGZrED+O0OELbn07XDFCvpY/hWZkqj9yxVmF5R9yfICTR+0IeQTnWmZU9v67zIzVHHp45goGH4e17ionXmiYaulZss9">
+      <TableDataSource Name="R12065" DataType="System.Int32" Enabled="true" TableName="R12065">
+        <Column Name="T_UNIT_NO" DataType="System.String"/>
+        <Column Name="T_PAT_NO" DataType="System.String"/>
+        <Column Name="PAT_NAME" DataType="System.String"/>
+        <Column Name="T_ABO_CODE" DataType="System.String"/>
+        <Column Name="PAT_BLOOD_GROUP" DataType="System.String"/>
+        <Column Name="T_BLOOD_GROUP_CODE" DataType="System.String"/>
+        <Column Name="DONER_BLOOD_GROUP" DataType="System.String"/>
+        <Column Name="PRODUCT_DESCRIPTION" DataType="System.String"/>
+        <Column Name="Pat_BarCode" DataType="System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" BindableControl="Picture"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <DataBand Name="Data1" Width="718.2" Height="368.55" StartNewPage="true" DataSource="R12065">
+      <ShapeObject Name="Shape2" Left="66.15" Width="463.05" Height="368.55"/>
+      <ShapeObject Name="Shape1" Left="66.15" Width="463.05" Height="94.5" Border.Style="Dot" Fill.Color="Gainsboro"/>
+      <TextObject Name="Text1" Left="94.5" Top="18.9" Width="70.25" Height="17.45" Text="Unit No" Font="Arial, 9pt"/>
+      <TextObject Name="Text2" Left="94.5" Top="42.8" Width="71.25" Height="16.45" Text="Signature 1" Font="Arial, 9pt"/>
+      <TextObject Name="Text3" Left="94.5" Top="65.7" Width="72.25" Height="18.45" Text="Signature 2" Font="Arial, 9pt"/>
+      <TextObject Name="Text4" Left="168.1" Top="18.9" Width="91.85" Height="18.9" Text=": [R12065.T_UNIT_NO]"/>
+      <TextObject Name="Text5" Left="170.55" Top="42.25" Width="89.05" Height="18.9" Text=": "/>
+      <TextObject Name="Text6" Left="170.1" Top="67.15" Width="89.05" Height="16.45" Text=":"/>
+      <TextObject Name="Text7" Left="274.05" Top="18.9" Width="77.25" Height="19.45" Text="Component" Font="Arial, 9pt"/>
+      <TextObject Name="Text8" Left="275.05" Top="42.25" Width="73.25" Height="15" Text="Date Given" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="274.05" Top="64.05" Width="73.25" Height="18.45" Text="Time Given" Font="Arial, 9pt"/>
+      <TextObject Name="Text10" Left="349.65" Top="18.9" Width="166" Height="16.45" Text=": [R12065.PRODUCT_DESCRIPTION]"/>
+      <TextObject Name="Text11" Left="351" Top="42.25" Width="165.75" Height="15.45" Text=":"/>
+      <TextObject Name="Text12" Left="349.65" Top="66.6" Width="167.2" Height="15.55" Text=":"/>
+      <LineObject Name="Line1" Left="176.1" Top="37.8" Width="84.7"/>
+      <LineObject Name="Line4" Left="362.1" Top="37.8" Width="149.15"/>
+      <LineObject Name="Line5" Left="362.55" Top="60.15" Width="150.7"/>
+      <LineObject Name="Line7" Left="176.1" Top="63.15" Width="84.7"/>
+      <LineObject Name="Line6" Left="363.55" Top="86.5" Width="149.25"/>
+      <LineObject Name="Line8" Left="179.1" Top="85.05" Width="81.7"/>
+      <TextObject Name="Text13" Left="94.5" Top="103.95" Width="99" Height="21.45" Text="Patient Name" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="94.5" Top="122.85" Width="189" Height="28.45" Text="[R12065.PAT_NAME]"/>
+      <TextObject Name="Text15" Left="94.5" Top="156.2" Width="188.05" Height="19.45" Text="Pantient Blood Group" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="359.1" Top="114.3" Width="126.35" Height="16.45" Text="Patient No" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text22" Left="359.1" Top="133.2" Width="160.65" Height="26.45" Text="[R12065.T_PAT_NO]"/>
+      <TextObject Name="Text16" Left="170.1" Top="175.1" Width="113.4" Height="17.45" Text="[R12065.PAT_BLOOD_GROUP]"/>
+      <TextObject Name="Text17" Left="94.5" Top="207.45" Width="189" Height="19.45" Text="Donor Blood Group" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text18" Left="170.1" Top="226.35" Width="113.4" Height="19.9" Text="[R12065.DONER_BLOOD_GROUP]" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text23" Left="359.1" Top="226.8" Width="129.05" Height="18.45" Text="Blood Component" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="94.5" Top="255.15" Width="60" Height="12.45" Text="Unit No"/>
+      <TextObject Name="Text20" Left="158.65" Top="255.15" Width="122.85" Height="12.45" Text=" [R12065.T_UNIT_NO]"/>
+      <TextObject Name="Text24" Left="359.1" Top="245.7" Width="160.65" Height="19.45" Text="[R12065.PRODUCT_DESCRIPTION]"/>
+      <TextObject Name="Text28" Left="94.5" Top="311.85" Width="406.55" Height="28.35" Text="THIS BLOOD COMPONENT HAS BEEN TESTED AND FOUND COMPATIBLE FOR THE ABOVE LISTED PATIENT"/>
+      <TextObject Name="Text27" Left="311.85" Top="349.65" Width="189" Height="16" Text="Medisys Report ID : R12065"/>
+      <BarcodeObject Name="Barcode1" Left="94.5" Top="274.05" Width="89.3" Height="32.35" AutoSize="false" Text="[R12065.T_UNIT_NO]" ShowText="false" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+    </DataBand>
+  </ReportPage>
+</Report>

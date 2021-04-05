@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "T12366";
+}
+<script src="~/Apps/JSController/Transaction/T12366Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12366Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12366Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="obj.onSave()"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12366Controller" name="obj.myDiv" novalidate ng-form>
+
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 14% auto">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td style="width:3%"> <input type="image" src="~/Images/plus.png" ng-click="onAddRow()" /></td>
+                            <td style="width:10%"><span id="lblUnit" style="text-align: center;" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td style="width:10%"><span id="lblDonationDate" style="text-align: center;" ng-bind="getLabel('lblDonationDate')"></span></td>
+                            <td style="width:10%"><span id="lblUnit1" style="text-align: center;" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td style="width:10%"><span id="lblProd" style="text-align: center;" ng-bind="getLabel('lblProd')"></span></td>
+                            <td style="width:10%"><span id="lblReasonCode" style="text-align: center;" ng-bind="getLabel('lblReasonCode')"></span></td>
+                            <td style="width:37%">
+                                <span id="lblRemarks" style="text-align: center;" ng-bind="getLabel('lblRemarks')"></span>
+                            </td>
+                            <td style="width:5%">
+                                <span id="lblSelected" style="text-align: center;" ng-bind="getLabel('lblSelected')"></span>
+                            </td>
+                            <td style="width:5%"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.T12322" style="width: 100%">
+                            <td style="width: 3%;text-align:right">
+                                <input type="text" style="width: 100%;text-align:right" class="form-control" readonly value="{{$index+1}}" />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" id="txtUnitNo{{$index}}" ng-model="obj.T_UNIT_NO" class="form-control" ng-keydown="onUnitSearch_tab($event,$index,obj.T_UNIT_NO)" ng-blur="onUnitSearch_blur($index,obj.T_UNIT_NO)" />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" ng-model="obj.T_DONATION_DATE |date:'dd-MMM-yy'" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" ng-model="obj.T_UNIT_NO1" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <ui-select ng-model="obj.p.selected" focus-on="ddlReason" id="ddlProduct{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.T_UNIT_NO==null||obj.T_UNIT_NO==''" on-select="onProductSelect($index,obj)">
+                                    <ui-select-match placeholder="Select">{{$select.selected.T_PRODUCT_CODE}}</ui-select-match>
+                                    <ui-select-choices repeat="p in obj.ProductList | propsFilter: {T_PRODUCT_CODE: $select.search}">
+                                        <div ng-bind-html="p.T_PRODUCT_CODE | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                            </td>
+                            <td style="width: 10%">
+                                <ui-select ng-model="obj.r.selected" focus-on="txtRemarks{{$index}}" id="ddlReason{{$index}}" theme="select2" append-to-body="true" style="width: 100%" ng-disabled="obj.T_UNIT_NO==null||obj.T_UNIT_NO==''" on-select="onReasonSelect($index,obj)">
+                                    <ui-select-match placeholder="Select">{{$select.selected.NAME}}</ui-select-match>
+                                    <ui-select-choices repeat="r in obj.ReasonList | propsFilter: {CODE: $select.search}">
+                                        <div ng-bind-html="r.NAME | highlight: $select.search"></div>
+                                    </ui-select-choices>
+                                </ui-select>
+
+                            </td>
+                            <td style="width: 37%">
+                                <input type="text" style="width: 100%" id="txtRemarks{{$index}}" class="form-control" ng-model="obj.T_REMARKS" ng-disabled="obj.T_UNIT_NO==null||obj.T_UNIT_NO==''" />
+                            </td>
+                            <td style="width: 5%; text-align:center">
+                                <input type="checkbox" ng-model="obj.T_SELECTED" ng-true-value="'1'" ng-false-value="''" ng-disabled="obj.T_UNIT_NO==null||obj.T_UNIT_NO==''" />
+                            </td>
+                            <td style="width: 5%; text-align:center">
+                                <input type="image" src="~/Images/checkcross.png" ng-click="remvoveRow($index)" />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr style="width:100%">
+                            <td style="width:13%" colspan="2"></td>
+                            <td style="width:10%;text-align:right">
+                                <span id="lblUser" style="text-align: center;" ng-bind="getLabel('lblUser')"></span>
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 20%" colspan="2">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width:47%" colspan="3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

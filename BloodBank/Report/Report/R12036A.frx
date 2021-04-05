@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/25/2019 11:30:50" ReportInfo.Modified="04/28/2019 10:27:30" ReportInfo.CreatorVersion="2016.1.0.0">
+  <Dictionary>
+    <XmlDataConnection Name="Connection" ConnectionString="rijcmlqmmfdjkQxfe1iwShBNGpudwEdyIftGIBrjfzMjSGZrED+O0OELbn07XDFCvpY/hWZkqj9yxVmF5R9yfICTR+0IeQTnWmZU9v67zIzVHHp45j+QRTgT2cNYIk26sSZnRWK">
+      <TableDataSource Name="R12036" DataType="System.Int32" Enabled="true" TableName="R12036">
+        <Column Name="T_DONATION_NO" DataType="System.String"/>
+        <Column Name="T_DONATION_DATE" DataType="System.DateTime"/>
+        <Column Name="T_UNIT_NO" DataType="System.String"/>
+        <Column Name="T_BLOOD_GROUP" DataType="System.String"/>
+        <Column Name="T_EXPIRY_DATE" DataType="System.DateTime"/>
+        <Column Name="T_LAB_REQUEST_NO" DataType="System.String"/>
+        <Column Name="T_PRODUCT_CODE" DataType="System.String"/>
+        <Column Name="PROD_DESC" DataType="System.String"/>
+        <Column Name="BLOOD_GROUP_DESCRIPTION" DataType="System.String"/>
+        <Column Name="T_RH_NAME" DataType="System.String"/>
+        <Column Name="T_XMATCH_DONE_TIME" DataType="System.String"/>
+        <Column Name="T_KELL" DataType="System.String"/>
+        <Column Name="T_RH_PHENOTY" DataType="System.String"/>
+        <Column Name="T_SEG_ABO" DataType="System.String"/>
+        <Column Name="T_ANTIBODY_1" DataType="System.String"/>
+        <Column Name="T_RH" DataType="System.String"/>
+      </TableDataSource>
+    </XmlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <DataBand Name="Data1" Width="718.2" Height="311.85" StartNewPage="true" DataSource="R12036">
+      <ShapeObject Name="Shape1" Left="37.8" Top="9.45" Width="425.25" Height="292.95"/>
+      <LineObject Name="Line1" Left="37.8" Top="151.2" Width="424.2"/>
+      <LineObject Name="Line2" Left="264.6" Top="9.45" Height="290.7"/>
+      <TextObject Name="Text2" Left="47.25" Top="47.25" Width="207.9" Height="37.8" Text="Central Lab and Blood Bank in Riyad" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="37.8" Top="85.05" Width="103.6" Height="27.9" Text="Donation Date"/>
+      <TextObject Name="Text5" Left="47.25" Top="122.85" Width="179.55" Height="18.9" Text="VOLUNTEERY DONOR" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="47.25" Top="210.9" Width="212.5" Height="15.9" Text="[R12036.PROD_DESC]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="47.25" Top="226.8" Width="217.35" Height="18.9" Text="From 450ml CPD Whole Blood"/>
+      <TextObject Name="Text9" Left="47.25" Top="264.6" Width="94.5" Height="18.9" Text="Store at 1-6C"/>
+      <TextObject Name="Text11" Left="368.55" Top="160.65" Width="86.5" Height="32.9" Text="Expairation date" HorzAlign="Center"/>
+      <TextObject Name="Text13" Left="274.05" Top="198.45" Width="181.5" Height="16.9" Text="[R12036.T_EXPIRY_DATE]" Format="Custom" Format.Format="dd-MMM-yyyy" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text14" Left="274.05" Top="217.35" Width="183.5" Height="48.9" Text="Neg for NAT,HIV I &amp; II, HIV, HCV, HTLV I &amp; II Malaria and syphilis,"/>
+      <TextObject Name="Text15" Left="264.6" Top="274.05" Width="195.5" Height="16.9" Text="Medisys Report ID : R12036"/>
+      <TextObject Name="Text16" Left="330.75" Top="47.25" Width="71.5" Height="48.9" Text="[R12036.T_RH]" Font="Arial, 28pt"/>
+      <TextObject Name="Text18" Left="264.6" Top="122.85" Width="26.5" Height="16.9" Text="Rh"/>
+      <TextObject Name="Text19" Left="283.5" Top="103.95" Width="157.55" Height="16.9" Text="[R12036.T_RH_NAME]"/>
+      <TextObject Name="Text20" Left="396.9" Top="122.85" Width="19.5" Height="16.9" Text="K"/>
+      <TextObject Name="Text21" Left="420.8" Top="122.85" Width="38.45" Height="16.9" Text="[R12036.T_KELL]"/>
+      <BarcodeObject Name="Barcode1" Left="144.3" Top="85.05" Width="118.6" Height="28.35" AutoSize="false" Text="[R12036.T_DONATION_DATE]" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <BarcodeObject Name="Barcode2" Left="47.25" Top="153.65" Width="166" Height="34.5" AutoSize="false" Text="[R12036.T_PRODUCT_CODE]" ShowText="false" AllowExpressions="true" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <TextObject Name="Text22" Left="308.85" Top="122.85" Width="45.5" Height="16.9"/>
+      <BarcodeObject Name="Barcode3" Left="274.05" Top="151.2" Width="86.75" Height="28.35" AutoSize="false" ShowText="false" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <BarcodeObject Name="Barcode4" Left="311.85" Top="9.45" Width="98.75" Height="38.25" AutoSize="false" ShowText="false" Barcode="Code128" Barcode.AutoEncode="true"/>
+      <BarcodeObject Name="Barcode5" Left="75.6" Top="9.45" Width="98.75" Height="28.35" AutoSize="false" ShowText="false" Barcode="Code128" Barcode.AutoEncode="true"/>
+    </DataBand>
+  </ReportPage>
+</Report>

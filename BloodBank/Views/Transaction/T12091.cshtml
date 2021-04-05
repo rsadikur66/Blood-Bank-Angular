@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewBag.Title = "T12091";
+}
+<script src="~/Apps/JSController/Transaction/T12091Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12091Service.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12091Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12091Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+        <div class="container" style="border: 2px solid #B2B4AA; margin-top: 2%; padding: 20px;">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #353833; margin:1% 5% 2% 20%; width: 55%; border-radius: 10px; padding: 15px;">
+                <table>
+                    <tr>
+                        <td>
+                            <label id="lblSite" for="txtSiteNo" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblSite')"*@>Delivery man</label>
+                        </td>
+                        <td>
+                            <input id="txtSiteNo" type="text" ng-dblclick="DeliveryMan_dblClick()" ng-model="obj.t12091.T_DELIVERY_CODE" class="form-control ng-cloak" style="width: 100px;" readonly>
+                        </td>
+
+                        <td colspan="4">
+                            <input id="txtSiteName" type="text" ng-model="obj.t12091.T_DELIVERY_NAME" ng- style="width: 370px;">
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblRequestNo" for="txtBloodReqNo" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblRequestNo')"*@>Blood Req. No</label>
+                        </td>
+                        <td>
+                            <input id="txtBloodReqNo" type="text" ng-dblclick="RequestNo_dblClick()" ng-model="obj.t12091.T_BLOOD_REQ_NO" class="form-control ng-cloak" style="width: 100px;" readonly>
+                        </td>
+                        <td>
+                            <label id="lblRequestDate" for="txtReqDate" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblRequestDate')"*@>Date</label>
+                        </td>
+                        <td>
+                            <input id="txtReqDate" type="text" ng-model="obj.t12091.T_RCVD_DATE" ng- style="width: 100px;">
+                        </td>
+                        <td>
+                            <label id="lblRequestTime" for="txtReqTime" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblRequestTime')"*@> Time</label>
+                        </td>
+                        <td>
+                            <input id="txtReqTime" type="text" ng-model="obj.t12091.T_RCVD_TIME" class="form-control ng-cloak" name="requtime" style="width: 80px;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #353833; margin: 0 5% 1% 20%; width: 55%; border-radius: 10px; padding: 20px;">
+                <table>
+                    <tr>
+                        <td>
+                            <label id="lblReferenceHospital" for="txtRefHospitalCode" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblReferenceHospital')"*@>Ref. Hosp.</label>
+                        </td>
+                        <td>
+                            <input id="txtRefHospitalCode" type="text" ng-model="obj.t12091.T_REF_HOSP" style="width: 100px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                        <td colspan="4">
+                            <input id="txtRefHospitalName" type="text" ng-model="obj.t12091.T_REFERRAL_NAME" style="width: 330px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblBloodGroup" for="txtBloodGroup" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblBloodGroup')"*@> Blood Group</label>
+                        </td>
+                        <td>
+                            <input id="txtBloodGroup" type="text" ng-model="obj.t12091.T_BLOOD_GRP" style="width: 100px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                        <td colspan="4">
+                            <input id="txtBloodGroupName" type="text" ng-model="obj.t12091.BLD_NAME" style="width: 330px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">
+                            <label id="lblProduct" for="txtProduct" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblProduct')"*@> Product</label>
+                        </td>
+                        <td>
+                            <input id="txtProduct" type="text" ng-model="obj.t12091.T_PRODUCT_CODE" style="width: 100px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                        <td colspan="4">
+                            <input id="txtProdName" type="text" ng-model="obj.t12091.T_PRODUCT_NAME" style="width: 330px; text-align: left;" class="form-control ng-cloak" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblNoOfUnit" for="txtNoOfUnit" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblNoOfUnit')"*@>No. Of Unit</label>
+                        </td>
+                        <td>
+                            <input id="txtNoOfUnit" type="text" ng-model="obj.t12091.T_NUM_UNIT" class="form-control ng-cloak" style="width: 100px;" readonly>
+                        </td>
+                        <td colspan="4"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #353833; margin: 0 5% 1% 20%; width: 55%; border-radius: 10px; padding: 20px;">
+                <table>
+                    <tr>
+                        <td>
+                            <label id="lblReceived" for="chkReceived" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblReceived')"*@>Handover</label>
+                        </td>
+                        <td>
+                            <input id="ChkHandover" type="checkbox" ng-model="obj.t12091.T_Handover_FLAG" ng-click="Handover_Flag()" ng-disabled="obj.ChkHandover === 'Disable'" name="check" ng-true-value="'1'" ng-false-value="''" style="width: 20px;box-shadow: none;">
+                        </td>
+                        <td>
+                            <label id="lblReceivedBy" for="txtReceivedid" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblReceivedBy')"*@>Handover By</label>
+                        </td>
+                        <td>
+                            <input id="txtReceivedid" type="text" ng-model="obj.t12091.T_EMP_CODE" style="width: 100px;" class="form-control ng-cloak" readonly>
+                        </td>
+                        <td>
+                            <input id="txtReceivedName" type="text" ng-model="obj.t12091.T_USER_NAME" class="form-control ng-cloak" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label id="lblReceivedDate" for="txtReceDate" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblReceivedDate')"*@>Date</label>
+                        </td>
+
+                        <td>
+                            <input id="txtReceDate" type="text" ng-model="obj.t12091.T_HANDOVER_DATE" style="width: 100px;" class="form-control ng-cloak" readonly>
+                        </td>
+                        <td>
+                            <label id="lblReceivedTime" for="txtReceTime" class="ng-cloak" style="color: #303386" @*ng-bind="getLabel('lblReceivedTime')"*@>Time</label>
+                        </td>
+                        <td class="2">
+                            <input id="txtReceTime" type="text" ng-model="obj.t12091.T_HANDOVER_TIME" style="width: 100px;" class="form-control ng-cloak" readonly>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </div>
+        @*Delivery Man Modal Start*@
+        <div id="divDeliveryMan" class="omf-modal">
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    <label id="lblRefHospitalHeader" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divDeliveryMan')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    <input type="text" class="omf-modal-placeholder" @*placeholder="{{getLabel('lblSiteCodeSearch')}}"*@ ng-model="SearchRefHospital" />
+                </div>
+                <div class="form-horizontal popup">
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead>
+                                    <tr>
+                                        <th style="width:20%">
+                                            <label id="lblSiteCodePopup" class="ng-cloak" @*ng-bind="getLabel('lblSiteCodePopup')"*@>Delivery man Code</label>
+                                        </th>
+                                        <th style="width:80%">
+                                            <label id="lblEngNamePopup" class="ng-cloak" @*ng-bind="getLabel('lblEngNamePopup')"*@> Delivery man Name</label>
+                                        </th>
+                                        
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="obj in obj.DeliveryManData |filter : SearchRefHospital |itemsPerPage:5" pagination-id="hospitalList" style="cursor: pointer" ng-click="DeliveryManRowSelect($index,obj)">
+                                        <td style="text-align: left; width: 10%"><span id="" style="width: 100%">{{obj.CODE}}</span></td>
+                                        <td style="text-align: center; width: 45%"><span id="" style="width: 100%">{{obj.NAME}}</span></td>
+                                        @*<td hidden style="text-align: center; width: 45%"><span id="" style="width: 100%">{{obj.T_BLOOD_REQ_NO}}</span></td>*@
+
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="hospitalList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

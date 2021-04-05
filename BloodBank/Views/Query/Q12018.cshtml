@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "Q12018";
+}
+
+<script src="~/Apps/JSController/Query/Q12018Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12018Service.js"></script>
+<style>
+    td {
+        padding: 0px !important;
+    }
+</style>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12018Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="NextClick()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Clear" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Save" class="Button Execute"></button>
+        <button id="btnPrint" title="Next" class="Button Print"></button>
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12018Controller" name="obj.myDiv" novalidate ng-form style="width:90%">
+    <div class="col-lg-12">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%">
+                <table style="width: 100%; margin: 0 auto;">
+                    <tr style="width: 100%;">
+                        <td style="width: 25%"></td>
+                        <td style="width: 15%;padding:5px !important" class="alnR"><label id="lblUnitNo" ng-bind="getLabel('lblUnitNo')" for="txtUnitNo" class="ng-cloak"></label></td>
+                        <td style="width: 25%">
+                            <input type="text" id="txtUnitNo" ng-model="obj.T_UNIT_NO" style="width: 60%" ng-keydown="DatawithEnter($event)"/>
+                        </td>
+                        <td style="width: 25%">
+                            @*<input type="text" id="txtUnitType" ng-model="obj.T_UNIT_TYPE" style="width: 60%" />*@
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px; ">
+            <div style="width: 100%">
+                <table style="width: 100%; margin: 1% auto">
+                    <thead style="text-align: center; width: 100%;">
+                        <tr style="width: 100%">
+                            <th style="width: 2%; text-align: center; white-space: nowrap">
+                                <label id="lblUnit" ng-bind="getLabel('lblUnit')" for="txtUnit" class="ng-cloak"></label><span>&nbsp;&#35;</span>
+                            </th>
+                            <th style="width: 8%; text-align: center">
+                                <label id="lblRequest" ng-bind="getLabel('lblRequest')" for="txtRequest" class="ng-cloak"></label><span>&nbsp;&#35;</span>
+                            </th>
+                            <th colspan="2" style="width: 2%; text-align: center; white-space: nowrap">
+                                <label id="lblProd" ng-bind="getLabel('lblProd')" for="txtProd" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 7%; text-align: center">
+                                <label id="lblBloodGroup" ng-bind="getLabel('lblBloodGroup')" for="txtBloodGroup" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 5%; text-align: center">
+                                <label id="lblUnitStatus" ng-bind="getLabel('lblUnitStatus')" for="txtUnitStatus" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 8%; text-align: center">
+                                <label id="lblDonat" ng-bind="getLabel('lblDonat')" for="txtDonatDate" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 10%; text-align: center">
+                                <label id="lblExpDay" ng-bind="getLabel('lblExpDay')" for="txtExpiryDate" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 10%; text-align: center">
+                                <label id="lblType" ng-bind="getLabel('lblType')" for="txtType" class="ng-cloak"></label>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="max-height: 275px; overflow: auto; overflow-x: hidden; width: 100%;">
+                        <tr style="width: 100%" ng-repeat="obj in obj.GridPart">
+
+                            <td style="width: 12%">
+                                <input type="text" id="txtUnit" ng-model="obj.T_UNIT_NO" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtRequest" ng-model="obj.T_REQUEST_NO" style="width: 100%" />
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtProdId" ng-model="obj.T_PRODUCT_ID" style="width: 100%" />
+                            </td>
+                            <td style="width: 14%">
+                                <input type="text" id="txtProd" ng-model="obj.T_PRODUCT" style="width: 100%" />
+                            </td>
+                            <td style="width: 8%">
+                                <input type="text" id="txtBloodGroup" ng-model="obj.T_BLOOD_GROUP_CODE" style="width: 100%" />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" id="txtUnitStatus" ng-model="obj.T_UNIT_STATUS" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtDonatDate" ng-model="obj.T_DONAT_DATE" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtExpiryDate" ng-model="obj.T_EXPIRY_DATE" style="width: 100%" />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" id="txtType" ng-model="obj.T_TYPE" style="width: 100%" />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <table>
+                    <tr>
+                        <td class="alnR" style="padding:5px !important;">
+                            <label id="lblHospitalName" ng-bind="getLabel('lblHospitalName')" for="txtUnitNo" class="ng-cloak"></label>
+                        </td>
+                        <td>
+                            <input type="text" id="txtHospitalName" ng-model="obj.T_HOSP_NAME" />
+                        </td>
+                        <td class="alnR" style="padding:5px !important;">
+                            <label id="lblIssueDate" ng-bind="getLabel('lblIssueDate')" for="txtUnitNo" class="ng-cloak"></label>
+                        </td>
+                        <td>
+                            <input type="text" id="txtIssueDate" ng-model="obj.T_ISSUE_DATE" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+
+        </div>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px; ">
+            <div style="width: 100%">
+                <table style="width: 100%; margin: 1% auto">
+                    <thead style="text-align: center; width: 100%;">
+                        <tr style="width: 100%">
+                            <th style="width: 2%; text-align: center; white-space: nowrap">
+                                <label id="lblUnit" ng-bind="getLabel('lblUnit')" for="txtUnit" class="ng-cloak"></label><span>&nbsp;&#35;</span>
+                            </th>
+                            <th style="width: 8%; text-align: center">
+                                <label id="lblRequest" ng-bind="getLabel('lblRequest')" for="txtRequest" class="ng-cloak"></label><span>&nbsp;&#35;</span>
+                            </th>
+                            <th colspan="2" style="width: 2%; text-align: center; white-space: nowrap">
+                                <label id="lblProd" ng-bind="getLabel('lblProd')" for="txtProd" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 7%; text-align: center">
+                                <label id="lblBloodGroup" ng-bind="getLabel('lblBloodGroup')" for="txtBloodGroup" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 5%; text-align: center">
+                                <label id="lblUnitStatus" ng-bind="getLabel('lblUnitStatus')" for="txtUnitStatus" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 8%; text-align: center">
+                                <label id="lblDonat" ng-bind="getLabel('lblDonat')" for="txtDonatDate" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 10%; text-align: center">
+                                <label id="lblExpDay" ng-bind="getLabel('lblExpDay')" for="txtExpiryDate" class="ng-cloak"></label>
+                            </th>
+                            <th style="width: 10%; text-align: center">
+                                <label id="lblType" ng-bind="getLabel('lblType')" for="txtType" class="ng-cloak"></label>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody style="max-height: 275px; overflow: auto; overflow-x: hidden; width: 100%;">
+                        <tr style="width: 100%" ng-repeat="obj in obj.GridPart2">
+
+                            <td style="width: 12%">
+                                <input type="text" id="txtUnit" ng-model="obj.T_UNIT_NO" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtRequest" ng-model="obj.T_REQUEST_NO" style="width: 100%" />
+                            </td>
+                            <td style="width: 5%">
+                                <input type="text" id="txtProdId" ng-model="obj.T_PRODUCT_ID" style="width: 100%" />
+                            </td>
+                            <td style="width: 14%">
+                                <input type="text" id="txtProd" ng-model="obj.T_PRODUCT" style="width: 100%" />
+                            </td>
+                            <td style="width: 8%">
+                                <input type="text" id="txtBloodGroup" ng-model="obj.T_BLOOD_GROUP_CODE" style="width: 100%" />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" id="txtUnitStatus" ng-model="obj.T_UNIT_STATUS" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtDonatDate" ng-model="obj.T_DONAT_DATE" style="width: 100%" />
+                            </td>
+                            <td style="width: 12%">
+                                <input type="text" id="txtExpiryDate" ng-model="obj.T_EXPIRY_DATE" style="width: 100%" />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" id="txtType" ng-model="obj.T_TYPE" style="width: 100%" />
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <table>
+                    <tr>
+                        <td class="alnR" style="padding:5px !important;">
+                            <label id="lblHospitalName" ng-bind="getLabel('lblHospitalName')" for="txtUnitNo" class="ng-cloak"></label>
+                        </td>
+                        <td>
+                            <input type="text" id="txtHospitalName" ng-model="obj.T_HOSP_NAME" />
+                        </td>
+                        <td class="alnR" style="padding:5px !important;">
+                            <label id="lblIssueDate" ng-bind="getLabel('lblIssueDate')" for="txtUnitNo" class="ng-cloak"></label>
+                        </td>
+                        <td>
+                            <input type="text" id="txtIssueDate" ng-model="obj.T_ISSUE_DATE" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3"></div>
+
+        </div>
+    </div>
+</div>

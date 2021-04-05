@@ -1,0 +1,145 @@
+﻿@*@using FastReport.Web*@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/pageeng.min.css")" title="eng" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/pagearb.min.css")" title="arb" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/metallic.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/validationEngine.jquery.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/jquery.mCustomScrollbar.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/jquery.dataTables.min.css") " rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute(" ~/Content/select.css") " rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute(" ~/Content/select2.css") " rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute(" ~/Content/selectize.default.css") " rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/angular-datepicker_Custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/Custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/ui-grid.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />
+
+    @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/Content/calender.css" rel="stylesheet" />
+        <script src="~/Scripts/moment.min.js"></script>
+        <script src="~/Scripts/calender.js"></script>*@
+
+    <script>document.write('<base href="' + document.location + '" />');</script>
+
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-hijri.js"></script>
+    <script src="~/Scripts/jquery.validationEngine.js"></script>
+    <script src="~/Scripts/jquery.validationEngine-en.js"></script>
+    <script src="~/Scripts/jquery.simplemodal.1.4.4.min.js"></script>
+    <script src="~/Scripts/angular/jquery.js"></script>
+    <script src="~/Scripts/angular/jquery.dataTables.js"></script>
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular/angular-datatables.js"></script>
+    <script src="~/Scripts/angular/angular-modal-service.js"></script>
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="~/Scripts/angular/angular-route.js"></script>
+    <script src="~/Scripts/dirPagination.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script src="~/Scripts/angular-datepicker_Custom.js"></script>
+    <script src="~/Scripts/Module/fileUploader.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+
+
+    @*<script src="~/Scripts/zebra_datepicker.js"></script>*@
+    @*<script src="~/Scripts/angular/xeditable.js"></script>
+        <script src="~/Scripts/angular/angular-mocks.js"></script>*@
+    @*<script src="~/Scripts/angular/ng-map.js"></script>*@
+    @*<link href="~/Content/Rating/jk-rating-stars.min.css" rel="stylesheet" />*@
+    @*<script src="~/Scripts/Rating/jk-rating-stars.min.js"></script>
+        <script src="~/Scripts/Rating/script.js"></script>*@
+    @*<script src="~/Scripts/ChatScripts/angular-flash.js"></script>*@
+    @*@WebReportGlobals.Scripts()
+        @WebReportGlobals.Styles()*@
+    @*<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvK4WBt18RMBAKEjwPZ0bDIY3Vp6ekPbM"></script>*@
+    @*<script src="~/Scripts/angular/map_api.js"></script>*@
+    @*<script src="~/Scripts/angular/angularjs-google-maps.js"></script>*@
+
+
+    <script src="~/Apps/app.js"></script>
+    <script src="~/Apps/JSController/Menu/menuController.js"></script>
+    <script src="~/Apps/JSService/Menu/menuService.js"></script>
+    <script src="~/Apps/JSService/LoginService.js"></script>
+</head>
+<body ng-app="BloodBank" ng-controller="menuController" ng-init="test()" class="ng-cloak" ng-keydown="backPage($event)">
+    @if (@ViewBag.WebReport != null)
+    {
+        @ViewBag.WebReport.GetHtml()
+    }
+    <div id="topbar" style="padding-top:5px">
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/bg.png")" id="bg" alt="background image" />
+        <img src="~/Images/{{topbarbg}}.png" id="topbarBg" alt="top bar" />
+        <img src="~/Images/{{topbarseparator}}.png" id="topbarSeparator" alt="top bar separator" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/whitelogo.png")" id="whiteLogo" alt="white logo" style="padding-top:3px" />
+        <img src="~/Images/{{pageleftpanelbg}}.png" id="pageLeftPanelBg" alt="page left panel" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/headerbg.png")" id="headerBg" alt="header" />
+        <img src="@VirtualPathUtility.ToAbsolute("~/Images/calender.png")" id="calender" alt="calender" style="padding-top:3px" />
+        <div id="datePanel">
+
+            <script type="text/javascript">
+                document.writeln(moment().format('DD/MM/YYYY'));
+            </script>
+            &nbsp;&nbsp;&nbsp;&nbsp;&brvbar;&nbsp;&nbsp;&nbsp;
+            <script src="@VirtualPathUtility.ToAbsolute("~/Scripts/ar-sa.js")"></script>
+            <script type="text/javascript">
+                document.writeln(moment().format('iYYYY/iMM/iDD'));
+            </script>
+
+        </div>
+        <div id="formInfo">
+            <label ID="FName" class="ng-cloak">{{FCode}}</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&brvbar;&nbsp;&nbsp;&nbsp;
+            <label ID="lblFormInfo" class="ng-cloak">{{FName}}</label>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <div id="header" data-ng-init="test()">
+        <div id="logo">
+            <img src="@VirtualPathUtility.ToAbsolute("~/Images/logo.png")" alt="logo" style="height: 50px;margin-left: 10px;" />
+        </div>
+        <div id="user">
+            <img src="@VirtualPathUtility.ToAbsolute("~/Images/user.png")" id="usericon" alt="user icon" />
+        </div>
+        <div id="userName">
+            <label ID="lblUserName" class="ng-cloak">{{UserName}}&nbsp;&hyphen;&nbsp;{{servername}}</label>
+        </div>
+
+        <div id="title">
+            <span class='gray ng-cloak'>{{HeadTitle1}}</span>&nbsp;<span class='red ng-cloak'>{{HeadTitle2}}</span>
+        </div>
+    </div>
+    <div class="clear"></div>
+
+    <div id="options">
+        <div>
+            @RenderSection("container", false)
+        </div>
+        <div style="margin-top: 80vh;bottom:5px;position:fixed ">
+            <button ID="btnBack"  title="Back" class="Button Back" ng-click="Back()"></button>
+            <button title="Logout" class="Button Logout" ng-click="Logout()"></button>
+        </div>
+    </div>
+
+
+    <div id="container">
+        <div ng-show="loading" style="position: absolute;padding-left: 50%;z-index: 100;"><img src="~/Images/loader.gif" style="height: 30px;"></div>
+        @RenderBody()
+    </div>
+    <div id="version">
+        <label ID="lblVersion"></label>
+    </div>
+
+</body>
+</html>

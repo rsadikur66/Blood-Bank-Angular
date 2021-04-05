@@ -1,0 +1,282 @@
+﻿
+@{
+    ViewBag.Title = "T01009";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Apps/JSController/Initialization/T01009Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T01009Service.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T01009Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()"></button>
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        <button ID="btnEnterQuery" title="Enter Query" class="Button Enter Query" ng-click="EnterQuery()"></button>
+        <button ID="btnExecuteQuery" title="Execute Query" class="Button Execute Query" ng-click="ExecutQuery()"></button>
+    </div>
+}
+
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T01009Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px;">
+    <div class="container">
+        <!--For Data Gridview start-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #4a4949; border-radius: 5px; padding: 10px; width: 1250px; margin: 1.0% auto;">
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                    <tr style="color: #29449b; width: 100%">
+                        <td><span id="lblCode" style="text-align: center; width: 7%" ng-bind="getLabel('lblCode')"></span></td>
+                        <td><span id="lblLoginName" style="text-align: center; width: 10%" ng-bind="getLabel('lblLoginName')"></span></td>
+                        <td><span id="lblPassword" style="width: 10%" ng-bind="getLabel('lblPassword')"> </span></td>
+                        <td><span id="lblName" style="width: 3%;" ng-bind="getLabel('lblName')"></span></td>
+                        <td><span id="lblDepertmentCode" style="width: 10%;" ng-bind="getLabel('lblDepertmentCode')"></span></td>
+                        <td><span id="lblDepName" style="width: 10%;" ng-bind="getLabel('lblDepName')"></span></td>
+                        <td><span id="lblRole" style="width: 10%;" ng-bind="getLabel('lblRole')"></span></td>
+                        <td><span id="lblRoleName" style="width: 10%;" ng-bind="getLabel('lblRoleName')"></span></td>
+                        <td><span id="lblLanguage" style="width: 10%;" ng-bind="getLabel('lblLanguage')"></span></td>
+                        <td><span id="lblMachRestrd" style="width: 10%;" ng-bind="getLabel('lblMachRestrd')"></span></td>
+                        <td><span id="lblPhExt" style="width: 10%;" ng-bind="getLabel('lblPhExt')"></span></td>
+                        <td><span id="lblMobile" style="width: 10%;" ng-bind="getLabel('lblMobile')"></span></td>
+                        <td><span id="lblNationalityId" style="width: 10%;" ng-bind="getLabel('lblNationalityId')"></span></td>
+                        <td><span id="lblSiteCode" style="width: 10%;" ng-bind="getLabel('lblSiteCode')"></span></td>
+                        <td><span id="lblHospital" style="width: 10%;" ng-bind="getLabel('lblHospital')"></span></td>
+                        <td><span id="lblActive" style="width: 10%;" ng-bind="getLabel('lblActive')"></span></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr @*ng-repeat="obj in obj.HospitalList"*@ dir-paginate="obj in obj.HospitalList |filter : SearchUnit |itemsPerPage:10" pagination-id="bed" style="width: 100%;cursor: pointer" @*ng-class="{'selected':$index == selectedRow}"*@ id="row{{index}}" @*ng-click="ddd($index)"*@>
+                        <td style="width: 8%">
+                            <input id="txtCode" class="form-control" name="code" ng-model="obj.T_EMP_CODE" type="text" style="width: 100%" ng-dblclick="ShowPopUp('')">
+                        </td>
+                        <td style="width: 10%">
+                            <input type="text" style="width: 100%" class="form-control" name="loginName" id="txtLoginNme" ng-model="obj.T_LOGIN_NAME">
+                        </td>
+                        <td style="width: 10%">
+                            <input type="text" style="width: 100%" class="form-control" name="Password" id="txtPassword" ng-model="obj.T_PWD">
+                        </td>
+                        <td style="width: 8%">
+                            <input type="text" style="width: 100%" class="form-control" name="UserName" id="textUserName" ng-model="obj.T_USER_NAME">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%" class="form-control" name="DepertmentCode" id="txtDepertmentCode" ng-model="obj.T_X_DEPT_CODE" ng-click="DeptPopUP()">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="Dscr" id="txtDscr" ng-model="obj.T_X_DEPT_NAME">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="RoleCode" id="txtRoleCode" ng-model="obj.T_ROLE_CODE">
+                        </td>
+                        <td style="width: 8%">
+                            <input type="text" style="width: 100%;" class="form-control" name="RoleName" id="txtRoleName" ng-model="obj.ROLE_NAME" readonly>
+                        </td>
+                        <td style="width: 10%">
+                            <select ng-model="obj.T_USER_LANG" style="width: 100%" ng-change="modelidchange()">
+                                <option value="" disabled selected hidden>--Select--</option>
+                                <option value="1" label="Arabic"></option>
+                                <option value="2" label="English"></option>
+                            </select>
+                        </td>
+                        <td style="width: 3%">
+                            <input type="checkbox" style="width: 100%; box-shadow: none; margin-left: -30%" class="form-control" name="MachRestrd" id="chkMachRestrd{{$index}}" ng-model="obj.T_MACH_RESTR" ng-click="ActiveCheckboxClicked($index)">
+                        </td>
+                        <td style="width: 10%;">
+                            <input type="text" class="form-control" name="PhExt" style="width: 55px" id="txtPhExt" ng-model="obj.T_PH_EXT">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="Mobile" id="txtMobile" ng-model="obj.T_MOBILE_NO">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="NationalityId" id="txtNationalityId" ng-model="obj.T_NTNLTY_ID">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="SiteCode" id="txtSiteCode" ng-model="obj.T_SITE_CODE">
+                        </td>
+                        <td style="width: 15%">
+                            <input type="text" style="width: 100%;" class="form-control" name="Hospital" id="txtHospital" ng-model="obj.T_HOSPITAL_CODE">
+                        </td>
+                        <td style="width: 3%">
+                            <input type="checkbox" style="width: 100%; box-shadow: none; margin-left: -30%" class="form-control" name="Active" id="chkActive{{$index}}" ng-true-value="1" ng-model="obj.T_ACTIVE_FLAG" ng-click="ActiveCheckboxClicked($index)">
+                        </td>
+                        <td>
+                            <input type="text" id="HiddenValue"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                   
+                </table>
+               
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                </div>
+                <br />
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                <label id="lblComment" for="txtComment" class="ng-cloak" ng-bind="getLabel('lblComment')" style="color: #303386"></label>
+                            </td>
+                            <td>
+                                <input id="txtComment" type="text" ng-model="obj.T_X_COMMENT" class="form-control ng-cloak" style="width: 200px;">
+                            </td>
+                            <td>
+                                <label id="lblExpDate" for="txtExpDate" class="ng-cloak" ng-bind="getLabel('lblExpDate')" style="color: #303386"></label>
+                            </td>
+                            <td>
+                                <input id="txtExpDate" type="text" ng-model="obj.DEPT_NAME" class="form-control ng-cloak" style="width: 100px;">
+                            </td>
+                            <td>
+                                <label id="lblOldRole" for="txtOldRole" class="ng-cloak" ng-bind="getLabel('lblOldRole')" style="color: #303386"></label>
+                            </td>
+                            <td>
+                                <input id="txtOldRole" type="text" ng-model="obj.T_OLD_ROLE_CODE" class="form-control ng-cloak" style="width: 100px;">
+                            </td>
+                            <td>
+                                <label id="lblDate" for="txtDate" class="ng-cloak" ng-bind="getLabel('lblDate')" style="color: #303386"></label>
+                            </td>
+                            <td>
+                                <input id="txtDate" type="text" ng-model="obj.T_UPD_DATE" class="form-control ng-cloak" style="width: 100px;">
+                            </td>
+                            <td>
+                                <input id="txtUpdateUser" type="text" ng-model="obj.UPD_USER" class="form-control ng-cloak" style="width: 200px;">
+                            </td>
+                        </tr>
+                    </table>
+                    <dir-pagination-controls pagination-id="bed" max-size="5"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+                </div>
+              
+            </div>
+        </div>
+        <!--For Data Gridview End-->
+        
+    @*EmpCode Modal Start*@
+    <div id="divEmployee" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblEmpHeader" ng-bind="getLabel('lblEmpHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divEmployee')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchProduct" />
+
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%">
+                                    <label id="lblCode" class="ng-cloak" ng-bind="getLabel('lblCode')"></label>
+                                </th>
+                                <th style="width: 50%">
+                                    <label id="lblName" ng-bind="getLabel('lblName')" class="ng-cloak"></label>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr dir-paginate="obj in ProductList |filter : SearchProduct |itemsPerPage:pageSize" current-page="currentPage" pagination-id="bList" style="cursor: pointer" ng-click="onProductSelect(PagiIndex($index,currentPage))">
+                                <td style="text-align: center; width: 50%"><span id="spnProductCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                <td style="text-align: left; width: 50%"><span id="spnProductDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bList" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Depertment Modal Start*@
+    <div id="divDepartment" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblDeptList" ng-bind="getLabel('lblDeptList')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divDepartment')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="SearchBlood" />
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%">
+                                    <label id="lblDepertmentCode" class="ng-cloak" ng-bind="getLabel('lblDepertmentCode')"></label>
+                                </th>
+                                <th style="width: 50%">
+                                    <label id="lblDepName" ng-bind="getLabel('lblDepName')" class="ng-cloak"></label>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="obj in bloodGroupList |filter : SearchBlood |itemsPerPage:10" pagination-id="bList" style="cursor: pointer" ng-click="onBloodSelect($index)">
+                                <td style="text-align: center; width: 50%"><span id="spnBloodCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                <td style="text-align: left; width: 50%"><span id="spnBloodDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bList" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    @*Role Modal Start*@
+    <div id="divRole" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblRoleList" ng-bind="getLabel('lblRoleList')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="ClosePopup('divRole')" />
+            </div>
+            <div class="omf-modal-div-placeholder">
+                <input type="text" @*placeholder="{{getLabel('lblPlaceHolderSearch')}}"*@ class="omf-modal-placeholder" ng-model="SearchBlood" />
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid">
+                            <thead>
+                            <tr>
+                                <th style="width: 50%">
+                                    <label id="lblDepertmentCode" class="ng-cloak" ng-bind="getLabel('lblDepertmentCode')"></label>
+                                </th>
+                                <th style="width: 50%">
+                                    <label id="lblDepName" ng-bind="getLabel('lblDepName')" class="ng-cloak"></label>
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr dir-paginate="obj in bloodGroupList |filter : SearchBlood |itemsPerPage:10" pagination-id="bList" style="cursor: pointer" ng-click="onBloodSelect($index)">
+                                <td style="text-align: center; width: 50%"><span id="spnBloodCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                <td style="text-align: left; width: 50%"><span id="spnBloodDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <dir-pagination-controls pagination-id="bList" max-size="5"
+                                                 direction-links="true"
+                                                 boundary-links="true">
+                        </dir-pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>

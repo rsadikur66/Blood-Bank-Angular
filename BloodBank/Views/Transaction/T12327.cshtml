@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "T12327";
+}
+<script src="~/Apps/JSController/Transaction/T12327Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12327Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12327Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12327Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 30%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDateFrom" for="txtDateFrom" class="ng-cloak" ng-bind="getLabel('lblDateFrom')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtDateFrom" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDateTo" for="txtDateTo" class="ng-cloak" ng-bind="getLabel('lblDateTo')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtDateTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 30%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblProductCode" for="txtProductCode" class="ng-cloak" ng-bind="getLabel('lblProductCode')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtProductCode" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;"></td>
+                    <td style="width: 10%">
+                        <input type="checkbox" id="chkPool" />
+                        <label id="lblPool" for="chkPool" class="ng-cloak" ng-bind="getLabel('lblPool')"></label>
+                    </td>
+                    <td style="width: 30%;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 14% auto">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="width: 100%;height:50px">
+                            <th style="width:10%"></th>
+                            <th style="width:16%;color: #CA445C; text-align:right"><span id="lblConfirmUnit" ng-bind="getLabel('lblConfirmUnit')"></span></th>
+                            <td style="width:16%">  <input type="text" style="width: 100%" class="form-control" readonly /></td>
+                            <th style="width:16%"></th>
+                            <th style="width:16%"></th>
+                            <th style="width:16%;"></th>
+                            <th style="width:10%"></th>
+                        </tr>
+                        <tr style="color: #29449b; width: 100%">
+                            <td style="width:10%"></td>
+                            <td style="width:16%"><span id="lblUnit" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td style="width:16%"><span id="lblUnit1" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td style="width:16%"><span id="lblProd" ng-bind="getLabel('lblProd')"></span></td>
+                            <td style="width:16%"><span id="lblBloodGroup" ng-bind="getLabel('lblBloodGroup')"></span></td>
+                            <td style="width:16%;"><span id="lblChecked" ng-bind="getLabel('lblChecked')"></span></td>
+                            <td style="width:10%"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.demo" style="width: 100%">
+                            <td style="width:10%"></td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width:10%"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

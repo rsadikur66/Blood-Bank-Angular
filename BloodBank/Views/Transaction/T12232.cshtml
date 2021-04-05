@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewBag.Title = "T12232";
+}
+
+<script src="~/Apps/JSController/Transaction/T12232Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12232Service.js"></script>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12232Controller">
+        <button id="btnNew" title="New" class="Button New" ng-click="NewClick()"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="Save()"></button>
+        <button id="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete" disabled="true"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+    </div>
+}
+
+
+<div class="container" ng-app="BloodBank" ng-controller="T12232Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-2 col-md-2 col-sm-2"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label id="lblUnit" style="float: right" for="txtUnit" class="ng-cloak" ng-bind="getLabel('lblUnit')"></label>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <input type="text" id="txtUnit" ng-model="obj.T_UNIT_NO" style="width: 150px;" ng-keydown="EnterAndF3()"  ng-blur="UnitValidate(obj.T_UNIT_NO)"/>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <label id="lblDonationDate" style="float: right" for="txtDonationDate" class="ng-cloak" ng-bind="getLabel('lblDonationDate')" readonly></label>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="margin-right: -5%">
+                            <input type="text" id="txtDonationDate" ng-model="obj.T_DONATION_DATE" style="width: 100px;" readonly />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                            <input type="text" id="txtUnit" ng-model="obj.T_DONATION_DATE_HIZRI" style="width: 100px;" readonly/><span>&nbsp;H</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        </div>
+    </div>
+
+    <!--2nd part start-->
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px; width: 100%; margin: 1.0% auto">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td style="width: 10%"></td>
+                            <td><span id="lblVirusCode" style="text-align: center; width: 7%" ng-bind="getLabel('lblVirusCode')"></span></td>
+                            <td><span id="lblVirusDesc" style="text-align: center; width: 20%" ng-bind="getLabel('lblVirusDesc')"></span></td>
+                            <td><span id="lblTestBy" style="width: 30%" ng-bind="getLabel('lblTestBy')"> </span></td>
+                            <td><span id="lblVerify" style="width: 3%; margin-right: -39px; margin-left: -39px;" ng-bind="getLabel('lblVerify')"></span></td>
+                            <td><span id="lblVerifiedBy" style="width: 25%" ng-bind="getLabel('lblVerifiedBy')"></span></td>
+                            <td><span id="lblVerifiedDate" style="width: 15%; margin-left: -15%" ng-bind="getLabel('lblVerifiedDate')"></span></td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.VirusInfo" style="width: 100%">
+                            <td style="width: 10%"></td>
+                            <td style="width: 7%">
+                                <input type="text" style="width: 100%" class="form-control" name="VirusCode" id="txtVirusCode" ng-model="obj.T_VIRUS_CODE" ng-dblclick="getVirusList($index)">
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" name="VirusDesc" id="txtVirusDesc" ng-model="obj.VirusDesc" readonly>
+                            </td>
+                            <td style="width: 18%">
+                                <input type="text" style="width: 100%" class="form-control" name="TestBy" id="txtTestBy" ng-model="obj.TestBy">
+                            </td>
+                            <td style="width: 3%">
+                                <input type="checkbox" style="width: 100%; box-shadow: none; margin-left: -25%" class="form-control" name="Pos1Verify" id="chkPos1Verify{{$index}}" ng-model="obj.T_POS1_VERIFY" ng-disabled="checkvalue($index)" readonly ng-click="CheckboxClicked($index)">
+                            </td>
+                            <td style="width: 20%">
+                                <input type="text" style="width: 100%; margin-left: -6%;" class="form-control" name="VerifyBy" id="txtVerifyBy" ng-model="obj.Verify_By" readonly>
+                            </td>
+                            <td style="width: 17%">
+                                <input type="text" style="width: 100%; margin-left: -7.2%;" class="form-control" name="Pos1VerificationDate" id="txtVerificationDate" ng-model="obj.Verification_Date" readonly>
+                            </td>
+                            <td style="width: 10%;display: none">
+                                <input type="text" class="form-control" name="hiddenField" id="txtHiddenField" ng-model="obj.HiddenField" >
+                            </td>
+                            <td style="width: 10%"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <div id="VerifyAll" style="text-align: center;">
+                    <input type="button" id="btnVerifyAll" value="{{getLabel('btnVerifyAll')}}" ng-click="CheckAllCheckBox($event)" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--2nd part end-->
+    @*Centrifuge Modal Start*@
+    <div id="VirusDiv" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblVirusHeader" ng-bind="getLabel('lblVirusHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseVirusPopup()" />
+            </div>
+
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid" arrow-selector="CentrifugeList">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblVirusId" class="ng-cloak" ng-bind="getLabel('lblVirusId')"></label>
+                                    </th>
+                                    <th style="width: 40%">
+                                        <label id="lblVirusDesc" class="ng-cloak" ng-bind="getLabel('lblVirusDesc')"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in VirusList |filter : SearchUnit |itemsPerPage:10" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onVirusSelect($index)">
+                                    <td style="text-align: center"><span id="spnVirusCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                    <td style="text-align: left"><span id="spnVirusDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Centrifuge Modal end*@
+</div>

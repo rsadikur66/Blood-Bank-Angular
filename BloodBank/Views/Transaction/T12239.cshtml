@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "T12239";
+}
+<script src="~/Apps/JSController/Transaction/T12239Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12239Service.js"></script>
+
+
+@section container
+{
+<div id="options" ng-app="BloodBank" ng-controller="T12239Controller">
+    <button id="btnNew" title="New" class="Button New"></button>
+    <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+    <button id="btnNext" title="Next" class="Button Next"></button>
+    <button id="btnDelete" title="Delete" class="Button Delete"></button>
+    <button id="btnClear" title="Clear" class="Button Clear"></button>
+    <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ></button>
+    <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+</div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12239Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 30%;"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblReqFr" for="txtReqFr" class="ng-cloak" ng-bind="getLabel('lblReqFr')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtReqFr" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 5%;" class="alnR">
+                        <label id="lblReqTo" for="txtReqTo" class="ng-cloak" ng-bind="getLabel('lblReqTo')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtReqTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 30%;"></td>
+                    <td style="width: 15%;" class="alnR">
+                        <label id="lblReqDtFr" for="txtReqDtFr" class="ng-cloak" ng-bind="getLabel('lblReqDtFr')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtReqDtFr" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 5%;" class="alnR">
+                        <label id="lblReqDtTo" for="txtReqDtTo" class="ng-cloak" ng-bind="getLabel('lblReqDtTo')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtReqDtTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 30%;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 14%">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td><span id="lblLabNo" style="text-align: center; width: 10%" ng-bind="getLabel('lblLabNo')"></span></td>
+                            <td><span id="lblReqDt" style="text-align: center; width: 10%" ng-bind="getLabel('lblReqDt')"></span></td>
+                            <td><span id="lblUnit" style="text-align: center; width: 10%" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td colspan="2"><span id="lblAnalysis" style="text-align: center; width: 25%" ng-bind="getLabel('lblAnalysis')"></span></td>
+                            <td colspan="2"><span id="lblResult" style="text-align: center; width: 25%" ng-bind="getLabel('lblResult')"></span></td>
+                            <td><span id="lblPrmant" style="text-align: center; width: 10%" ng-bind="getLabel('lblPrmant')"></span></td>
+                            <td style="text-align:left"><span id="lblVerify" style="text-align: left; width: 10%" ng-bind="getLabel('lblVerify')"></span></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.demo" style="width: 100%">
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" readonly/>
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 15%">
+                                <input type="text" style="width: 100%" class="form-control" readonly/>
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control"  readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="checkbox"   readonly />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

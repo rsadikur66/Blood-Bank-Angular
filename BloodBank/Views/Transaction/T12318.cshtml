@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewBag.Title = "T12318";
+}
+<script src="~/Apps/JSController/Transaction/T12318Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12318Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12318Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12318Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:72%">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 15%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDateFrom" for="txtDate" class="ng-cloak" ng-bind="getLabel('lblDateFrom')"></label>
+                    </td>
+                    <td style="width: 35%" colspan="2">
+                        <input type="text" id="txtDate" style="width: 50%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblDateTo" for="txtDateTo" class="ng-cloak" ng-bind="getLabel('lblDateTo')"></label>
+                    </td>
+                    <td style="width: 15%">
+                        <input type="text" id="txtDateTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 15%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 15%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblLabLocation" for="txtLabLocationCode" class="ng-cloak" ng-bind="getLabel('lblLabLocation')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtLabLocationCode" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 25%">
+                        <input type="text" id="txtLabLocationDesc" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR"></td>
+                    <td style="width: 15%"></td>
+                    <td style="width: 15%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 15%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblAnalysis" for="txtAnalysisCode" class="ng-cloak" ng-bind="getLabel('lblAnalysis')"></label>
+                    </td>
+                    <td style="width: 10%">
+                        <input type="text" id="txtAnalysisCode" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 25%">
+                        <input type="text" id="txtAnalysisDesc" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblCompleted" for="ddlCompleted" class="ng-cloak" ng-bind="getLabel('lblCompleted')"></label>
+                    </td>
+                    <td style="width: 15%">
+                        <input type="text" id="ddlCompleted" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 15%;"></td>
+                </tr>
+                <tr style="width: 100%">
+                    <td style="width: 15%;"></td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblLabNoFrom" for="txtLabNoFrom" class="ng-cloak" ng-bind="getLabel('lblLabNoFrom')"></label>
+                    </td>
+                    <td style="width: 35%" colspan="2">
+                        <input type="text" id="txtLabNoFrom" style="width: 50%;" readonly />
+                    </td>
+                    <td style="width: 10%;" class="alnR">
+                        <label id="lblLabNoTo" for="txtLabNoTo" class="ng-cloak" ng-bind="getLabel('lblLabNoTo')"></label>
+                    </td>
+                    <td style="width: 15%">
+                        <input type="text" id="txtLabNoTo" style="width: 100%;" readonly />
+                    </td>
+                    <td style="width: 15%;"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 14%">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td><span id="lblCopy" style="text-align: center; width: 5%" ng-bind="getLabel('lblCopy')"></span></td>
+                            <td><span id="lblVerify" style="text-align: center; width: 5%" ng-bind="getLabel('lblVerify')"></span></td>
+                            <td><span id="lblLabNo" style="text-align: center; width: 7%" ng-bind="getLabel('lblLabNo')"></span></td>
+                            <td><span id="lblReq" style="text-align: center; width: 7%" ng-bind="getLabel('lblReq')"></span></td>
+                            <td><span id="lblSpecNo" style="text-align: center; width: 7%" ng-bind="getLabel('lblSpecNo')"></span></td>
+                            <td><span id="lblPatientName" style="text-align: center; width: 16%" ng-bind="getLabel('lblPatientName')"></span></td>
+                            <td colspan="2"><span id="lblResult" style="text-align: center; width: 23%" ng-bind="getLabel('lblResult')"></span></td>
+                            <td><span id="lblResultNotes" style="text-align: center; width: 30%" ng-bind="getLabel('lblResultNotes')"></span></td>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.demo" style="width: 100%">
+                            <td style="width: 5%;text-align: center;">
+                                <input type="checkbox" readonly />
+                            </td>
+                            <td style="width: 5%;text-align: center;">
+                                <input type="checkbox" readonly />
+                            </td>
+                            <td style="width: 7%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 7%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 7%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 7%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 16%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 30%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr style="width:100%">
+                            <td colspan="5" style="width: 31%"></td>
+                            <td style="width: 23%">
+                                <div style="display:inline-block;width:48%;text-align:left"><input type="button" value="{{getLabel('lblCloseResult')}}" /></div>
+                                <div style="display:inline-block;width:48%;text-align:right">
+                                    <input type="button" value="{{getLabel('lblUpdateResult')}}" />
+                                </div>
+                            </td>
+                            <td colspan="2" style="width: 46%"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

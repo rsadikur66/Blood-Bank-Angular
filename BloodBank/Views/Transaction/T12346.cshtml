@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "T12346";
+}
+<script src="~/Apps/JSController/Transaction/T12346Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12346Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12346Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12346Controller" name="obj.myDiv" novalidate ng-form>
+  
+    <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;  margin: 1.6% 30%">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div>
+                <table style="width: 100%">
+                    <thead style="text-align: center">
+                        <tr style="color: #29449b; width: 100%">
+                            <td><span id="lblLabNo" style="text-align: center; width: 10%" ng-bind="getLabel('lblUnit')"></span></td>
+                            <td><span id="lblReqDt" style="text-align: center; width: 10%" ng-bind="getLabel('lblbg')"></span></td>
+                            <td><span id="lblUnit" style="text-align: center; width: 10%" ng-bind="getLabel('lblDt')"></span></td>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="obj in obj.demo" style="width: 100%">
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                            <td style="width: 10%">
+                                <input type="text" style="width: 100%" class="form-control" readonly />
+                            </td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

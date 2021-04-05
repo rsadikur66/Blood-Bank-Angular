@@ -1,0 +1,424 @@
+﻿@{
+    ViewBag.Title = "T12213";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Apps/JSController/Transaction/T12213Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12214Service.js"></script>
+
+<!--For Calender-->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/calender.css" rel="stylesheet" />
+<script src="~/Scripts/calender.js"></script>
+@*<script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-hijri.js"></script>*@
+<style>
+    .error {
+        color: red !important;
+    }
+</style>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12213Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save_Click()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete_Click()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="btnClear_Click()"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="Enter()"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="ExecuteButton(obj.t03001.T_PAT_NO,obj.t03001.T_NTNLTY_ID)"></button>
+    </div>
+}
+
+<div class="container" ng-app="BloodBank" ng-controller="T12213Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div style="margin: .5% auto; border: 1px solid #A21217; border-radius: 5px; padding: 10px;">
+                <div style="margin: .5% auto; width:100%">
+                    <div class="row" style="margin: .5% auto;">
+                        <center>
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <span class="error" ng-show="obj.myDiv.ntnl.$error.required">*</span>
+                                            <label id="lblNationalId" for="txtNationalId" ng-bind="getLabel('lblNationalId')" class="ng-cloak"></label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txtNationalId" name="ntnl" ng-model="obj.t03001.T_NTNLTY_ID" required ng-blur="checkNationalityCode(obj.t03001.T_NTNLTY_ID)" ng-keypress="EnterNatinality($event,obj.t03001.T_NTNLTY_ID)" numbers-only/>
+                                        </td>
+                                        <td>
+                                            <label id="lblDonarId" for="txtDonarId" ng-bind="getLabel('lblDonarId')" class="ng-cloak"></label>
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txtDonarId" ng-model="obj.t03001.T_PAT_NO" ng-blur="LPad(obj.t03001.T_PAT_NO,8)" readOnly numbers-only/>
+                                        </td>
+                                        <td>
+                                            @*<label id="lblTitleId" ng-bind="getLabel('lblTitleId')" class="ng-cloak" ng-click="nglabel('ddlTitleId')"></label>*@
+                                        </td>
+                                        <td>
+                                            <ui-select focus-on="ddlTitleId" ng-model="obj.T.selected" on-select="getTitleList('ddlTitleId')" id="ddlTitleId" theme="select2" append-to-body="true" style="min-width: 50px" class="hidden">
+                                                <ui-select-match placeholder="Select" id="selectMatch">{{$select.selected.T_TITLE_NAME}}</ui-select-match>
+                                                <ui-select-choices repeat="title in getTitle | propsFilter: {T_TITLE_NAME: $select.search}">
+                                                    <div ng-bind-html="title.T_TITLE_NAME | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <input type="text" id="ddlITitleId" ng-model="obj.t03001.T_TITLE_CODE" name="title" ng-bind="obj.t03001.T_TITLE_CODE=obj.T.selected.T_TITLE_CODE" class="hidden" />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+                <div class="row" style="margin: .5% auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <center>
+                            <table>
+
+                                <tr>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.firstName.$error.required">*</span>
+                                        <label id="lblFirstName" for="txtFirstName" ng-bind="getLabel('lblFirstName')" class="ng-cloak" ng-keydown="$event"></label>
+                                    </td>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.fatherName.$error.required">*</span>
+                                        <label id="lblFatherName" for="txtFatherName" ng-bind="getLabel('lblFatherName')" class="ng-cloak"></label>
+                                    </td>
+                                    <td>
+                                        <label id="lblGrandFatherName" for="txtGrandFatherName" ng-bind="getLabel('lblGrandFatherName')" class="ng-cloak"></label>
+                                    </td>
+                                    <td>
+                                        <label id="lblLastName" for="txtLastName" ng-bind="getLabel('lblLastName')" class="ng-cloak"></label>
+                                    </td>
+                                    <td>
+                                        <label id="lblBirthDate" for="txtBirthDateEng" ng-bind="getLabel('lblBirthDate')" class="ng-cloak"></label>
+                                    </td>
+                                    <td>
+                                        <label id="lblYear" for="txtYear" ng-bind="getLabel('lblYear')" class="ng-cloak" readOnly></label>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="txtFirstName2" restrict-input="{type: 'arabicOnly'}" ng-keydown="EnterControl($event,'txtFirstName2')" style="text-align: right" ng-model="obj.t03001.T_FIRST_LANG1_NAME" ng-blur="focusControl($event,'txtFirstName2')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtFatherName2" restrict-input="{type: 'arabicOnly'}" ng-keydown="EnterControl($event,'txtFatherName2')" restrict-input="{type: 'arabicOnly'}" style="text-align: right" ng-model="obj.t03001.T_FATHER_LANG1_NAME" ng-blur="focusControl($event,'txtFatherName2')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtGrandFatherName2" restrict-input="{type: 'arabicOnly'}" style="text-align: right" ng-model="obj.t03001.T_GFATHER_LANG1_NAME" ng-keydown="EnterControl($event,'txtGrandFatherName2')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtLastName2" ng-keydown="EnterControl($event,'txtLastName2')" restrict-input="{type: 'arabicOnly'}" style="text-align: right" ng-model="obj.t03001.T_FAMILY_LANG1_NAME" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtBirthDateArb" ng-model="obj.t03001.T_BIRTH_DATEARB" style="width: 180px;" readonly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtMon" style="width: 20%" ng-model="obj.t03001.MOS" ng-keydown="EnterControl($event,'txtMon')" maxlength="2" readOnly />
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="txtFirstName" text-only ng-model="obj.t03001.T_FIRST_LANG2_NAME" name="firstName" style="text-transform: uppercase" required ng-keydown="EnterControl($event,'txtFirstName')" ng-blur="focusControl($event,'txtFirstName')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtFatherName" text-only ng-model="obj.t03001.T_FATHER_LANG2_NAME" name="fatherName" style="text-transform: uppercase" required ng-keydown="EnterControl($event,'txtFatherName')" ng-blur="focusControl($event,'txtFatherName')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtGrandFatherName" text-only ng-model="obj.t03001.T_GFATHER_LANG2_NAME" name="grandfatherName" style="text-transform: uppercase" ng-keydown="EnterControl($event,'txtGrandFatherName')" readOnly />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtLastName" text-only ng-model="obj.t03001.T_FAMILY_LANG2_NAME" name="lastName" style="text-transform: uppercase" ng-keydown="EnterControl($event,'txtLastName')" readOnly />
+                                    </td>
+                                    <td>
+                                        <datepicker date-format="dd/MM/yyyy">
+                                            <input ng-model="obj.T74046.T_BIRTH_DATE" type="text" id="txtBirthDateEng" style="cursor: pointer; width: 180px;" required ng-click="onBirthDateSelect()" ng-change="getAge()" placeholder="DD/MM/YYYY" ng-keydown="EnterControl($event,'txtBirthDateEng')" readonly />
+                                        </datepicker>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtYear" ng- style="width: 20%" ng-model="obj.t03001.YRS" maxlength="3" ng-keydown="EnterControl($event,'txtYear')" ng-blur="CheckyearFocus($event,'txtYear')" readOnly />
+                                    </td>
+
+                                </tr>
+
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <hr style="border: 1px solid #A21217;" />
+                <div class="row" style="margin: .5% auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <center>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label id="lblMotherNo" for="txtMotherNo" ng-bind="getLabel('lblMotherNo')" class="ng-cloak"></label>
+                                    </td>
+                                    <td>
+                                        <input type="text" id="txtMotherNo" style="width: 10%" ng-keydown="EnterControl($event,'txtMotherNo')" readOnly />
+                                        <input type="text" id="txtMotherNo2" style="width: 40%" ng-keydown="EnterControl($event,'txtMotherNo2')" readOnly />
+                                    </td>
+                                    <td>
+                                        <label id="lblMotherName" for="txtMotherName" ng-bind="getLabel('lblMotherName')" class="ng-cloak"></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="txtMotherName2" style="width: 100%" ng-model="obj.t03001.T_MOTHER_LANG1_NAME" ng-keydown="EnterControl($event,'txtMotherName2')" restrict-input="{type: 'arabicOnly'}" readOnly />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" id="txtMotherName" style="width: 100%; text-transform: uppercase" ng-keydown="EnterControl($event,'txtMotherName')" ng-model="obj.t03001.T_MOTHER_LANG2_NAME" name="motherName" text-only readOnly />
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <hr style="border: 1px solid #A21217;" />
+                <div class="row" style="margin: .5% auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <center>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label id="lblFamHead" for="txtFamHead" ng-bind="getLabel('lblFamHead')" class="ng-cloak">
+                                        </label>
+                                        <input type="text" id="txtFamHead" style="width: 40%" ng-keydown="EnterControl($event,'txtFamHead')" readOnly />
+                                    </td>
+                                    <td>
+                                        <label id="lblNationalIdNo" for="txtNationalIdNo" ng-bind="getLabel('lblNationalIdNo')" class="ng-cloak"></label>
+                                        <input type="text" id="txtNationalIdNo" style="width: 40%" ng-keydown="EnterControl($event,'txtNationalIdNo')" readonly />
+                                    </td>
+                                    <td>
+                                        <label id="lblRelation" ng-bind="getLabel('lblRelation')" class="ng-cloak" ng-click="nglabel('ddlRelationId')"></label>
+
+
+                                    </td>
+                                    <td>
+                                        <ui-select focus-on="ddlRelationId" ng-model="obj.RT.selected" on-select="getRelationList()" id="ddlRelationId" theme="select2" append-to-body="true" style="min-width: 150px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_RLTN_NAME}}</ui-select-match>
+                                            <ui-select-choices repeat="relation in getRelation | propsFilter: {T_RLTN_NAME: $select.search}">
+                                                <div ng-bind-html="relation.T_RLTN_NAME | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" id="ddlIRelationId" ng-model="obj.t03001.T_RLTN_CODE" ng-bind="obj.t03001.T_RLTN_CODE=obj.RT.selected.T_RLTN_CODE" class="hidden" />
+
+                                    </td>
+                                    <td>
+                                        <label id="lblRelationName" for="txtRelationName" ng-bind="getLabel('lblRelationName')" class="ng-cloak"></label>
+                                        <input type="text" id="txtRelationName" style="width: 60%" ng-keydown="EnterControl($event,'txtRelationName')" readOnly />
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+                <hr style="border: 1px solid #A21217;" />
+                <div class="row" style="margin: .5% auto;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <center>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.genderCode.$error.required">*</span>
+                                        <label id="lblGender" ng-bind="getLabel('lblGender')" class="ng-cloak" ng-click="nglabel('ddlGenderId')">
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <ui-select focus-on="ddlGenderId" ng-model="obj.G.selected" on-select="getGenderList('gender')" id="ddlGenderId" theme="select2" append-to-body="true" style="min-width: 150px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_GENDER}}</ui-select-match>
+                                            <ui-select-choices repeat="Gender in getGender | propsFilter: {T_GENDER: $select.search}">
+                                                <div ng-bind-html="Gender.T_GENDER | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" id="ddlIGenderId" name="genderCode" ng-model="obj.t03001.T_SEX_CODE" ng-bind="obj.t03001.T_SEX_CODE=obj.G.selected.T_SEX_CODE" class="hidden" required />
+                                    </td>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.nationalityCode.$error.required">*</span>
+                                        <label id="lblNationality" ng-bind="getLabel('lblNationality')" class="ng-cloak" ng-click="nglabel('ddlNationalityId')" style="width: 0%;"></label>
+                                    </td>
+                                    <td>
+                                        <ui-select focus-on="ddlNationalityId" ng-model="obj.N.selected" on-select="getNationalityList('nationality')" id="ddlNationalityId" theme="select2" append-to-body="true" style="min-width: 150px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_NTNLTY}}</ui-select-match>
+                                            <ui-select-choices repeat="Nationality in getNationality | propsFilter: {T_NTNLTY: $select.search}">
+                                                <div ng-bind-html="Nationality.T_NTNLTY | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" id="ddlINationalityId" ng-model="obj.t03001.T_NTNLTY_CODE" name="nationalityCode" required ng-bind="obj.t03001.T_NTNLTY_CODE=obj.N.selected.T_NTNLTY_CODE" class="Hidden" />
+                                    </td>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.religion.$error.required">*</span>
+                                        <label id="lblReligion" ng-bind="getLabel('lblReligion')" class="ng-cloak" ng-click="nglabel('ddlReligionId')"></label>
+                                    </td>
+                                    <td>
+                                        <ui-select focus-on="ddlReligionId" ng-model="obj.RG.selected" on-select="getReligionList('religion')" id="ddlReligionId" theme="select2" append-to-body="true" style="min-width: 150px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_RLGN_NAME}}</ui-select-match>
+                                            <ui-select-choices repeat="Religion in getReligion | propsFilter: {T_RLGN_NAME: $select.search}">
+                                                <div ng-bind-html="Religion.T_RLGN_NAME | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" id="ddlIReligionId" ng-model="obj.t03001.T_RLGN_CODE" ng-bind="obj.t03001.T_RLGN_CODE=obj.RG.selected.T_RLGN_CODE" name="religion" required class="hidden" />
+
+                                    </td>
+                                    <td>
+                                        <span class="error" ng-show="obj.myDiv.state.$error.required">*</span>
+                                        <label id="lblState" ng-bind="getLabel('lblState')" class="ng-cloak" ng-click="nglabel('ddlMaritialStatusId')"></label>
+                                    </td>
+                                    <td>
+                                        <ui-select focus-on="ddlMaritialStatusId" ng-model="obj.M.selected" on-select="getMrtlStatusList('mstatus')" id="ddlMaritialStatusId" theme="select2" append-to-body="true" style="min-width: 140px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_MRTL_STATUS}}</ui-select-match>
+                                            <ui-select-choices repeat="MrtlStatus in MaritialStatus | propsFilter: {T_MRTL_STATUS: $select.search}">
+                                                <div ng-bind-html="MrtlStatus.T_MRTL_STATUS | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" id="ddlIMaritialStatusId" ng-model="obj.t03001.T_MRTL_STATUS_CODE" name="state" required ng-bind="obj.t03001.T_MRTL_STATUS_CODE=obj.M.selected.T_MRTL_STATUS_CODE" class="hidden" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                </div>
+            <hr style="border: 1px solid #A21217;" />
+            <div class="row" style="margin: .5% auto;">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <center>
+                        <table>
+                            <tr>
+                                <td>
+                                    <label id="lblAddress" for="txtAddress" ng-bind="getLabel('lblAddress')" class="ng-cloak">
+                                    </label>
+                                    <input type="text" id="txtAddress" ng-model="obj.t03001.T_ADDRESS1" ng-keydown="EnterControl($event,'txtAddress')" ng-blur="focusControl($event,'txtAddress')" readOnly />
+                                </td>
+                                <td>
+                                    <span class="error" ng-show="obj.myDiv.mobileno.$error.required">*</span>
+                                    <label id="lblMobileNo" for="txtMobileNo" ng-bind="getLabel('lblMobileNo')" class="ng-cloak"></label>
+                                    <input type="text" id="txtMobileNo" maxlength="10" name="mobileno" numbers-only required ng-model="obj.t03001.T_MOBILE_NO" ng-keydown="EnterControl($event,'txtMobileNo')" ng-blur="checkMobileNoFocus($event)" readOnly />
+                                </td>
+                                <td></td>
+                                <td>
+                                    <label id="lblRes" for="txtRes" ng-bind="getLabel('lblRes')" class="ng-cloak"></label>
+                                    <input type="text" id="txtRes" ng-keydown="EnterControl($event,'txtRes')" ng-blur="focusControl($event,'txtRes')" readOnly />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label id="lblEmail" for="txtEmail" ng-bind="getLabel('lblEmail')" class="ng-cloak">
+                                    </label>
+                                    <input type="text" id="txtEmail" ng-keydown="EnterControl($event,'txtEmail')" ng-blur="focusControl($event,'txtEmail')" readOnly/>
+
+                                </td>
+                                <td>
+                                    <label id="lbPoBox" for="txtPoBox" ng-bind="getLabel('lbPoBox')" class="ng-cloak"></label>
+                                    <input type="text" id="txtPoBox" ng-keydown="EnterControl($event,'txtPoBox')" ng-blur="focusControl($event,'txtPoBox')" readOnly/>
+                                </td>
+                                <td>
+                                    <label id="lblPosterCode" for="txtPosterCode" ng-bind="getLabel('lblPosterCode')" class="ng-cloak"></label>
+                                    <input type="text" id="txtPosterCode" ng-keydown="EnterControl($event,'txtPosterCode')" ng-blur="focusControl($event,'txtPosterCode')" readOnly/>
+                                </td>
+                                <td>
+                                    <label id="lblOffice" for="txtOffice" ng-bind="getLabel('lblOffice')" class="ng-cloak"></label>
+                                    <input type="text" id="txtOffice" ng-keydown="EnterControl($event,'txtOffice')" ng-blur="focusControl($event,'txtOffice')" readOnly/>
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </div>
+            <hr style="border: 1px solid #A21217;" />
+            <div class="row" style="margin: .5% auto;">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <center>
+                        <table>
+                            <tr>
+                                <td>
+                                    @*<span class="error" ng-show="obj.myDiv.ercontract.$error.required">*</span>*@
+                                    <label id="lblERContact" for="txtContact" ng-bind="getLabel('lblERContact')" class="ng-cloak">
+                                    </label>
+                                    <input type="text" id="txtContact" style="width: 60%" ng-keydown="EnterControl($event,'txtContact')" ng-blur="focusControl($event,'txtContact')" readOnly required />
+                                </td>
+                                <td>
+                                    <label id="lblERRelation" ng-bind="getLabel('lblERRelation')" class="ng-cloak" ng-click="nglabel('ddlERRelationId')"></label>
+                                </td>
+                                <td>
+                                    <ui-select focus-on="ddlERRelationId" ng-model="obj.ER.selected" on-select="getERRelationList()" id="ddlERRelationId" theme="select2" append-to-body="true" style="min-width: 150px">
+                                        <ui-select-match placeholder="Select">{{$select.selected.T_ERRLTN_NAME}}</ui-select-match>
+                                        <ui-select-choices repeat="errelation in getERRelation | propsFilter: {T_ERRLTN_NAME: $select.search}">
+                                            <div ng-bind-html="errelation.T_ERRLTN_NAME | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <input type="text" id="ddlIERRelationId" ng-model="obj.t03001.T_ER_RLTN_CODE" ng-bind="obj.t03001.T_ER_RLTN_CODE=obj.ER.selected.T_ER_RLTN_CODE" class="hidden" />
+                                
+                                </td>
+                                <td>
+                                    <label id="lblERMobileNo" for="txtERMobileNo" ng-bind="getLabel('lblERMobileNo')" class="ng-cloak"></label>
+                                    <input type="text" id="txtERMobileNo" style="width: 62%" ng-blur="focusControl($event,'txtERMobileNo')" readOnly />
+                                </td>
+                            </tr>
+                        </table>
+                    </center>
+                </div>
+            </div>
+            <hr style="border: 1px solid #A21217;" />
+                <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="row">
+                            <div class="text-left">
+                                <label id="lblRegisteredBy" for="txtRegisteredBy" ng-bind="getLabel('lblRegisteredBy')" class="ng-cloak">
+                                </label>
+                                <input type="text" id="txtRegisteredBy" Style="width: 50%" ng-model="obj.t03001.RegisterBy" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="row">
+                            <div class="text-right">
+                                <label id="lblModifiedBy" for="txtModifiedBy" ng-bind="getLabel('lblModifiedBy')" class="ng-cloak">
+                                </label>
+                                <input type="text" id="txtModifiedBy" Style="width: 50%" ng-model="obj.t03001.ModifiedBy" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="row">
+                            <div class="text-right">
+                                <div class="text-left">
+                                    <label id="lblDate" for="txtDate" ng-bind="getLabel('lblDate')" class="ng-cloak">
+                                    </label>
+                                    <input type="text" id="txtDate" style="width: 25.4%" ng-model="obj.t03001.T_ENTRY_DATE" readonly />
+                                    <label id="lblH" for="txtH" ng-bind="getLabel('lblH')" class="ng-cloak">
+                                    </label>
+                                    <input type="text" id="txtH" style="width: 29%" readonly ng-model="obj.t03001.T_ENTRY_DATEARB" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="row">
+                            <div class="text-right">
+                                <label id="lblDate2" for="txtDate2" ng-bind="getLabel('lblDate2')" class="ng-cloak">
+                                </label>
+                                <input type="text" id="txtDate2" style="width: 20%" ng-model="obj.t03001.T_UPD_DATE" />
+                                <label id="lblH2" for="txtH" ng-bind="getLabel('lblH2')" class="ng-cloak">
+                                </label>
+                                <input type="text" id="txtH2" style="width: 19.5%" ng-model="obj.t03001.T_UPD_DATEARB" readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

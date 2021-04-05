@@ -1,0 +1,186 @@
+﻿@{
+    ViewBag.Title = "Q12207";
+}
+<script src="~/Apps/JSController/Query/Q12207Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12207Service.js"></script>
+<style>
+    #table1 td {
+        padding: 0px !important;
+    }
+
+    #table2 td {
+        padding: 2px !important;
+    }
+    .btn-custom {
+        color: #FAF7F6;
+        background-color: #6D7165;
+        border-color: #6D7165;
+        padding: 0px 5px !important;
+    }
+    .TUG {
+        width: 70%;
+        margin: 0 18%;
+        color: black;
+        font-weight: bolder;
+        background-color: cadetblue;
+    }
+    .btnCount {
+        width: 100%;
+        height: 35px;
+        background-color: cadetblue;
+        color: black;
+        font-weight: bolder;
+        font-size: larger;
+    }
+    #table1 tbody {
+        display: block !important;
+        overflow: auto;
+        /*height: 500px !important;*/
+        height: calc(100vh - 400px);
+        /*max-height: 300px !important;*/
+        width: 100%;
+    }
+    #table1 thead tr {
+        width: 100%;
+        table-layout: fixed;
+    }
+    #table1 thead, tbody tr {
+        width: 100%;
+        table-layout: fixed !important;
+    }
+    .bgCenterReceived {
+        background-color: #CEA3F1 !important;
+        color: black !important;
+    }
+    .bgIssued {
+        background-color: #d9ac6b !important;
+        color: black !important;
+    }
+    .bgDelAccept {
+        background-color: #cbe426 !important;
+        color: black !important;
+    }
+    .bgHandover {
+        background-color: #c5bb54 !important;
+        color: black !important;
+    }
+    .bgDelArrived {
+        background-color: #787cf2 !important;
+        color: black !important;
+    }
+    .bgDropped {
+        background-color: #62aa2d !important;
+        color: black !important;
+    }
+    .bgTransfReceived {
+        background-color: #aae7aa !important;
+        color: black !important;
+    }
+    .countBtns {
+        font-weight: bold;
+        font-size: 1vw;
+        min-height: 5vh;
+        min-width: 2.5vw;
+        max-width: 2.5vw;
+        border-left: 6px solid #d9ac6b;
+        height: 10px;
+        text-align:left
+    }
+    .countLabels {
+        border-left: 6px solid #B2C2EA;       
+        font-weight: bold;
+        height: 25px;
+        font-size: 14px;
+        width: 100%;
+        text-align: right
+    }
+</style>
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="Q12207Controller">
+        @*<button id="btnNew" title="New" class="Button New"></button>*@
+        @*<button id="btnSave" title="Save" class="Button Save" ng-click="Save()"></button>*@
+        <button id="btnNext" title="Next" class="Button Next" ng-click="nextClick()"></button>
+        @*<button id="btnDelete" title="Delete" class="Button Delete"></button>*@
+        @*<button id="btnClear" title="Clear" class="Button Clear" ng-click="ClearAll()"></button>*@
+        @*<button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>*@
+        @*<button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>*@
+        @*<button id="btnPrint1" title="Print1" class="Button Print" ng-click="T12304_print()"></button>*@
+    </div>
+
+}
+<div class="container" ng-app="BloodBank" ng-controller="Q12207Controller" name="obj.myDiv" novalidate ng-form style="width: 100%">
+    <div class="col-lg-12 col-md-12 col-sm-12" style="">
+        <div class="row" style="margin: 1.6% auto; border: 1px solid gray; border-radius: 5px; padding: 10px;">
+            <div style="width: 100%">
+                <table id="table1" style="width: 100%; font-size: 0.73vw; margin: 1% auto">
+                    <thead style="width:100%; display: table;">
+                        <tr style="display: table;width: 100%;border:1px solid gray;background-color:#c12d2d;color:white;">
+                            <th style="width:4%;border:1px solid gray;text-align:center; "><label class="ng-cloak" ng-bind="getLabel('lblReqNo')"></label></th>
+                            <th style="width:10%;border:1px solid gray;text-align:center; "><label class="ng-cloak" ng-bind="getLabel('lblTransfHosp')"></label></th>
+                            <th style="width:15%;border:1px solid gray;text-align:center; "><label class="ng-cloak" ng-bind="getLabel('lblCenterHosp')"></label></th>
+                            <th style="width:7%;border:1px solid gray;text-align:center; "><label class="ng-cloak" ng-bind="getLabel('lblReqDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray;text-align:center; "><label class="ng-cloak" ng-bind="getLabel('lblReqRcvDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblIssueDate')"></label></th>
+                            <th style="width:8%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblDelMan')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblAcptDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblArivDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblHandOverDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblDropDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblUnitRcvDate')"></label></th>
+                            <th style="width:7%;border:1px solid gray; text-align:center;"><label class="ng-cloak" ng-bind="getLabel('lblStatus')"></label></th>
+                        </tr>
+                    </thead>
+                    <tbody style="display: table;width:100%;">
+                        <tr style="display: table;width: 100%;border:1px solid gray" ng-repeat="obj in obj.GridPart" ng-class="{'bgCenterReceived': (obj.T_STATUS==='Request Received'),'bgIssued': (obj.T_STATUS==='Issued'),'bgDelAccept': (obj.T_STATUS==='Delivery Accept'),'bgDelArrived':(obj.T_STATUS==='Arrived'),'bgHandover':(obj.T_STATUS==='Handovered'),'bgDropped':(obj.T_STATUS==='Dropped'),'bgTransfReceived':(obj.T_STATUS==='Out Received')}">
+                            <td style="width:4%;border:1px solid gray; text-align:center">{{obj.T_BLOOD_REQNO}}</td>
+                            <td style="width:10%;border:1px solid gray;padding-left:5px !important">{{obj.TRANS_HOSP_NAME}}</td>
+                            <td style="width:15%;border:1px solid gray;padding-left:5px !important">{{obj.CENTR_HOSP_NAME}}</td>
+                            <td style="width:7%;border:1px solid gray; text-align:center">{{obj.T_BLOOD_REQDATE |date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_BLOOD_REQTIME}}</td>
+                            <td style="width:7%;border:1px solid gray; text-align:center">{{obj.REQ_RCV_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.REQ_RCV_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray;text-align:center">{{obj.T_BB_ISSUED_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_BB_ISSUED_TIME}}</td>
+                            <td style="width:8%;border:1px solid gray;padding-left:5px !important">{{obj.T_USER_NAME}}</td>
+                            <td style="width:7%;border:1px solid gray;text-align:center">{{obj.T_REQ_ACCEPT_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_REQ_ACCEPT_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray;text-align:center">{{obj.T_BLOOD_RCVD_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_BLOOD_RCVD_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray;text-align:center">{{obj.T_BB_HANDOVER_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_BB_HANDOVER_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray;text-align:center">{{obj.T_BLOOD_DROP_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.T_BLOOD_DROP_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray; text-align:center">{{obj.OUT_RCV_DATE|date:'dd-MMM-yy'}}&nbsp;&nbsp;{{obj.OUT_RCV_TIME}}</td>
+                            <td style="width:7%;border:1px solid gray;padding-left:5px !important">{{obj.T_STATUS}}</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+        <div class="row">
+            <table>
+                <tr>
+
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><img style="width: 37px" ng-click="stopInterval()" src="~/Images/stop1.png" /></td>
+                    <td><img style="width: 45px" ng-click="refreshPage()" src="~/Images/refresh.jpg" /></td>
+                    <td><label style="background-color: white; font-weight: bold;font-size:15px;">{{obj.Timer}}</label></td>
+                    <td><label id="lblRegistered" class="countLabels" style=" color: #0777ad;" ng-bind="getLabel('lblReqCount')"></label></td>
+                    <td><button class="btn btn-default countBtns">{{obj.countRequested}}</button></td>
+                    <td><label id="lblRegistered" class="countLabels" style=" color: #CEA3F1;" ng-bind="getLabel('lblRcvCount')"></label></td>
+                    <td><button style="background-color:#CEA3F1  !important;" class="btn btn-default countBtns">{{obj.countRequestRecived}}</button></td>
+                    <td><label id="lblIssued" class="countLabels" style=" color: #d9ac6b;" ng-bind="getLabel('lblIssued')"></label></td>
+                    <td><button style="background-color:#d9ac6b;" class="btn btn-default countBtns">{{obj.countIssued}}</button></td>
+                    @*deliverpart*@
+                    <td><label id="lblRegistered" class="countLabels" style=" color: #33b1ab;" ng-bind="getLabel('lblaccepted')"></label></td>
+                    <td><button style="background-color:#33b1ab;" class="btn btn-default countBtns" >{{obj.countDelAccept}}</button></td>
+                    <td><label id="lblRegistered" class="countLabels" style=" color: #787cf2;" ng-bind="getLabel('lblArrived')"></label></td>
+                    <td><button style="background-color:#787cf2;" class="btn btn-default countBtns">{{obj.countDelArrived}}</button></td>
+                    <td><label id="lblIssued" class="countLabels" style=" color: #c5bb54 ;" ng-bind="getLabel('lblHandovered')"></label></td>
+                    <td><button style="background-color:#c5bb54 ;" class="btn btn-default countBtns">{{obj.countHandovered}}</button></td>
+                    <td><label id="lblIssued" class="countLabels" style=" color: #119a00;" ng-bind="getLabel('lblDropped')"></label></td>
+                    <td><button style="background-color:#119a00;" class="btn btn-default countBtns">{{obj.countDropped}}</button></td>
+                    <td><label id="lblOutReceived" class="countLabels" style=" color: #aae7aa;" ng-bind="getLabel('lblOutReceived')"></label></td>
+                    <td><button style="background-color:#aae7aa;" class="btn btn-default countBtns">{{obj.countOutReceived}}</button></td>
+                </tr>
+               
+            </table>
+        </div>
+    </div>
+    
+</div>

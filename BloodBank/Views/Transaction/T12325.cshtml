@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "T12325";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    /*For PopUp start*/
+    /*.omf-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 300px;
+        width: 60%;
+        height: 50vw;
+        background-color: rgba(128, 128, 128, 0.00);
+        overflow: auto;
+        z-index: 99999;
+    }
+
+    .omf-modal .omf-modal-body {
+        width: 68.25%;
+        padding: 1px;
+        margin: auto;
+        margin-top: 150px;
+        margin-left: 122px;
+        background-color: #FFFFFF;
+        border-style: ridge;
+    }
+
+    nav .nav .btn {
+        margin-top: 3px;
+    }
+
+    #mainBody {
+        margin-top: 20px;
+        z-index: 999999;
+    }*/
+
+    .sselected {
+        /*background-color: transparent;*/
+        /*color: black;*/
+        /*font-weight: bold;*/
+    }
+/*For PopUp end*/
+
+</style>
+<script src="~/Apps/JSController/Transaction/T12325Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12325Service.js"></script>
+<style>
+    .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+        padding: 5px !important;
+    }
+</style>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12325Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save_Click()"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next_Click()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+    <div ng-app="BloodBank" ng-controller="T12325Controller" name="obj.myDiv" novalidate ng-form style="padding: 15px; margin-left: 25px;">
+        <div class="container">
+
+            <div class="row col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #A21217; border-radius: 5px;">
+
+                <Table style="margin:8px auto">
+                    <tr style="width: 100%">
+                        <td style="width:15%"> <label id="lblUnitNo" for="txtUnitNo" ng-bind="getLabel('lblUnitNo')"></label> </td>
+                        <td style="width:35%"> <input id="txtUnitNo" type="text" ng-model="obj.T12325.T_UNIT_NO" ng-keydown="CheckUnitNo_Click($event,obj.T12325.T_UNIT_NO)" ng-dblclick="ShowUnitPopup()" style="width: 80%" ng-blur="UnitValidate(obj.T12325.T_UNIT_NO)"  /></td>
+                        <td style="width:20%"> <label id="lblDonationDate" ng-bind="getLabel('lblDonationDate')" for="txtDonationDate"></label> </td>
+                        <td style="width:30%">  <input id="txtDonationDate" ng-model="obj.T12325.T_DONATION_DATE" type="text" ng-keydown="CreatRow_Click($event)" style="width: 125px" readonly="readonly"/></td>
+                    </tr>
+                </Table>
+
+               
+
+            </div>
+
+            <div class="row col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #A21217; border-radius: 5px; margin-top: 3px;">
+                <table id="TableTest" class="table table-bordered table-condensed" style="display: block; border: 1px solid #A21217; border-radius: 5px; margin-top: 10px; width: 100%;margin-bottom: 3px">
+                    @*<thead style="text-align: center; display: block;width: 100%">*@
+                        <tr style="background-color: #c12d2d; color: #ffffff;width: 100%">
+                            <th style="width: 3%;"><span id="lblsl" ng-bind="getLabel('lblsl')"></span></th>
+                            <th style="width: 5%; text-align: center;"><span id="lblVCode" ng-bind="getLabel('lblVCode')"></span></th>
+                            <th style="width: 20%; text-align: center;"><span id="lblVirusDes" ng-bind="getLabel('lblVirusDes')"></span></th>
+                            <th style="width: 10%; text-align: center;"><span id="lblResultVal" ng-bind="getLabel('lblResultVal')"></span></th>
+                            <th style="width: 10%; text-align: center;"><span id="lblResulDes" ng-bind="getLabel('lblResulDes')"></span></th>
+                            <th style="width: 20%; text-align: center;"><span id="lblByUser" ng-bind="getLabel('lblByUser')"></span></th>
+                            <th style="width: 5%; text-align: center;"><span id="lblVerity" ng-bind="getLabel('lblVerity')"></span></th>
+                            <th style="width: 15%; text-align: center;"><span id="lblVerifyBy" ng-bind="getLabel('lblVerifyBy')"></span></th>
+                            <th style="width: 133px; text-align: center;"><span id="lblVeriryDate" ng-bind="getLabel('lblVeriryDate')"></span></th>
+                            @*<th style="width: 5%; text-align: center;">Delete</th>*@
+                        </tr>
+                    @*</thead>*@
+                    <tbody style="height: 340px; overflow: auto; overflow-x: hidden; display: block;">
+                        <tr ng-repeat="obj in obj.VirusList track by $index" style="width: 98%">
+                            @*TestList*@
+                            <td style="width: 3%;">{{$index+1}}</td>
+                            <td style="width: 5%;">{{obj.T_VIRUS_CODE}}</td>
+                            <td style="width: 20%;">{{obj.VIRUS_NAME}}</td>
+                            <td style="width: 10%;"><input id="txtReValue{{$index}}" type="text" ng-model="obj.T_RESULT_CODE" ng-keydown="SetResult_Click($event,$index,obj.T_RESULT_CODE,obj.T_VIRUS_CODE)" ng-dblclick="ShowResultPopup($index,obj.T_VIRUS_CODE)" style="width: 100%" /></td>
+                            <td style="width: 10%;">{{obj.RESULT_NAME}}</td>
+                            <td style="width: 20%;">{{obj.BY_USER}}</td>
+                            <td style="width: 5%; text-align: center"><input id="chekValue{{$index}}" type="checkbox" ng-model="obj.CheckValue" ng-click="chekBox_Click($index)" ng-true-value="'1'" ng-false-value="''" /></td>
+                            <td style="width: 15%;">{{obj.VERYFY_USER}}</td>
+                            <td style="width: 133px;">{{obj.VERYFY_DATE}}</td>
+                            @*<td style="width: 5%; text-align: center;" id="btnCancel" ng-click="Remove_Click($index)"><img src="~/Images/cancelquery.png" style="height: 22px;" /></td>*@
+                        </tr>
+
+                    </tbody>
+                </table>
+                <div style="padding: 0px 50px 24px 50px;">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="text-align: center">
+                            <input type="Button" value="Enter" ng-click="GetData_Click()" /> @*style="background: #a21217; color: white"*@
+                            <input type="Button" value="Verify" ng-click="VerifyAll_Click()" />
+
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+
+
+
+
+
+        </div>
+        <!--For Data Gridview start-->
+        <div class="row">
+
+        </div>
+        <!--For Data Gridview End-->
+        @*Virus popup start*@
+        <div id="ResultPopUp" class="omf-modal popup">
+
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                    <label style="width: 97%" ng-bind="getLabel('lblVirusInformation')"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePatientPopup('ResultPopUp')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                    <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+                </div>
+
+                <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                    <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                    <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                        <th style="width: 53px; text-align: center;"><span ng-bind="getLabel('lblResultCode')"></span></th>
+                                        <th style="width: 100px; text-align: center;"> <span ng-bind="getLabel('lblName')"></span></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="B in obj.VirusResultList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'sselected':$index == selectedRow}" ng-click="setClickedVirusResultRow($index,B)">
+                                        <td style="width: 53px; ">{{B.T_RESULT_CODE}}</td>
+                                        <td style="width: 100px;">{{B.T_LANG_NAME}}</td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                            @*<table id="VirusPopUpTable" class=" table table-bordered table-hover table-condensed" style="width: 550px">
+                                <thead style="text-align: center">
+                                    <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                        <th style="width: 53px; text-align: center;">Virus code</th>
+                                        <th style="width: 100px; text-align: center;">Virus Name</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="B in obj.VirusList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'sselected':$index == selectedRow}" ng-click="setClickedRow($index,B,'VirusPopUp')">
+                                        <td style="width: 53px; ">{{B.T_VIRUS_CODE}}</td>
+                                        <td style="width: 100px;">{{B.VIRUS_NAME}}</td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>*@
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        @*style="text-align: center;display:table; width:100%;"*@
+        @*Virus popup end*@
+
+        @*Unit popup start*@
+        <div id="UnitPopUp" class="omf-modal popup">
+
+            <div class="omf-modal-body">
+                <div class="omf-modal-header">
+                    @*<label id="lblReasonHeader" ng-bind="getLabel('lblReasonHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close"  ng-click="CloseReasonPopup()" />*@
+                    <label style="width: 97%" ng-bind="getLabel('lblUnitInformation')"></label><input type="button" style="background: url(../Images/Cancel_White.png); background-size: 15px; background-repeat: no-repeat; background-position: center; width: 3%; padding-bottom: 7px; border-color: #c12d2d" ng-click="ClosePatientPopup('UnitPopUp')" />
+                </div>
+                <div class="omf-modal-div-placeholder">
+                    @*<input type="text" placeholder="{{getLabel('lblPlaceHolderSearch')}}" class="omf-modal-placeholder" ng-model="Search" />*@
+                    <input type="text" style="float: right; width: 30%; height: 25px" placeholder="Search...." class="form-control" ng-model="Search" />
+
+                </div>
+
+                <form class="form-horizontal" ng-submit="Receive()" role="form" name="ReceivepeForm" novalidate>
+                    <div class="form-group" ng-class="{'has-error': ReceivepeForm.T_SERVICE_NAME.$touched && ReceivepeForm.T_SERVICE_NAME.$error.required , 'has-success': ServiceTypeForm.T_SERVICE_NAME.$valid }">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                    <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                        <th style="width: 53px; text-align: center;"><span ng-bind="getLabel('lblUnitNo')"></span></th>
+                                        <th style="width: 100px; text-align: center;"><span ng-bind="getLabel('lblDonationDate')"></span></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="B in obj.UnitList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'sselected':$index == selectedRow}" ng-click="setClickedRow_UnitNo($index,B)">
+                                        <td style="width: 53px; ">{{B.T_UNIT_NO}}</td>
+                                        <td style="width: 100px;">{{B.T_DONATION_DATE}}</td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="bed" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                            @*<table id="VirusPopUpTable" class=" table table-bordered table-hover table-condensed" style="width: 550px">
+                                <thead style="text-align: center">
+                                    <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                        <th style="width: 53px; text-align: center;">Virus code</th>
+                                        <th style="width: 100px; text-align: center;">Virus Name</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="B in obj.VirusList |filter : Search |itemsPerPage:5" pagination-id="bed" ng-class="{'sselected':$index == selectedRow}" ng-click="setClickedRow($index,B,'VirusPopUp')">
+                                        <td style="width: 53px; ">{{B.T_VIRUS_CODE}}</td>
+                                        <td style="width: 100px;">{{B.VIRUS_NAME}}</td>
+
+
+                                    </tr>
+
+                                </tbody>
+                            </table>*@
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @*Unit popup end*@
+
+
+
+    </div>

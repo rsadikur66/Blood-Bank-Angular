@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Q12352";
+}
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+<script src="~/Apps/JSController/Query/Q12352Controller.js"></script>
+<script src="~/Apps/JSService/Query/Q12352Service.js"></script>
+
+
+<style>
+    /**{
+        box-sizing: border-box;
+        font-family : "verdana"
+    }*/
+    html, body {
+        margin: 0px;
+    }
+
+    #controls {
+        height: 68px;
+        width: 700px;
+        background-color: #5F7E87;
+        color: white;
+        padding: 10px;
+    }
+
+    /*.chart {
+        width: 35vw !important;
+        height: 20vh !important;
+        margin: 2% !important;
+    }*/
+
+    .bgCenterReceived {
+        background-color: #5f7e87
+    }
+    #myChartPRBC, #myChartFFP, #myChartPLT {
+        height: 180px !important;
+        margin-top: -10px;
+    }
+</style>
+@*<script type="text/javascript">
+
+        (function () {
+
+            angular.module("BloodBank").controller("DemoController", DemoController);
+
+            function DemoController($scope) {
+
+
+            }
+        })();
+
+    </script>*@
+
+<div ng-app="BloodBank" ng-controller="Q12352Controller">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <canvas id="myChartPRBC"></canvas>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+    </div>
+     <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <canvas id="myChartPLT"></canvas>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+        <div class="col-lg-4 col-md-4 col-sm-4">
+            <canvas id="myChartFFP"></canvas>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4"></div>
+    </div>
+</div>

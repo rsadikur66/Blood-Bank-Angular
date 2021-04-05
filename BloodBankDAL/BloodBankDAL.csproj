@@ -1,0 +1,410 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6876465B-2E96-4BB1-9A20-6FF68479F9A9}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BloodBankDAL</RootNamespace>
+    <AssemblyName>BloodBankDAL</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="M12132.cs" />
+    <Compile Include="M12309.cs" />
+    <Compile Include="M12337.cs" />
+    <Compile Include="Model\Code128Content.cs" />
+    <Compile Include="Model\Code128Rendering.cs" />
+    <Compile Include="Model\CommonModel.cs" />
+    <Compile Include="Model\M01004.cs" />
+    <Compile Include="Model\M12011.cs" />
+    <Compile Include="Model\M12087.cs" />
+    <Compile Include="Model\M12263.cs" />
+    <Compile Include="Model\M12264.cs" />
+    <Compile Include="Model\M12281.cs" />
+    <Compile Include="Model\M12300.cs" />
+    <Compile Include="Model\M12338.cs" />
+    <Compile Include="Model\t01009.cs" />
+    <Compile Include="Model\T012022.cs" />
+    <Compile Include="Model\t12011.cs" />
+    <Compile Include="Model\M12012.cs" />
+    <Compile Include="Model\T12019.cs" />
+    <Compile Include="Model\T12022.cs" />
+    <Compile Include="Model\T03001.cs" />
+    <Compile Include="Model\M12034.cs" />
+    <Compile Include="Model\t12028.cs" />
+    <Compile Include="Model\t12033.cs" />
+    <Compile Include="Model\t12068.cs" />
+    <Compile Include="Model\T12071.cs" />
+    <Compile Include="Model\t12073.cs" />
+    <Compile Include="Model\t12087.cs" />
+    <Compile Include="Model\t12135.cs" />
+    <Compile Include="Model\t12207.cs" />
+    <Compile Include="Model\t12220.cs" />
+    <Compile Include="Model\M12325.cs" />
+    <Compile Include="Model\t12233.cs" />
+    <Compile Include="Model\t12235.cs" />
+    <Compile Include="Model\t12236.cs" />
+    <Compile Include="Model\t12246.cs" />
+    <Compile Include="Model\t12304.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CommonDAL.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T01004Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T01009Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12011Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12028Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12033Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12068Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12081Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12087Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12132Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12199Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12246Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12281Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12332Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12337Repository.cs" />
+    <Compile Include="Repository\Implementation\Initialization\T12338Repository.cs" />
+    <Compile Include="Repository\Implementation\ErrorRepository.cs" />
+    <Compile Include="Repository\Implementation\LoginRepository.cs" />
+    <Compile Include="Repository\Implementation\Menu\MenuRepository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q03001Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12012Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12018Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12025Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12017Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12207Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12252Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12200Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12263Repository.cs" />
+    <Compile Include="Repository\Implementation\Query\Q12352Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12006Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12016Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12025Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12260Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12302Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12201Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12204Repository.cs" />
+    <Compile Include="Repository\Implementation\Report\R12304Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T06210Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12003Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12091Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12201Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12202Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12204Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12207Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12214Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12215Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12232Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12233Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12236Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12241Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12244Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12245Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12235Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12250Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12252Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12262Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12263Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12264Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12265Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12266Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12300Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12301Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12302Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12304Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12309Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12325Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12328Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12349Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T12322Repository.cs" />
+    <Compile Include="Repository\Implementation\Transaction\T13054Repository.cs" />
+    <Compile Include="Repository\Interface\IError.cs" />
+    <Compile Include="Repository\Interface\ILogin.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT01004.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT01009.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12011.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12028.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12033.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12068.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12081.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12087.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12132.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12199.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12246.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12281.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12332.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12337.cs" />
+    <Compile Include="Repository\Interface\Initialization\IT12338.cs" />
+    <Compile Include="Repository\Interface\IT12244.cs" />
+    <Compile Include="Repository\Interface\Menu\IMenu.cs" />
+    <Compile Include="Repository\Interface\Query\IQ03001.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12012.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12018.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12025.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12017.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12207.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12252.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12200.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12263.cs" />
+    <Compile Include="Repository\Interface\Query\IQ12352.cs" />
+    <Compile Include="Repository\Interface\Report\IR12006.cs" />
+    <Compile Include="Repository\Interface\Report\IR12016.cs" />
+    <Compile Include="Repository\Interface\Report\IR12025.cs" />
+    <Compile Include="Repository\Interface\Report\IR12260.cs" />
+    <Compile Include="Repository\Interface\Report\IR12302.cs" />
+    <Compile Include="Repository\Interface\Report\IR12304.cs" />
+    <Compile Include="Repository\Interface\Report\RI12201.cs" />
+    <Compile Include="Repository\Interface\Report\RI12204.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT06210.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12003.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12091.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12201.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12202.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12204.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12207.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12214.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12215.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12232.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12233.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12236.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12241.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12244.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12245.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12235.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12250.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12252.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12262.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12263.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12264.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12265.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12266.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12300.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12301.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12302.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12304.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12309.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12325.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12328.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12349.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT12322.cs" />
+    <Compile Include="Repository\Interface\Transaction\IT13054.cs" />
+    <Compile Include="Repository\Query\Initialization\T01004.cs" />
+    <Compile Include="Repository\Query\Initialization\T01009.cs" />
+    <Compile Include="Repository\Query\Initialization\T12011.cs" />
+    <Compile Include="Repository\Query\Initialization\T12028.cs" />
+    <Compile Include="Repository\Query\Initialization\T12033.cs" />
+    <Compile Include="Repository\Query\Initialization\T12068.cs" />
+    <Compile Include="Repository\Query\Initialization\T12087.cs" />
+    <Compile Include="Repository\Query\Initialization\T12132.cs" />
+    <Compile Include="Repository\Query\Initialization\T12199.cs" />
+    <Compile Include="Repository\Query\Initialization\T12246.cs" />
+    <Compile Include="Repository\Query\Initialization\T12281.cs" />
+    <Compile Include="Repository\Query\Initialization\T12332.cs" />
+    <Compile Include="Repository\Query\Initialization\T12337.cs" />
+    <Compile Include="Repository\Query\Initialization\T12338.cs" />
+    <Compile Include="Repository\Query\Login.cs" />
+    <Compile Include="Repository\Query\Menus\MenuQuery.cs" />
+    <Compile Include="Repository\Query\Query\Q03001.cs" />
+    <Compile Include="Repository\Query\Query\Q12012.cs" />
+    <Compile Include="Repository\Query\Query\Q12018.cs" />
+    <Compile Include="Repository\Query\Query\Q12025.cs" />
+    <Compile Include="Repository\Query\Query\Q12017.cs" />
+    <Compile Include="Repository\Query\Query\Q12207.cs" />
+    <Compile Include="Repository\Query\Query\Q12252.cs" />
+    <Compile Include="Repository\Query\Query\Q12200.cs" />
+    <Compile Include="Repository\Query\Query\Q12263.cs" />
+    <Compile Include="Repository\Query\Query\Q12352.cs" />
+    <Compile Include="Repository\Query\Report\R12006.cs" />
+    <Compile Include="Repository\Query\Report\R12016.cs" />
+    <Compile Include="Repository\Query\Report\R12025.cs" />
+    <Compile Include="Repository\Query\Report\R12260.cs" />
+    <Compile Include="Repository\Query\Report\R12302.cs" />
+    <Compile Include="Repository\Query\Report\R12201.cs" />
+    <Compile Include="Repository\Query\Report\R12204.cs" />
+    <Compile Include="Repository\Query\Transaction\T06210.cs" />
+    <Compile Include="Repository\Query\Transaction\T12003.cs" />
+    <Compile Include="Repository\Query\Transaction\T12091.cs" />
+    <Compile Include="Repository\Query\Transaction\T12201.cs" />
+    <Compile Include="Repository\Query\Transaction\T12202.cs" />
+    <Compile Include="Repository\Query\Transaction\T12204.cs" />
+    <Compile Include="Repository\Query\Transaction\T12207.cs" />
+    <Compile Include="Repository\Query\Transaction\T12214.cs" />
+    <Compile Include="Repository\Query\Transaction\T12215.cs" />
+    <Compile Include="Repository\Query\Transaction\T12232.cs" />
+    <Compile Include="Repository\Query\Transaction\T12233.cs" />
+    <Compile Include="Repository\Query\Transaction\T12236.cs" />
+    <Compile Include="Repository\Query\Transaction\T12241.cs" />
+    <Compile Include="Repository\Query\Transaction\T12244.cs" />
+    <Compile Include="Repository\Query\Transaction\T12245.cs" />
+    <Compile Include="Repository\Query\Transaction\T12235.cs" />
+    <Compile Include="Repository\Query\Transaction\T12250.cs" />
+    <Compile Include="Repository\Query\Transaction\T12252.cs" />
+    <Compile Include="Repository\Query\Transaction\T12262.cs" />
+    <Compile Include="Repository\Query\Transaction\T12263.cs" />
+    <Compile Include="Repository\Query\Transaction\T12264.cs" />
+    <Compile Include="Repository\Query\Transaction\T12265.cs" />
+    <Compile Include="Repository\Query\Transaction\T12266.cs" />
+    <Compile Include="Repository\Query\Transaction\T12300.cs" />
+    <Compile Include="Repository\Query\Transaction\T12301.cs" />
+    <Compile Include="Repository\Query\Transaction\T12302.cs" />
+    <Compile Include="Repository\Query\Transaction\T12304.cs" />
+    <Compile Include="Repository\Query\Transaction\T12309.cs" />
+    <Compile Include="Repository\Query\Transaction\T12325.cs" />
+    <Compile Include="Repository\Query\Transaction\T12328.cs" />
+    <Compile Include="Repository\Query\Transaction\T12349.cs" />
+    <Compile Include="Repository\Query\Transaction\T12322.cs" />
+    <Compile Include="Repository\Query\Transaction\T13054.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10209</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:10209/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

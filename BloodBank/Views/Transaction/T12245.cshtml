@@ -1,0 +1,304 @@
+﻿
+@{
+    ViewBag.Title = "T12245";
+}
+<script src="~/Apps/JSController/Transaction/T12245Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12245Service.js"></script>
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12245Controller">
+        @*<button id="btnNew" tooltip="New" class="Button New" ng-click="NewClick()"></button>*@
+        @*<button id="btnSave" tooltip="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid" ng-click="onSave()"></button>*@
+        <button id="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete" disabled="true"></button>
+        <button id="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+        @*<button id="btnEnterQuery" tooltip="Enter Query" class="Button Enter" ng-click="onSearch()"></button>
+            <button id="btnExecuteQuery" tooltip="Execute Query" class="Button Execute" ng-click="onExecute()"></button>
+            <button id="btnPrint" tooltip="Print" class="Button Print" ng-click="onPrint()"></button>*@
+    </div>
+}
+
+
+<div class="container" ng-app="BloodBank" ng-controller="T12245Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10" style="margin: 1.6% auto; border: 2px solid #b2aeae; border-radius: 5px; padding: 10px;">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" @*style="margin-right: -26px"*@>
+                            <label id="lblCentrifugeCode" for="txtCentriFugeCode" class="ng-cloak" ng-bind="getLabel('lblCentrifugeCode')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" id="txtCentriFugeCode" ng-model="obj.t12135.T_CENTRIFUGE_MACHINE_CODE" style="width: 65px;" ng-dblclick="GetCentrifugeData()" ng-keydown="btnf9Centrifuge($event)" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left: 10px">
+                            <input type="text" id="txtCentriFugeName" ng-model="obj.T_CENTRIFUGE_MACHINE_NAME" style="width: 500px; margin-left: -15px" readonly="readonly" />
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+
+                        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" @*style="margin-right: -35px"*@>
+                            <label id="lblProgramCode" for="txtProgramCode" class="ng-cloak" style="margin-right: -55px" ng-bind="getLabel('lblProgramCode')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1" @*style="margin-left: 35px"*@>
+                            <input type="text" id="txtProgramCode" style="width: 65px;" ng-model="obj.t12135.T_PROGRAM_CODE" ng-dblclick="GetProgramData()" ng-keydown="btnf9_Program($event)" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="margin-left: -5px;margin-right: 39px">
+                            <input type="text" id="txtProgramName" ng-model="obj.PROGRAM_NAME" />
+                        </div>
+
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <label id="lblSpeed" for="txtSpeed" class="ng-cloak" style="margin-left: 30px" ng-bind="getLabel('lblSpeed')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1" style="">
+                            <input type="text" id="txtSpeed" ng-model="obj.T_SPEED" style="width: 75px;" />
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1" style="">
+                            <label id="lblTemp" for="txtTemp" class="ng-cloak" style="margin-left: 34px;" ng-bind="getLabel('lblTemp')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" id="txtTemp" ng-model="obj.T_TEMP" style="width: 75px;" />
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="">
+                            <label id="lblTime" for="txtTime" class="ng-cloak" style="margin-right: -60px" ng-bind="getLabel('lblTime')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1">
+                            <input type="text" id="txtTime" ng-model="obj.T_TIME" style="width: 65px;" />
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-2" style="margin-right: -114px">
+                            <label id="lblUnit" for="txtUnit" class="ng-cloak" ng-bind="getLabel('lblUnit')"></label>
+                        </div>
+                        <div class="col-lg-1 col-md-1 col-sm-1" style="">
+                            <input type="text" id="txtUnit" style="width: 127px;" ng-model="obj.t12135.T_UNIT_NO" ng-keydown="GetDataWithEnterOrF3($event)" ng-readonly="truefalse"
+                                   ng-blur="blur == true && GetData()" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+    </div>
+
+    <div style="margin-left: 7%;">
+        <!--2nd part start-->
+        <div class="row" id="1stDiv" style="display: block;/* margin: 5px auto; */border: 2px solid #b2aeae;/*margin-bottom: -7px !important;*/ margin-left: 15px;width: 89.6%;border-radius: 5px;margin-top: -11px;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div>
+                    <table class="col-lg-8 col-md-8 col-sm-8" style="margin-left: 15px; width: 100%;" cellspacing="10px !important">
+                        <thead style="text-align: center">
+                            <tr style="color: #3c4a76;">
+                                <th id="lblHdrProduct" style="text-align: center;width: 12%" ng-bind="getLabel('lblHdrProduct')"></th>
+                                <th id="lblHdrBloodProduct" style="text-align: center;width: 22%" ng-bind="getLabel('lblHdrBloodProduct')"></th>
+                                <th id="lblHdrReason" style="text-align: center;width: 12%" ng-bind="getLabel('lblHdrReason')"></th>
+                                <th id="lblHdrSegmentNo" style="text-align: center;width: 12%" ng-bind="getLabel('lblHdrSegmentNo')"></th>
+                                <th id="lblHdrDonationDate" style="text-align: center;width: 12%" ng-bind="getLabel('lblHdrDonationDate')"></th>
+                                <th id="lblHdrExpiryDate" style="text-align: center;width: 25%" ng-bind="getLabel('lblHdrExpiryDate')"></th>
+                                <th id="lblHdrCheck" style="text-align: center;width: 5%" ng-bind="getLabel('lblHdrCheck')"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="obj in obj.productInfo">
+
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="Product" id="txtProduct" ng-model="obj.T_PRODUCT_CODE" readonly>
+
+                                </td>
+                                <td style="width: 22%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="BloodProduct" id="txtBloodProduct" ng-model="obj.BLOOD_PRODUCT" readonly>
+                                </td>
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="Reason" id="txtReason" ng-model="obj.Reason" readonly>
+                                </td>
+
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="SegmentNo" id="txtSegmentNo" ng-model="obj.T_SEGMENT_NO" readonly>
+                                </td>
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    @*For Calender ng-datepicker*@
+                                    @*<ng-datepicker ng-model="obj.T_DONATION_DATE" id="ManufacDate" name="manufacDate" type="text" style="width: 100%" view-format="DD/MM/YYYY"></ng-datepicker>*@
+                                    <input type="text" style="width: 100%" class="form-control" name="lotNo" id="txtDonationDate" ng-model="obj.T_DONATION_DATE" readonly>
+                                </td>
+                                <td style="width: 25%;padding-bottom: 5px;">
+                                    @*For Calender ng-datepicker*@
+                                    @*<ng-datepicker ng-model="obj.T_EXPIRY_DAYS" id="ExpireDate" name="expireDate" type="text" view-format="DD/MM/YYYY">
+                                        </ng-datepicker>*@
+                                    <input type="text" style="width: 100%" class="form-control" name="lotNo" id="txtExpiryDate" ng-model="obj.T_EXPIRY_DAYS" readonly>
+                                </td>
+
+                                <td style="width: 5%;padding-bottom: 5px;">
+                                    <input type="checkbox" ng-model="obj.Check" id="Chk1stCompo{{$index}}" class="form-control" style="width: 100%;" @*ng-true-value="'1'" ng-false-value="'2'"*@ ng-click="MoveIntoDownComponent($index)">
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+            </div>
+
+        </div>
+        <!--2nd part end-->
+        <!--3rd part start-->
+        <div class="row" id="2ndDiv" style="display: block;border: 2px solid #b2aeae;margin-left: 15px;width: 89.6%;border-radius: 5px;">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                @*<div class="col-lg-1 col-md-1 col-sm-1"></div>*@
+                <div style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;">
+                    <table class="col-lg-8 col-md-8 col-sm-8" style="margin-left: 15px; width: 100%;">
+                        <thead style="text-align: center;">
+                            <tr style="color: #3c4a76;">
+                                <th style="text-align: center; width: 12%" ng-bind="getLabel('lblHdrProduct')"></th>
+                                <th style="text-align: center; width: 22%" ng-bind="getLabel('lblHdrBloodProduct')"></th>
+                                <th style="text-align: center; width: 12%" ng-bind="getLabel('lblHdrReason')"></th>
+                                <th style="text-align: center; width: 12%" ng-bind="getLabel('lblHdrSegmentNo')"></th>
+                                <th style="text-align: center; width: 12%" ng-bind="getLabel('lblHdrDonationDate')"></th>
+                                <th style="text-align: center; width: 25%" ng-bind="getLabel('lblProdExpiryDate')"></th>
+                                <th style="text-align: center; width: 5%" ng-bind="getLabel('lblHdrCheck')"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="obj in obj.secondPart">
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="batchNo" id="txtProduct_1" ng-model="obj.T_PRODUCT_CODE_1" readonly />
+                                </td>
+
+                                <td style="width: 22%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="bloodProduct_1" id="txtBloodProduct_1" ng-model="obj.BLOOD_PRODUCT_1" readonly>
+                                </td>
+
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="reason_1" id="txtReason_1" ng-model="obj.Reason_1" readonly>
+                                </td>
+
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    <input type="text" style="width: 100%" class="form-control" name="segmentNo_1" id="txtSegmentNo_1" ng-model="obj.T_SEGMENT_NO_1" readonly>
+                                </td>
+
+                                <td style="width: 12%;padding-bottom: 5px;">
+                                    @*For Calender ng-datepicker*@
+                                    @*<ng-datepicker ng-model="obj.T_DONATION_DATE" id="ManufacDate" name="manufacDate" type="text" style="width: 100%" view-format="DD/MM/YYYY"></ng-datepicker>*@
+                                    <input type="text" style="width: 100%" class="form-control" name="DonationDate_1" id="txtDonationDate_1" ng-model="obj.T_DONATION_DATE_1" readonly>
+                                </td>
+                                <td style="width: 25%;padding-bottom: 5px;">
+                                    @*For Calender ng-datepicker*@
+                                    @*<ng-datepicker ng-model="obj.T_EXPIRY_DAYS_1" id="ExpireDate_1" name="expireDate_1" type="text" view-format="DD/MM/YYYY">
+                                        </ng-datepicker>*@
+                                    <input type="text" style="width: 100%;" class="form-control" name="expireDate_1" id="ExpireDate_1" ng-model="obj.T_EXPIRY_DAYS_1" readonly>
+                                </td>
+
+
+                                <td style="width: 5%;padding-bottom: 5px;">
+                                    <input type="checkbox" name="check_1" ng-true-value="'2'" ng-false-value="'1'" id="Chk2ndCompo{{index}}" class="form-control" style="width: 100%;" ng-model="obj.Check_1" ng-disabled="eCheck($index)" ng-click="DeleteRow($index)" ng-checked="checked">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2"></div>
+            </div>
+        </div>
+        <!--3rd part end-->
+    </div>
+
+
+
+
+    @*Centrifuge Modal Start*@
+    <div id="divCentrifuge" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblCentrifugeHeader" ng-bind="getLabel('lblCentrifugeHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseCentrifugePopup()" />
+            </div>
+
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid" arrow-selector="CentrifugeList">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblCentrifugeId" class="ng-cloak" ng-bind="getLabel('lblCentrifugeId')"></label>
+                                    </th>
+                                    <th style="width: 40%">
+                                        <label id="lblCentrifugeDesc" class="ng-cloak" ng-bind="getLabel('lblCentrifugeDesc')"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="obj in CentrifugeList |filter : SearchUnit |itemsPerPage:pageSize" current-page="currentPage" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onCentrifugeSelect(PagiIndex($index,currentPage))">
+                                    <td style="text-align: center"><span id="spnCentrifugeCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                    <td style="text-align: left"><span id="spnCentrifugeDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        @*<dir-pagination-controls pagination-id="uList" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>*@
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Centrifuge Modal end*@
+    
+    @*Program Modal start*@
+    <div id="divProgram" class="omf-modal">
+        <div class="omf-modal-body">
+            <div class="omf-modal-header">
+                <label id="lblProgramHeader" ng-bind="getLabel('lblProgramHeader')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseProgramPopup()" />
+            </div>
+
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <table class="omf-modal-grid grid" arrow-selector="ProgramList">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%">
+                                        <label id="lblProgramId" class="ng-cloak" ng-bind="getLabel('lblProgramId')"></label>
+                                    </th>
+                                    <th style="width: 40%">
+                                        <label id="lblProgramDesc" class="ng-cloak" ng-bind="getLabel('lblProgramDesc')"></label>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                           
+                            <tr dir-paginate="obj in ProgramList |filter : SearchUnit |itemsPerPage:10" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onProgramSelect($index)">
+
+                                <td style="text-align: center"><span id="spnrogramCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                <td style="text-align: left"><span id="spnrogramDesc{{$index}}" style="width: 100%">{{obj.NAME}}</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* Program modal end*@
+
+
+
+
+
+</div>

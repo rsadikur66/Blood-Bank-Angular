@@ -1,0 +1,226 @@
+﻿
+@{
+    ViewBag.Title = "T12326";
+}
+<script src="~/Apps/JSController/Transaction/T12326Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12326Service.js"></script>
+
+
+@section container
+{
+    <div id="options" ng-app="BloodBank" ng-controller="T12326Controller">
+        <button id="btnNew" title="New" class="Button New"></button>
+        <button id="btnSave" title="Save" class="Button Save" ng-disabled="obj.myDiv.$invalid"></button>
+        <button id="btnNext" title="Next" class="Button Next"></button>
+        <button id="btnDelete" title="Delete" class="Button Delete"></button>
+        <button id="btnClear" title="Clear" class="Button Clear"></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter"></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute"></button>
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12326Controller" name="obj.myDiv" novalidate ng-form>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:98%">
+            <div style="width: 100%">
+                <table style=" width:100%">
+                    <tr style="width: 100%">
+                        <td style="width: 7%;" class="alnR"><label id="lblRequest" for="txtRequest" class="ng-cloak" ng-bind="getLabel('lblRequest')"></label></td>
+                        <td style="width: 14%;" colspan="2"><input type="text" id="txtRequest" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblRequestDate" for="txtRequestDate" class="ng-cloak" ng-bind="getLabel('lblRequestDate')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtRequestDate" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"><input type="text" id="txtRequestDateH" style="width: 100%;" readonly /></td>
+                        <td style="width: 3%;" class="alnL"><label id="lblH" for="txtRequestDateH" class="ng-cloak" ng-bind="getLabel('lblH')"></label></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblPatNo" for="txtPatNo" class="ng-cloak" ng-bind="getLabel('lblPatNo')"></label></td>
+                        <td style="width: 8%;" colspan="2"><input type="text" id="txtPatNo" style="width: 100%;" readonly /></td>
+
+                        <td style="width: 28%;" colspan="2"><input type="text" id="txtPatDesc" style="width: 100%;" readonly /></td>
+                        <td style="width: 3%;" class="alnR"><label id="lblY" for="txtY" class="ng-cloak" ng-bind="getLabel('lblY')"></label></td>
+                        <td style="width: 3%;"><input type="text" id="txtY" style="width: 100%;" readonly /></td>
+                        <td style="width: 3%;" class="alnR"><label id="lblM" for="txtM" class="ng-cloak" ng-bind="getLabel('lblM')"></label></td>
+                        <td style="width: 3%;"><input type="text" id="txtM" style="width: 100%;" readonly /></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 7%;" class="alnR"><label id="lblGender" for="txtGender" class="ng-cloak" ng-bind="getLabel('lblGender')"></label></td>
+                        <td style="width: 14%;" colspan="2"><input type="text" id="txtGender" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblNationality" for="txtNationality" class="ng-cloak" ng-bind="getLabel('lblNationality')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtNationality" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblBloodGroup" for="txtBloodGroup" class="ng-cloak" ng-bind="getLabel('lblBloodGroup')"></label></td>
+                        <td style="width: 4%;"><input type="text" id="txtBloodGroup" style="width: 100%;" readonly /></td>
+                        <td style="width: 18%;" colspan="2"><input type="text" id="txtBloodGroupDesc" style="width: 100%;" readonly /></td>
+                        <td style="width: 14%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 7%;" class="alnR"><label id="lblLocation" for="txtLocation" class="ng-cloak" ng-bind="getLabel('lblLocation')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtLocation" style="width: 100%;" readonly /></td>
+                        <td style="width: 14%;" colspan="2"><input type="text" id="txtLocationDesc" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 4%;"></td>
+                        <td style="width: 14%;"></td>
+                        <td style="width: 14%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 7%;" class="alnR"><label id="lblUnitNo" for="txtUnitNo" class="ng-cloak" ng-bind="getLabel('lblUnitNo')"></label></td>
+                        <td style="width: 14%;" colspan="2"><input type="text" id="txtUnitNo" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblProduct" for="txtProduct" class="ng-cloak" ng-bind="getLabel('lblProduct')"></label></td>
+                        <td style="width: 7%"><input type="text" id="txtProduct" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 7%;" class="alnR"><label id="lblExpiryDate" for="txtExpiryDate" class="ng-cloak" ng-bind="getLabel('lblExpiryDate')"></label></td>
+                        <td style="width: 8%" colspan="2"><input type="text" id="txtExpiryDate" style="width: 100%;" readonly /></td>
+                        <td style="width: 14%;"></td>
+                        <td style="width: 14%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                        <td style="width: 3%;"></td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:98%">
+            <div style="width: 100%">
+                <table style=" width:100%">
+                    <tr style="width: 100%">
+                        <td style="width: 35%;text-align:center;" colspan="4">
+                            <label id="lblCheckClarical" style="font-weight:bold;text-decoration:underline" class="ng-cloak" ng-bind="getLabel('lblCheckClarical')"></label>
+                        </td>
+                        <td style="width: 65%;text-align:center;" colspan="5">
+                            <label id="lblBloodSpecimen" style="font-weight:bold;text-decoration:underline" class="ng-cloak" ng-bind="getLabel('lblBloodSpecimen')"></label>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 10%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 11%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 23%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 21%;"></td>
+                        <td style="width: 7%;"></td>
+                        <td style="width: 7%;text-align:center"><label id="lblResult" class="ng-cloak" ng-bind="getLabel('lblResult')"></label></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 10%;" class="alnR"><label id="lblPatientName" for="txtPatientName" class="ng-cloak" ng-bind="getLabel('lblPatientName')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtPatientName" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;" class="alnR"><label id="lblBloodUnit" for="txtBloodUnit" class="ng-cloak" ng-bind="getLabel('lblBloodUnit')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtBloodUnit" style="width: 100%;" readonly /></td>
+                        <td style="width: 23%;" class="alnR"><label id="lblPreTransSmplHemo" for="txtPreTransSmplHemo" class="ng-cloak" ng-bind="getLabel('lblPreTransSmplHemo')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtPreTransSmplHemo" style="width: 100%;" readonly /></td>
+                        <td style="width: 21%;" class="alnR"><label id="lblDNAtestPre" for="txtDNAtestPre" class="ng-cloak" ng-bind="getLabel('lblDNAtestPre')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtDNAtestPre" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"><input type="text" id="txtDNAtestPre1" style="width: 100%;" readonly /></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 10%;" class="alnR"><label id="lblPatientNumber" for="txtPatientNumber" class="ng-cloak" ng-bind="getLabel('lblPatientNumber')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtPatientNumber" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;" class="alnR"><label id="lblBloodABO" for="txtBloodABO" class="ng-cloak" ng-bind="getLabel('lblBloodABO')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtBloodABO" style="width: 100%;" readonly /></td>
+                        <td style="width: 23%;" class="alnR"><label id="lblPostTransSmplHemo" for="txtPostTransSmplHemo" class="ng-cloak" ng-bind="getLabel('lblPreTransSmplHemo')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtPostTransSmplHemo" style="width: 100%;" readonly /></td>
+                        <td style="width: 21%;" class="alnR"><label id="lblDNAtestPost" for="txtDNAtestPost" class="ng-cloak" ng-bind="getLabel('lblDNAtestPost')"></label></td>
+                        <td style="width: 7%;"><input type="text" id="txtDNAtestPost" style="width: 100%;" readonly /></td>
+                        <td style="width: 7%;"><input type="text" id="txtDNAtestPost1" style="width: 100%;" readonly /></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;width:98%">
+            <div style="width: 100%">
+                <table style=" width:100%">
+                    <tr style="width: 100%">
+                        <td style="width: 38%;text-align:center;font-weight:bold;" colspan="3"><label id="lblABO" class="ng-cloak" style="text-decoration:underline" ng-bind="getLabel('lblABO')"></label></td>
+                        <td style="width: 62%;text-align:center;font-weight:bold;" colspan="7"><label id="lblAb" style="text-decoration:underline" class="ng-cloak" ng-bind="getLabel('lblAb')"></label></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;"></td>
+                        <td style="width: 8%;text-align:center;"><label id="lblDone" class="ng-cloak" ng-bind="getLabel('lblDone')"></label></td>
+                        <td style="width: 15%;text-align:center;"><label id="lblResult" class="ng-cloak" ng-bind="getLabel('lblResult')"></label></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 15%;"></td>
+                        <td style="width: 8%;text-align:center;"><label id="lblCellI" class="ng-cloak" ng-bind="getLabel('lblCellI')"></label></td>
+                        <td style="width: 8%;text-align:center;"><label id="lblCellII" class="ng-cloak" ng-bind="getLabel('lblCellII')"></label></td>
+                        <td style="width: 8%;text-align:center;"><label id="lblCellIII" class="ng-cloak" ng-bind="getLabel('lblCellIII')"></label></td>
+                        <td style="width: 11%;text-align:center;"><label id="lblIsCross" class="ng-cloak" ng-bind="getLabel('lblIsCross')"></label></td>
+                        <td style="width: 11%;text-align:center;"><label id="lblFullCross" class="ng-cloak" ng-bind="getLabel('lblFullCross')"></label></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblPreTransSmpl" for="txtPreTransSmpl" class="ng-cloak" ng-bind="getLabel('lblPreTransSmpl')"></label></td>
+                        <td style="width: 8%;"><input type="text" id="txtPreTransSmpl" style="width: 100%;" readonly /></td>
+                        <td style="width: 15%;"><input type="text" id="txtPreTransSmplRes" style="width: 100%;" readonly /></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 15%;" class="alnR"><label id="lblWithpreTransSmpl" for="txtWithpreTransSmplCellI" class="ng-cloak" ng-bind="getLabel('lblWithpreTransSmpl')"></label></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpreTransSmplCellI" style="width: 100%;" readonly /></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpreTransSmplCellII" style="width: 100%;" readonly /></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpreTransSmplCellIII" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;"><input type="text" id="txtWithpreTransSmplIsCross" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;"><input type="text" id="txtWithpreTransSmplFullCross" style="width: 100%;" readonly /></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblPostTransSmpl" for="txtPostTransSmpl" class="ng-cloak" ng-bind="getLabel('lblPostTransSmpl')"></label></td>
+                        <td style="width: 8%;"><input type="text" id="txtPostTransSmpl" style="width: 100%;" readonly /></td>
+                        <td style="width: 15%;"><input type="text" id="txtPostTransSmplRes" style="width: 100%;" readonly /></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 15%;" class="alnR"><label id="lblWithpostTransSmpl" for="txtWithpostTransSmpl" class="ng-cloak" ng-bind="getLabel('lblWithpostTransSmpl')"></label></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpostTransSmplCellI" style="width: 100%;" readonly /></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpostTransSmplCellII" style="width: 100%;" readonly /></td>
+                        <td style="width: 8%;"><input type="text" id="txtWithpostTransSmplCellIII" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;"><input type="text" id="txtWithpostTransSmplIsCross" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;"><input type="text" id="txtWithpostTransSmplFullCross" style="width: 100%;" readonly /></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;" class="alnR"><label id="lblBloodBag" for="txtBloodBag" class="ng-cloak" ng-bind="getLabel('lblBloodBag')"></label></td>
+                        <td style="width: 8%;"><input type="text" id="txtBloodBag" style="width: 100%;" readonly /></td>
+                        <td style="width: 15%;"><input type="text" id="txtBloodBagRes" style="width: 100%;" readonly /></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 15%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 11%;"></td>
+                        <td style="width: 11%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 38%;font-weight:bold" class="alnR" colspan="3"><label id="lblCulture" for="txtCulture" class="ng-cloak" ng-bind="getLabel('lblCulture')"></label></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 50%;" colspan="5"><input type="text" id="txtCulture" style="width: 100%;" readonly /></td>
+                        <td style="width: 11%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;font-weight:bold" class="alnR"><label id="lblConclusion" for="txtConclusion" class="ng-cloak" ng-bind="getLabel('lblConclusion')"></label></td>
+                        <td style="width: 74%;" colspan="8"><textarea id="txtConclusion" style="width: 100%;height:50px" readonly></textarea></td>
+                        <td style="width: 11%;"></td>
+                    </tr>
+                    <tr style="width: 100%">
+                        <td style="width: 15%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 15%;"></td>
+                        <td style="width: 1%;"></td>
+                        <td style="width: 15%;color:#4A4F9F">
+                            <label id="lblComplete" for="chkComplete" class="ng-cloak" ng-bind="getLabel('lblComplete')"></label>
+                            <input type="checkbox" id="chkComplete" />
+                        </td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 8%;"></td>
+                        <td style="width: 11%;"></td>
+                        <td style="width: 11%;"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+

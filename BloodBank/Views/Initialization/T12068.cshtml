@@ -1,0 +1,259 @@
+﻿
+@{
+    ViewBag.Title = "T12068";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<title>National Electronic Blood Bank</title>
+
+<script src="~/Apps/JSController/Initialization/T12068Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12068Service.js"></script>
+<link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+@*<script src="~/Scripts/angular/jquery.dataTables.js"></script>
+    <script src="~/Scripts/angular/jquery.js"></script>*@
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12068Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save_Click()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete_Click()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+    <div class="form-horizontal" ng-app="BloodBank" ng-controller="T12068Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+        <div class="container" style="border: 1px solid #c12d2d;margin-top: 10px; border-radius: 5px; padding: 20px;">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblQstNo" for="txtQstNo" class="ng-cloak" ng-bind="getLabel('lblQstNo')"></label>
+                    </div>
+                    <div class="col-lg-1 col-md-1 col-sm-1">
+                        <input id="txtQstNo" type="text" ng-model="obj.t12068.T_QNO" style="width: 100px;" readonly>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblHedQst" for="ddlHedQstNo" class="ng-cloak" ng-bind="getLabel('lblHedQst')"></label><span class="error" ng-show="obj.myDiv.loca.$error.required">*</span>
+                    </div>
+                    <div class="col-lg-5 col-md-5 col-sm-5">
+                        <div class="ng-cloak select-box">
+                            <ui-select ng-model="obj.QHead.selected"  on-select="GetQstHeadData()" id="ddlHedQstNo" theme="select2" append-to-body="true" style="min-width: 438px" >
+                                <ui-select-match placeholder="Select">{{$select.selected.T_QHEAD}}</ui-select-match>
+                                <ui-select-choices repeat="QHead in getQHead | propsFilter: {T_QHEAD: $select.search}" >
+                                    <div ng-bind-html="QHead.T_QHEAD | highlight: $select.search" ></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input type="text" id="ddlIHedQstNo" ng-model="obj.t12068.T_QHEAD_NO" ng-bind="obj.t12068.T_QHEAD_NO=obj.QHead.selected.T_QHEAD_NO" required name="loca" class="hidden"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: left">
+                        <input type="button" id="lblAdd" ng-click="openDialog('QstHeadTypediv',obj.QHead.selected)"  class="ng-cloak" value="{{getLabel('lblAdd')}}" style="background:#c12d2d; color: #ffffff; border-radius: 5px; height: 28px; margin-top: 2px;" />
+                    </div>
+                </div>
+
+                @*Modal Start*@
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <div class="container">
+                        <div id="QstHeadTypediv" class="omf-modal">
+                            <div class="omf-modal-body" style="border: 1px solid #c12d2d;border-radius: 5px;">
+                                <div class="form-group" ng-submit="addQstHeadType()" role="form" name="costTypeForm" ng-class="{'has-error': QstHeadTypeForm.T_LANG2_NAME.$touched && QstHeadTypeForm.T_LANG2_NAME.$error.required , 'has-success': QstHeadTypeForm.T_LANG2_NAME.$valid }">
+                                    <div class="row" style="padding: 3px;">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align: right">
+                                                <label id="lblQheadNumber" for="txtQheadNumber" class="ng-cloak" ng-bind="getLabel('lblQheadNumber')"></label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input id="txtQheadNumber" type="text" ng-model="addQhed.T_QHEAD_NO">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 3px;">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align: right">
+                                                <label id="lblEnglish" for="txtEnglish" class="ng-cloak" ng-bind="getLabel('lblEnglish')"></label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input id="txtEnglish" type="text" ng-model="addQhed.T_LANG2_NAME">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 3px;">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align: right">
+                                                <label id="lblLocal" for="txtLocal" class="ng-cloak" ng-bind="getLabel('lblLocal')"></label>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input id="txtLocal" type="text" ng-model="addQhed.T_LANG1_NAME">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="padding: 3px;">
+                                        <div class="col-md-12 col-lg-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-sm-6" style="text-align: right">
+                                                <input class="btn-danger" ng-click="addQstHeadType()" type="submit" value="Add" />
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                                <input type="button" class="btn-primary col-sm-offset-3" ng-click="closeDialog('QstHeadTypediv')" value="Close" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Modal End*@
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right;">
+                        <label style="vertical-align: middle;" id="lblEngName" for="txtEngName" class="ng-cloak" ng-bind="getLabel('lblEngName')"></label><span class="error" ng-show="obj.myDiv.english.$error.required">*</span>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <textarea id="txtEngName" type="text" name="english" ng-model="obj.t12068.T_LANG2_NAME" style="width: 446px; height: 100px;" required></textarea>
+                       
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblLocName" for="txtLocName" name="local" class="ng-cloak" ng-bind="getLabel('lblLocName')"></label><span class="error" ng-show="obj.myDiv.local.$error.required">*</span>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <textarea id="txtLocName" type="text" name="local" ng-model="obj.t12068.T_LANG1_NAME" style="width: 366px; height: 100px;" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblQstWeight" for="txtQstWeight" class="ng-cloak" ng-bind="getLabel('lblQstWeight')"></label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input id="txtQstWeight" type="text" ng-model="obj.t12068.T_QUS_WEIGHT">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblDispSeq" for="txtDispSeq" class="ng-cloak" ng-bind="getLabel('lblDispSeq')"></label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input id="txtDispSeq" type="text" ng-model="obj.t12068.T_DISP_SEQ">
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblDiffDay" for="txtDiffDay"class="ng-cloak" ng-bind="getLabel('lblDiffDay')"></label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input id="txtDiffDay" type="text" ng-model="obj.t12068.T_DIFFERAL_DAY">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblSex" for="ddlSex" class="ng-cloak" ng-bind="getLabel('lblSex')"></label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="ng-cloak select-box">
+                            <ui-select ng-model="obj.Gender.selected" on-select="GetAllGender()" id="ddlSex" theme="select2" append-to-body="true" style="min-width: 150px">
+                                <ui-select-match placeholder="Select">{{$select.selected.T_SEX}}</ui-select-match>
+                                <ui-select-choices repeat="Gender in getGender | propsFilter: {T_SEX: $select.search}">
+                                    <div ng-bind-html="Gender.T_SEX | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input type="text" id="ddlISex" ng-model="obj.t12068.T_SEX" ng-bind="obj.t12068.T_SEX=obj.Gender.selected.T_SEX_CODE" class="hidden"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblIfFail" for="ddlIfFail" class="ng-cloak" ng-bind="getLabel('lblIfFail')"></label>
+                        <span class="error" ng-show="obj.myDiv.fal.$error.required">*</span>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="ng-cloak select-box">
+                            <ui-select ng-model="obj.Fail.selected" id="ddlIfFail" name="falil" theme="select2" style="min-width: 175px;" append-to-body="true" required>
+                                <ui-select-match placeholder="Select">{{$select.selected.T_IF_FAIL}}</ui-select-match>
+                                <ui-select-choices repeat="Fail in getFail | propsFilter: {T_IF_FAIL: $select.search}">
+                                    <div ng-bind-html="Fail.T_IF_FAIL | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <input type="text" id="ddlIfFail1" ng-model="obj.t12068.T_IF_FAIL" ng-bind="obj.t12068.T_IF_FAIL = obj.Fail.selected.T_CODE"  required name="fal" class="hidden"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 10px;">
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblExpAns" class="ng-cloak" ng-bind="getLabel('lblExpAns')"></label>
+                        @*<span class="error" ng-show="obj.myDiv.answer.$error.required">*</span>*@
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <label id="lblAnswerYes" for="chkAnswerYes" class="ng-cloak" ng-bind="getLabel('lblAnswerYes')"></label>
+
+                        <input id="chkAnswerYes" type="radio" name="answer" ng-model="obj.t12068.T_EXP_ANS" value="1">
+
+                        <label id="lblAnswerNo" for="chkAnswerNo" class="ng-cloak" ng-bind="getLabel('lblAnswerNo')"></label>
+
+                        <input id="chkAnswerNo" type="radio" name="answer" ng-model="obj.t12068.T_EXP_ANS" value="2" >
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2" style="text-align: right">
+                        <label id="lblActive" for="ridoActive" class="ng-cloak" ng-bind="getLabel('lblActive')"></label>
+                    </div>
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <input id="chkActive" type="checkbox" ng-model="obj.t12068.T_ACTIVE" ng-click="chkActiv()" ng-true-value="'1'" ng-false-value="'2'" checked>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--For Data Gridview start-->
+    </div>
+    <div ng-controller="T12068Controller">
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10">
+                <center>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="table-responsive">
+                                    <table id="entry-grid" datatable="" dt-options="dtOptions" dt-columns="dtColumns" class="table table-hover" style="width: 100%;"></table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1"></div>
+        </div>
+    </div>
+<!--For Data Gridview End-->
+
+<style>
+    .omf-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 300px;
+        width: 60%;
+        height: 50vw;
+        background-color: rgba(128, 128, 128, 0.00);
+        overflow: auto;
+        z-index: 99999;
+    }
+
+        .omf-modal .omf-modal-body {
+            width: 68.25%;
+            padding: 50px;
+            margin: auto;
+            margin-top: 286px;
+            margin-left: 122px;
+            background-color: #FFFFFF;
+            border-style: ridge;
+        }
+
+    nav .nav .btn {
+        margin-top: 3px;
+    }
+
+    #mainBody {
+        margin-top: 20px;
+        z-index: 999999;
+    }
+    .error {
+        color: red !important;
+    }
+</style>
+
+

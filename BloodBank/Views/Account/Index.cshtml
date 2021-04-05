@@ -1,0 +1,226 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>National Electronic Blood Bank</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/font-awesome.min.css")" rel="stylesheet" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/normalize.css")" rel="stylesheet" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/login.css")" rel="stylesheet" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/Custom.css")" rel="stylesheet" type="text/css" />
+    <link href="@VirtualPathUtility.ToAbsolute("~/Content/angular-datepicker_Custom.css")" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-hijri.js"></script>
+    <script src="~/Scripts/jquery.validationEngine.js"></script>
+    <script src="~/Scripts/jquery.validationEngine-en.js"></script>
+    <script src="~/Scripts/jquery.simplemodal.1.4.4.min.js"></script>
+    <script src="~/Scripts/angular/jquery.js"></script>
+    <script src="~/Scripts/angular/jquery.dataTables.js"></script>
+    <script src="~/Scripts/angular/angular.min.js"></script>
+    <script src="~/Scripts/angular/angular-datatables.js"></script>
+    <script src="~/Scripts/angular/angular-modal-service.js"></script>
+    <script src="~/Scripts/angular/angular-sanitize.js"></script>
+    <script src="~/Scripts/ui-grid.min.js"></script>
+    <script src="~/Scripts/angular/angular-route.js"></script>
+    <script src="~/Scripts/dirPagination.js"></script>
+    <script src="~/Scripts/select.js"></script>
+    <script src="~/Scripts/Module/fileUploader.js"></script>
+    <script src="~/Scripts/angular-datepicker_Custom.js"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+
+    @*<script src="~/Scripts/zebra_datepicker.js"></script>
+        <script src="~/Scripts/angular/xeditable.js"></script>
+            <script src="~/Scripts/angular/angular-mocks.js"></script>
+        <script src="~/Scripts/angular/ng-map.js"></script>
+        <link href="~/Content/Rating/jk-rating-stars.min.css" rel="stylesheet" />
+        <script src="~/Scripts/Rating/jk-rating-stars.min.js"></script>
+            <script src="~/Scripts/Rating/script.js"></script>
+        <script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBvK4WBt18RMBAKEjwPZ0bDIY3Vp6ekPbM"></script>
+        <script src="~/Scripts/angular/map_api.js"></script>
+        <script src="~/Scripts/angular/angularjs-google-maps.js"></script>*@
+
+
+    <script src="~/Apps/app.js"></script>
+    <script src="~/Apps/JSService/LoginService.js"></script>
+    <script src="~/Apps/JSController/Account/LoginController.js"></script>
+
+</head>
+<body>
+    <div ng-app="BloodBank" ng-controller="LoginController" class="ng-cloak">
+        <div style="height: 120px; border: solid 2px #CCC;">
+            <table style="width: 100%; padding: 5px;">
+                <tr>
+                    <td style="color: #40618C; font-size: medium; font-weight: bold; width: 20%;">
+                        <img src="~/Images/ministrylogo.png" alt="medisys" height="110" />
+                    </td>
+                    <td style="color: #c12d2d; font-size: xx-large; font-weight: bold; text-align: center; width: 50%;">
+                        National Electronic Blood Bank<br />
+                        بنك الدم الوطني الإلكتروني
+                        @*المشروع الوطنى لبنوك الدم*@
+                    </td>
+                    <td style="text-align: right; color: #40618C; font-size: small; font-weight: bold; width: 20%;">
+                        <div style="text-align: center; float: right;">
+                            @*<img src="~/Images/medisys.png" alt="medisys" height="50px" />*@<br />
+                            <img src="~/Images/Hemocare HR.png" alt="medisys" height="50" /><br />
+                            Medical Systems Co. Ltd<br />
+                            <label id="lblEnglish" ng-click="language('2')" style="font-size: 15px; color: #c12d2d; cursor: pointer;">English</label>
+                            |
+                            <label id="lblArabic" ng-click="language('1')" style="font-size: 20px; color: #c12d2d;cursor: pointer;">عربي</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="box">
+            <div class="leftPanel" style="margin-top: 3%;">
+                <div class="innerPanel">
+                    <div class="leftPanel" style="display: inline-block;">
+                        <div class="roundPanel">
+                            <img src="~/Images/tips.png" alt="tips" class="tips" />
+                        </div>
+                    </div>
+                    <div style="display: inline-block; margin-top: 3%; margin-left: 30px;">
+                        <div class="sidePanel">
+                            <span id="lblUserTips" ng-repeat="field in entity track by $index"
+                                  ng-if="field.T_CONTROL_NAME=='lblUserTips'" class="heading ng-cloak">{{field.T_CONTROL_TEXT}}</span>
+                            <ul>
+                                <li id="lblChangePassword" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblChangePassword'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                                <li id="lblRemember" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblRemember'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                                <li id="lblIfYou" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblIfYou'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="innerPanel">
+                    <div class="leftPanel" style="display: inline-block;">
+                        <div class="roundPanel">
+                            <img src="~/Images/hosplogo.png" alt="tips" class="tips" />
+                        </div>
+                    </div>
+                    <div style="display: inline-block; margin-top: 3%; margin-left: 30px;">
+                        <div class="sidePanel">
+                            <span id="lblProductLic" ng-repeat="field in entity track by $index"
+                                  ng-if="field.T_CONTROL_NAME=='lblProductLic'" class="heading ng-cloak">{{field.T_CONTROL_TEXT}}</span>
+                            <ul>
+                                <li id="lblThisLic" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblThisLic'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                                <li id="lblMinistry" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblMinistry'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                                <li id="lblLicCode" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblLicCode'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                                <li id="lblDontEnter" ng-repeat="field in entity track by $index"
+                                    ng-if="field.T_CONTROL_NAME=='lblDontEnter'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightPanel" style="display: inline-block; margin-right: 1%;">
+                <div id="login">
+                    <div class="leftPanel">
+                        <img class="loginIcon" src=@VirtualPathUtility.ToAbsolute("~/Images/security.png") alt="security" />
+                        <div id="namePanel" class="inputPanel">
+                            <img src=@VirtualPathUtility.ToAbsolute("~/Images/usericon.png") alt="user icon" style="margin-bottom: 10px" />
+                            <input ID="lblUserName" ng-model="obj.T_LOGIN_NAME" ng-if="field.T_CONTROL_NAME=='lblUserName'" ng-repeat="field in entity track by $index" Placeholder="{{field.T_CONTROL_TEXT}}" type="text" ng-keypress="enterKey($event)" style="margin-top: 5px;" ng-click="Name('nam')" ng-init="focus()" />
+                        </div>
+                        <div id="passPanel" class="inputPanel">
+                            <img src=@VirtualPathUtility.ToAbsolute("~/Images/passicon.png") alt="password icon" style="margin-bottom: 7px" />
+                            <input ID="lblPassword" ng-model="obj.T_PWD" ng-if="field.T_CONTROL_NAME=='lblPassword'" ng-repeat="field in entity track by $index" Placeholder="{{field.T_CONTROL_TEXT}}" type="password" style="margin-top: 7px" ng-keypress="KeyPressed($event,obj.T_LOGIN_NAME,obj.T_PWD)" ng-click="Name('pass')" />
+                        </div>
+                    </div>
+                    <div style="float: right">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="button" id="btn7" value="7" name="seven" ng-click="addNumber('7')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn8" value="8" name="eight" ng-click="addNumber('8')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn9" value="9" name="nine" ng-click="addNumber('9')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btnAc" value="AC" name="cancle" ng-click="Cancel('AC')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" id="btn4" value="4" name="four" ng-click="addNumber('4')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn5" value="5" name="five" ng-click="addNumber('5')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn6" value="6" name="six" ng-click="addNumber('6')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btnback" value="←" name="back" ng-click="BackNumber('←')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" id="btn1" value="1" name="one" ng-click="addNumber('1')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn2" value="2" name="two" ng-click="addNumber('2')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btn3" value="3" name="three" ng-click="addNumber('3')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td rowspan="2">
+                                    <input type="button" id="btnenter" value="Enter" name="enterr" ng-click="Enter(obj.T_LOGIN_NAME,obj.T_PWD)" style="width: 50px; height: 100px; border-radius: 5px; " />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="button" id="btn0" value="0" name="zero" ng-click="addNumber('0')" style="width: 102px; height: 50px; border-radius: 5px; " />
+                                </td>
+                                <td>
+                                    <input type="button" id="btndot" value="." name="dot" ng-click="addNumber('.')" style="width: 50px; height: 50px; border-radius: 5px; " />
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <button ID="btnLogout" class="actionButton" ng-click="logout()"></button>
+                            <button ID="btnLogin" class="actionButton" ng-click="login(obj.T_LOGIN_NAME,obj.T_PWD)"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="leftPanel" style="margin-left: 10%;">
+                <strong id="lblMedicalSystem" ng-repeat="field in entity track by $index"
+                        ng-if="field.T_CONTROL_NAME=='lblMedicalSystem'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</strong><span id="lblAllRights" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblAllRights'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</span>
+            </div>
+            <div class="rightPanel" style="margin-right: 6%;">
+                <div id="warning">
+                    <span id="lblWarning" ng-repeat="field in entity track by $index"
+                          ng-if="field.T_CONTROL_NAME=='lblWarning'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</span><p id="lblEnd" ng-repeat="field in entity track by $index" ng-if="field.T_CONTROL_NAME=='lblEnd'" class="ng-cloak">{{field.T_CONTROL_TEXT}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    var base = window.location.host;
+    $.getScript('../Apps/Login.js', function (data, textStatus, jqxhr) {
+        console.log('Script File Load Status=' + jqxhr.status);
+    });
+
+</script>

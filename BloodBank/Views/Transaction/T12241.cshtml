@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "T12241";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .error {
+        color: red !important;
+    }
+</style>
+<script src="~/Apps/JSController/Transaction/T12241Controller.js"></script>
+<script src="~/Apps/JSService/Transaction/T12241Service.js"></script>
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12241Controller">
+        <button ID="btnNew" title="New" class="Button New" ng-click="New()" disabled></button>
+        <button ID="btnSave" title="Save" class="Button Save"></button>
+        <button ID="btnNext" title="Next" class="Button Next" ng-click="Next()"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete()" disabled></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()" disabled></button>
+        <button id="btnEnterQuery" title="Enter Query" class="Button Enter" ng-click="EnterQuery()" disabled></button>
+        <button id="btnExecuteQuery" title="Execute Query" class="Button Execute" ng-click="ExecuteQuery()" disabled></button>
+
+    </div>
+}
+<div class="container" ng-app="BloodBank" ng-controller="T12241Controller" name="obj.myDiv" novalidate ng-form>
+    <div class="row" style="margin: 1.6% auto; border: 1px solid #b2aeae; border-radius: 5px; padding: 10px;">
+        <div style="width: 100%">
+            <table style=" width:100%">
+                <tr style="width: 100%">
+                    <td style="width: 25%"></td>
+                    <td style="width: 7%" class="alnR">
+                        <label id="lblUnitFrom" style="float: right" for="txtUnitFrom" class="ng-cloak" ng-bind="getLabel('lblUnitFrom')"></label>
+                    </td>
+                    <td style="width: 25%">
+                        <input type="text" id="txtUnitFrom" ng-model="obj.T_UNIT_NO_FROM" style="width: 60%;" ng-dblclick="UnitFromPopup()" ng-keydown="btnf9_UnitFrom($event)"  ng-blur="UnitValidate(obj.T_UNIT_NO_FROM,'UnitFrom')"/>
+                    </td>
+                    <td style="width: 5%" class="alnR">
+                        <label id="lblUnitTo" style="float: right" for="txtUnitTo" class="ng-cloak" ng-bind="getLabel('lblUnitTo')" readonly></label>
+                    </td>
+                    <td style="width: 25%">
+                        <input type="text" id="txtUnitTo" ng-model="obj.T_UNIT_NO_TO" style="width: 60%;" ng-keydown="GetDataWithEnterOrF3($event)" ng-dblclick="UnitToPopup()" ng-blur="UnitValidate(obj.T_UNIT_NO_TO,'UnitTo')"/>
+                    </td>
+                    <td style="width: 25%"></td>
+                </tr>
+                <tr></tr>
+            </table>
+
+
+            <!--2nd part start-->
+            <div class="row" id="1stDiv" style="border: 1px solid #b2aeae; border-radius: 5px; padding: 10px; width: 100%; margin: 1.0% auto">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div>
+                        <table style="width: 100%">
+                            <thead style="text-align: center">
+                                <tr style="color: #29449b; width: 100%">
+                                    <td style="width: 10%"></td>
+                                    <td class="alnR"><span id="lblUnitNo" style="text-align: center; width: 7%" ng-bind="getLabel('lblUnitNo')"></span></td>
+                                    <td class="alnR"><span id="lblSegmentNo" style="text-align: center; width: 10%" ng-bind="getLabel('lblSegmentNo')"></span></td>
+                                    <td class="alnR"><span id="lblDonationDate" style="width: 10%" ng-bind="getLabel('lblDonationDate')"> </span></td>
+                                    <td></td>
+                                    <td class="alnL"><span id="lblEnteredBy" style="width: 3%;" ng-bind="getLabel('lblEnteredBy')"></span></td>
+                                    <td class="alnL"><span id="lblVirology" style="width: 10%;" ng-bind="getLabel('lblVirology')"></span></td>
+                                    <td></td>
+                                    <td class="alnL"><span id="lblVirologyBy" style="width: 10%;" ng-bind="getLabel('lblVirologyBy')"></span></td>
+                                    <td style="width: 10%"></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="obj in obj.Virology" style="width: 100%">
+                                    <td style="width: 10%"></td>
+                                    <td style="width: 8%">
+                                        <input type="text" style="width: 100%" class="form-control" name="UnitNo" id="txtUnitNo" ng-model="obj.UnitNo">
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" name="SegmentNo" id="txtSegmentNo" ng-model="obj.SegmentNo" readonly>
+                                    </td>
+                                    <td style="width: 10%">
+                                        <input type="text" style="width: 100%" class="form-control" name="DonationDate" id="txtDonationDate" ng-model="obj.DonationDate">
+                                    </td>
+                                    <td style="width: 5%">
+                                        <input type="text" style="width: 100%" class="form-control" name="EnteredBy_Code" id="txtEnteredBy_Code" ng-model="obj.EnteredBy_Code">
+                                    </td>
+                                    <td style="width: 15%">
+                                        <input type="text" style="width: 100%" class="form-control" name="EnteredBy_Name" id="txtEnteredBy_Name" ng-model="obj.EnteredBy_Name">
+                                    </td>
+                                    <td style="width: 3%">
+                                        <input type="checkbox" style="width: 100%; box-shadow: none; margin-left: -30%" class="form-control" name="Virology" id="virology{{$index}}" ng-disabled="checkvalue($index)" ng-model="obj.VIROLOGY_CHECK" ng-click="VirologyCheckboxClicked($index)">
+                                    </td>
+                                    <td style="width: 5%">
+                                        <input type="text" style="width: 100%;margin-left: -22px;" class="form-control" name="VirologyBy_Code" id="txtVirologyBy_Code" ng-model="obj.VerifyBy_Code" readonly>
+                                    </td>
+                                    <td style="width: 15%">
+                                        <input type="text" style="width: 100%;margin-left: -22px" class="form-control" name="VirologyBy_Name" id="txtVirologyBy_Name" ng-model="obj.VerifyBy_Name" readonly>
+                                    </td>
+                                    <td style="width: 10%;display:none">
+                                        <input type="text" class="form-control" name="hiddenField" id="txtHiddenField" ng-model="obj.HiddenField" hidden="hidden">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <div id="VerifyAll" style="text-align: center;">
+                            <input type="button" id="btnNegativeResults" value="{{getLabel('btnNegativeResults')}}" ng-click="NegativeResultsUpdate($event)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @*Unit From Modal Start*@
+            <div id="divUnitFrom" class="omf-modal" style="width: 80% !important">
+                <div class="omf-modal-body">
+                    <div class="omf-modal-header">
+                        <label id="lblUnitFrom" ng-bind="getLabel('lblUnitFrom')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseUnitFromPopup()" />
+                    </div>
+                    <div class="omf-modal-div-placeholder">
+                        <input type="text" placeholder="select..." class="omf-modal-placeholder" ng-model="SearchUnitFrom" />
+
+                    </div>
+                    <div class="form-horizontal popup">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table class="omf-modal-grid grid" arrow-selector="UnitList">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 20%">
+                                                <label id="lblUnitNo" class="ng-cloak" ng-bind="getLabel('lblUnitNo')"></label>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr dir-paginate="obj in UnitList |filter : SearchUnitFrom |itemsPerPage:10" pagination-id="uListFrom" style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onUnitFromSelect($index,obj)">
+                                            <td style="text-align: center"><span id="spnCentrifugeCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls pagination-id="uListFrom" max-size="5"
+                                                             direction-links="true"
+                                                             boundary-links="true">
+                                    </dir-pagination-controls>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*Unit From Modal end*@
+
+            @*Unit To Modal start*@
+            <div id="divUnitTo" class="omf-modal" style="width: 80% !important">
+                <div class="omf-modal-body">
+                    <div class="omf-modal-header">
+                        <label id="lblUnitTo" ng-bind="getLabel('lblUnitTo')" class="ng-cloak omf-modal-header-Label"></label><input type="button" class="omf-modal-header-Close" ng-click="CloseUnitToPopup()" />
+                    </div>
+                    
+                    <div class="omf-modal-div-placeholder">
+                        <input type="text" placeholder="select..." class="omf-modal-placeholder" ng-model="SearchUnitTo" />
+
+                    </div>
+                    <div class="form-horizontal popup">
+                        <div class="form-group">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <table class="omf-modal-grid grid" arrow-selector="UnitList">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 20%">
+                                            <label id="lblUnitNo" class="ng-cloak" ng-bind="getLabel('lblUnitNo')"></label>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr dir-paginate="obj in UnitList |filter : SearchUnitTo |itemsPerPage:10" pagination-id="uListTo"  style="cursor: pointer" ng-class="{'selected':$index == selectedRow}" ng-click="onUnitToSelect($index,obj)">
+
+                                        <td style="text-align: center"><span id="spnUnitToCode{{$index}}" style="width: 100%">{{obj.CODE}}</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <dir-pagination-controls pagination-id="uListTo" max-size="5"
+                                                         direction-links="true"
+                                                         boundary-links="true">
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Unit To modal end*@
+        </div>
+    </div>
+</div>

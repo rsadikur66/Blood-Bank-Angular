@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "T12281";
+}
+@*<style>
+        .selected {
+            color: #f7f7f7;
+            background-color: #e17d7d
+        }
+    </style>*@
+<script src="~/Apps/JSController/Initialization/T12281Controller.js"></script>
+<script src="~/Apps/JSService/Initialization/T12281Service.js"></script>
+<script src="~/Scripts/dirPagination.js"></script>
+
+@section container{
+    <div id="options" ng-app="BloodBank" ng-controller="T12281Controller">
+        <button ID="btnSave" title="Save" class="Button Save" ng-click="Save_Click()" ng-disabled="obj.myDiv.$invalid"></button>
+        <button ID="btnDelete" title="Delete" class="Button Delete" ng-click="Delete_Click()"></button>
+        <button ID="btnClear" title="Clear" class="Button Clear" ng-click="Clear()"></button>
+    </div>
+}
+<div class="form-horizontal" ng-app="BloodBank" ng-controller="T12281Controller" name="obj.myDiv" novalidate ng-form style="width: 1000px; padding: 20px; margin-left: 25px;">
+    <div class="container" style="margin-top: 10px; border-radius: 5px; padding: 20px;">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="border: 2px solid #c12d2d; border-radius: 10px; padding: 10px;">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="alnR"> <label id="lblWeightCode" for="txtWeightCode" ng-bind="getLabel('lblWeightCode')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightCode" type="text" ng-model="obj.T12281.T_WEIGHT_CODE"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"><label id="lblWeightName" for="txtWeightName" ng-bind="getLabel('lblWeightName')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightName" type="text" ng-model="obj.T12281.T_WEIGHT_NAME"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"><label id="lblUnitName" for="ddlUnitName" ng-bind="getLabel('lblUnitName')" class="ng-cloak"></label></td>
+                                    <td>
+                                        @*<input id="txtUnitName" type="text" ng-model="obj.T12281.T_UNIT_NAME">*@
+
+                                        <ui-select ng-model="obj.a.selected" on-select="onAnsSelect(obj.a.selected.ANS_ID,$index)" id="ddlUnitName" theme="select2" append-to-body="true" style="width: 179px">
+                                            <ui-select-match placeholder="Select">{{$select.selected.T_UNIT_NAME}}</ui-select-match>
+                                            <ui-select-choices repeat="a in obj.UnitList  | propsFilter: {T_UNIT_NAME: $select.search}">
+                                                <div ng-bind-html="a.T_UNIT_NAME | highlight: $select.search"></div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <input type="text" style="width: 179px" id="ddlITitleId" ng-model="obj.T12281.T_ACTION" name="title" ng-bind="obj.T12281.T_ACTION=obj.a.selected.T_UNIT_TYPE" class="Hidden" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"><label id="lblDiscardReason" for="txtDiscardReason" ng-bind="getLabel('lblDiscardReason')" class="ng-cloak"></label></td>
+                                    <td><input id="txtDiscardReason" type="text" ng-model="obj.T12281.T_DISCARD_REASON_CODE"></td>
+                                </tr>
+
+
+                            </table>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td class="alnR"><label id="lblWeightFrom" for="txtWeightFrom" ng-bind="getLabel('lblWeightFrom')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightFrom" type="text" ng-model="obj.T12281.T_WEIGHT_FR"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"><label id="lblWeightTo" for="txtWeightTo" ng-bind="getLabel('lblWeightTo')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightTo" type="text" ng-model="obj.T12281.T_WEIGHT_TO"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"> <label id="lblWeightGM" for="txtWeightGM" ng-bind="getLabel('lblWeightGM')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightGM" type="text" ng-model="obj.T12281.T_WEIGHT_GM"></td>
+                                </tr>
+                                <tr>
+                                    <td class="alnR"><label id="lblWeightGMT" for="txtWeightGMT" ng-bind="getLabel('lblWeightGMT')" class="ng-cloak"></label></td>
+                                    <td><input id="txtWeightGMT" type="text" ng-model="obj.T12281.T_WEIGHT_GMT"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-1 col-md-1 col-sm-1"></div>
+            </div>
+            <div class="form-horizontal popup">
+                <div class="form-group">
+                    <div class="col-lg-12 col-md-12 col-sm-12" style="margin-top: 20px">
+                        @*<div class="col-lg-2 col-md-2 col-sm-2"></div>*@
+                        <div class="col-lg-12 col-md-12 col-sm-12" style="border: 1px solid #c12d2d;border-radius: 10px; padding: 10px 10px 30px;">
+                            <table class="omf-modal-grid grid">
+                                <thead style="text-align: center">
+                                    <tr style=" background-color: #c12d2d; color: #ffffff;">
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightCode')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightName')"></label></th>
+                                        <th style="text-align: center;width: 30%"><label ng-bind="getLabel('lblUnitName')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightFrom')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightTo')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightGM')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblWeightGMT')"></label></th>
+                                        <th style="text-align: center;width: 10%"><label ng-bind="getLabel('lblDisReason')"></label></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr dir-paginate="V in obj.weightList |filter : Search |itemsPerPage:5" pagination-id="weight" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,V)">
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_CODE}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_NAME}}</td>
+                                        <td style="text-align: center;width: 30%">{{V.UNIT_NAME}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_FR}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_TO}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_GM}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_WEIGHT_GMT}}</td>
+                                        <td style="text-align: center;width: 10%">{{V.T_DISCARD_REASON_CODE}}</td>
+                                        <td class="hidden" style="text-align: center">{{V.T_ACTION}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <dir-pagination-controls pagination-id="weight" max-size="5"
+                                                     direction-links="true"
+                                                     boundary-links="true">
+                            </dir-pagination-controls>
+                        </div>
+                        @*<div class="col-lg-2 col-md-2 col-sm-2"></div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
